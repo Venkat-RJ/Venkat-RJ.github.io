@@ -1,0 +1,197 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ChapterStyles from '../components/ChapterStyles.astro';
+
+const lessons = [
+  { icon: '◎', label: 'leading, not just modelling', body: 'First time I had direct reports. A team of data scientists shipping nothing is worse than one data scientist shipping something. My job pivoted from "build models" to "clear the path so others can".' },
+  { icon: '⇄', label: 'reinforcement learning in the wild', body: 'Applied RL across procurement cycles, warehouse routing, and supplier selection. Reward functions messy. Environment non-stationary. Gained deep respect for anyone claiming RL works in production — and made it work here.' },
+  { icon: '◈', label: 'Bayesian optimization', body: "Black-box optimization for hard physical products — experiments cost money and time, so each sample mattered. Gaussian processes, acquisition functions, surrogate models. The mathematics of being smart about the next experiment." },
+  { icon: '⌁', label: 'the 90% optimisation', body: 'One pipeline I rebuilt ran 90% faster. The speedup didn\'t come from a better algorithm — it came from understanding which parts of the problem nobody needed solved daily.' },
+];
+
+const methods = [
+  {
+    title: 'Reinforcement learning for supply-chain decisions',
+    tag: 'RL · DQN · PPO · multi-agent',
+    body: "Procurement timing, supplier selection, inventory rebalancing — sequential decisions under uncertainty is textbook RL, except the environment is a real factory. Trained agents against simulators we built ourselves, then did careful off-policy evaluation before anything touched production. Every deployment taught us how different 'the real world' is from any simulator. I championed RL as the single point of contact for the supply-chain org.",
+  },
+  {
+    title: 'Bayesian optimization for hard products',
+    tag: 'BO · Gaussian processes · surrogate models',
+    body: "Physical products have physical costs — you can't just grid-search your way through engineering tradeoffs. Built Bayesian-optimization pipelines where each experiment was treated as a precious sample: Gaussian process surrogates, expected-improvement acquisition functions, careful exploration-exploitation balance. Reduced the number of physical trials needed by orders of magnitude, while finding Pareto fronts the domain experts didn't expect.",
+  },
+  {
+    title: 'Combinatorial & mixed-integer optimization',
+    tag: 'MILP · constraint programming · metaheuristics',
+    body: "AI-powered supplier selection was at its heart a brutal combinatorial problem — thousands of suppliers, hundreds of constraints, dozens of optimization objectives. Mixed-integer linear programs where they fit, genetic / tabu search where they didn't, and always a dashboard so the humans who'd live with the answer could interrogate it.",
+  },
+  {
+    title: 'Time-series & demand forecasting',
+    tag: 'ARIMA · Prophet · Transformer forecasters',
+    body: "Inventory stock analysis across plant locations, lifecycle prediction, demand decay modeling. The models weren't the hard part — figuring out which demand signals were load-bearing and which were noise was. Built reusable forecasting infrastructure the team is probably still using.",
+  },
+  {
+    title: 'Entity resolution & deduplication',
+    tag: 'embeddings · fuzzy matching · rule engines',
+    body: "Material duplicate resolution — when you have decades of procurement data, every part number has five spellings. Built hybrid ML + rule-based resolution systems. Unglamorous, high-leverage work that saved the procurement org genuine millions.",
+  },
+];
+---
+
+<BaseLayout title="Continental — Venkateshwar Reddy Jambula">
+  <ChapterStyles />
+  <article class="ch">
+    <header class="ch-header">
+      <a href="/" class="ch-back">&larr; home</a>
+      <div class="ch-eyebrow">2017 – 2022 &middot; Bangalore &middot; the long stretch &middot; four and a half years</div>
+      <h1>Continental.</h1>
+    </header>
+
+    <section class="ch-opener">
+      <p class="ch-lede">
+        My longest chapter so far. Four and a half years in Bangalore
+        doing supply-chain optimisation, reinforcement learning,
+        Bayesian optimisation, and leading a team for the first time.
+        The quiet years where you <em>actually</em> become senior at
+        something.
+      </p>
+      <figure class="feature-photo">
+        <img src="/images/continental/warehouse.jpg" alt="Shipping containers at port" loading="eager" />
+        <figcaption>supply chains &middot; what ML was quietly reshaping</figcaption>
+      </figure>
+    </section>
+
+    <section class="ch-section">
+      <h2>What four and a half years bought.</h2>
+      <p>
+        Continental is the kind of chapter that doesn&rsquo;t fit in a
+        bullet point. It&rsquo;s where I went from doing data science
+        to <em>leading</em> data science. Where I led the development of an
+        AI-powered supplier selection system, a material duplicate-resolution
+        application, and an optimisation pipeline I cut by more than 90%.
+      </p>
+      <p>
+        It&rsquo;s where I became the single point of contact for applying
+        RL and optimisation across the supply chain, and where I learnt
+        that "getting it shipped" is a different skill from "getting it
+        working." The middle years of a career look unremarkable on a
+        resume and are the ones that actually make you.
+      </p>
+    </section>
+
+    <section class="ch-section">
+      <h2>What Continental put in me.</h2>
+      <div class="lesson-grid">
+        {lessons.map((l) => (
+          <article class="lesson">
+            <div class="l-icon">{l.icon}</div>
+            <div class="l-label">{l.label}</div>
+            <p>{l.body}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="ch-section">
+      <h2>The methods, concretely.</h2>
+      <p class="methods-note">
+        Not a list of buzzwords. These are the technical pillars of the
+        work I did &mdash; reinforcement learning, Bayesian optimization,
+        combinatorial optimization, time-series forecasting, entity
+        resolution &mdash; and how they got applied to a supply chain
+        that had to keep running.
+      </p>
+
+      <div class="methods">
+        {methods.map((m) => (
+          <article class="method">
+            <div class="m-tag">{m.tag}</div>
+            <h3>{m.title}</h3>
+            <p>{m.body}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="ch-section">
+      <h2>The terrain I worked on.</h2>
+      <div class="gallery g-2">
+        <figure>
+          <img src="/images/continental/tires.jpg" alt="Automotive tires" loading="lazy" />
+          <figcaption>automotive &middot; where continental lives</figcaption>
+        </figure>
+        <figure>
+          <img src="/images/continental/warehouse.jpg" alt="Shipping containers" loading="lazy" />
+          <figcaption>supply chain &middot; where ml actually ran</figcaption>
+        </figure>
+      </div>
+      <p class="photo-credit">Photos: Wikimedia Commons (CC).</p>
+    </section>
+
+    <section class="ch-section ch-close">
+      <blockquote>
+        <p>
+          By the time I left, I knew what kind of engineer I was, what
+          kind of team I wanted to build, and what kind of problems were
+          worth staying up for. Continental isn&rsquo;t a chapter about a
+          breakthrough. It&rsquo;s a chapter about the quiet craft of
+          getting steadily better, for a long time, at a thing most people
+          don&rsquo;t want to hear about at parties.
+        </p>
+      </blockquote>
+    </section>
+
+    <footer class="ch-foot"><a href="/" class="ch-back-cta">&larr; back to the story</a></footer>
+  </article>
+</BaseLayout>
+
+<style>
+  .methods-note {
+    font-family: var(--font-body);
+    font-size: 15px !important;
+    color: var(--ink-muted) !important;
+    max-width: 620px;
+    margin-bottom: 32px !important;
+    font-style: italic;
+  }
+  .methods {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px dashed rgba(60, 40, 20, 0.15);
+  }
+  .method {
+    padding: 24px 0;
+    border-bottom: 1px dashed rgba(60, 40, 20, 0.12);
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+  .method .m-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent-red);
+    letter-spacing: 0.05em;
+    padding-top: 4px;
+    line-height: 1.5;
+  }
+  .method h3 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    line-height: 1.15;
+    color: var(--ink-headline);
+    margin: 0 0 10px;
+    letter-spacing: -0.01em;
+  }
+  .method p {
+    font-family: var(--font-body);
+    font-size: 15px !important;
+    line-height: 1.7 !important;
+    color: var(--ink-primary) !important;
+    margin: 0 !important;
+  }
+  @media (max-width: 900px) {
+    .method { grid-template-columns: 1fr; gap: 10px; }
+  }
+</style>

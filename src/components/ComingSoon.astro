@@ -1,0 +1,94 @@
+---
+interface Props {
+  section: string;
+  hint?: string;
+}
+const { section, hint } = Astro.props;
+---
+
+<section class="coming-soon">
+  <a href="/" class="back">← back</a>
+  <div class="sticky-big">
+    <div class="label">Note to self</div>
+    <h1>{section}</h1>
+    <p>coming soon.</p>
+    {hint && <p class="hint">{hint}</p>}
+  </div>
+</section>
+
+<style>
+  .coming-soon {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    position: relative;
+  }
+  .back {
+    position: absolute;
+    top: 30px; left: 40px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--ink-primary);
+    text-decoration: none;
+    padding: 7px 14px;
+    background: var(--paper-card);
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(60, 40, 20, 0.15);
+    transform: rotate(-1deg);
+    transition: all 0.25s var(--ease-reveal);
+  }
+  .back:hover {
+    transform: rotate(0deg) translateY(-2px);
+    background: var(--accent-red);
+    color: var(--paper-card);
+    text-decoration: none;
+  }
+  .sticky-big {
+    width: min(420px, 90vw);
+    padding: 36px 32px 40px;
+    background: linear-gradient(145deg, var(--sticky-yellow) 0%, #f7d878 100%);
+    box-shadow:
+      2px 2px 2px rgba(60, 40, 20, 0.1),
+      14px 24px 40px rgba(60, 40, 20, 0.2);
+    transform: rotate(-2deg);
+    font-family: var(--font-hand);
+    animation: dropIn 1s var(--ease-drop) forwards;
+    opacity: 0;
+  }
+  @keyframes dropIn {
+    0% { opacity: 0; transform: rotate(-15deg) translateY(-80px); }
+    100% { opacity: 1; transform: rotate(-2deg) translateY(0); }
+  }
+  .label {
+    font-family: var(--font-body);
+    font-size: 10px;
+    color: #6b5520;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+  .sticky-big h1 {
+    font-family: var(--font-display);
+    font-size: 54px;
+    line-height: 0.95;
+    margin: 0 0 16px;
+    color: var(--ink-primary);
+    font-weight: 400;
+  }
+  .sticky-big p {
+    font-size: 26px;
+    color: var(--ink-primary);
+    margin: 0;
+    line-height: 1.2;
+  }
+  .sticky-big .hint {
+    font-size: 18px;
+    color: var(--ink-muted);
+    margin-top: 14px;
+    font-style: italic;
+  }
+</style>

@@ -1,0 +1,70 @@
+---
+import '../styles/global.css';
+import TopNav from '../components/TopNav.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Venkateshwar Reddy Jambula',
+  description = "Personal site of Venkateshwar Reddy Jambula — engineer, builder, outlier. Bengaluru, via Yokohama.",
+} = Astro.props;
+
+const site = Astro.site?.toString().replace(/\/$/, '') ?? 'https://venkateshwar-reddy-jambula.github.io';
+const canonical = new URL(Astro.url.pathname, site).toString();
+const ogImage = `${site}/og-image.png`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+
+    {/* Open Graph */}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Venkateshwar Reddy Jambula" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Venkateshwar Reddy Jambula — engineer, builder, outlier" />
+
+    {/* Twitter / X */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content="Venkateshwar Reddy Jambula — engineer, builder, outlier" />
+  </head>
+  <body>
+    <TopNav />
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style>
+  main {
+    min-height: 80vh;
+    animation: pageFadeIn 0.5s var(--ease-reveal) both;
+  }
+  @keyframes pageFadeIn {
+    0%   { opacity: 0; transform: translateY(6px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    main { animation: none; }
+  }
+</style>

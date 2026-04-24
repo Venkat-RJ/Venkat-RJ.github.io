@@ -1,0 +1,255 @@
+---
+// Hero — clean paper. Single column of text, two polaroids pinned right.
+// No scattered decorations. Max ±1° rotation. Readable first, decorative second.
+---
+
+<section class="hero">
+  <div class="text-col">
+    <div class="eyebrow">Researcher · Builder · Founder</div>
+    <h1>
+      Venkateshwar,<br />
+      mostly <em>building</em>.
+    </h1>
+    <svg class="scribble" viewBox="0 0 280 12" aria-hidden="true">
+      <path d="M4 8 Q 40 2, 90 7 T 180 6 T 276 6" />
+    </svg>
+
+    <p class="lede">
+      Fourteen years across Bosch, Caterpillar, Continental, Samsung, and
+      Sigmoid &mdash; mostly data science, mostly making things more reliable.
+      Now founder of <strong>PranaAlpha Labs</strong>, building <strong>PortoAI</strong>:
+      an AI portfolio companion for Indian retail investors.
+    </p>
+
+    <div class="meta">
+      <span class="stamp">Bengaluru &middot; via Yokohama</span>
+      <span class="now-pill">
+        <span class="dot" aria-hidden="true"></span>
+        Now &mdash; Zerodha live, Groww next
+      </span>
+    </div>
+  </div>
+
+  <div class="image-col">
+    <figure class="polaroid">
+      <div class="img grid" aria-hidden="true">
+        <div style="background:#0f1720"></div><div style="background:#1a3a2a"></div><div style="background:#3a7a4a"></div><div style="background:#8a7a3a"></div><div style="background:#aa7a2a"></div><div style="background:#ee5544"></div>
+        <div style="background:#0f1720"></div><div style="background:#1a2a3a"></div><div style="background:#3a6a4a"></div><div style="background:#6a7a4a"></div><div style="background:#9a7a3a"></div><div style="background:#bb6633"></div>
+        <div style="background:#1a2a3a"></div><div style="background:#2a4a3a"></div><div style="background:#4a5a4a"></div><div style="background:#6a6a4a"></div><div style="background:#aa7a4a"></div><div style="background:#bb7744"></div>
+        <div style="background:#1a2a3a"></div><div style="background:#3a4a4a"></div><div style="background:#5a5a4a"></div><div style="background:#7a6a4a"></div><div style="background:#9a7a4a"></div><div style="background:#cc5533"></div>
+      </div>
+      <figcaption>coherencebench &middot; &apos;25</figcaption>
+    </figure>
+
+    <figure class="polaroid pola-2">
+      <div class="img portoai" aria-hidden="true"></div>
+      <figcaption>portoai &middot; now</figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .hero {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 96px 48px 120px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 80px;
+    align-items: start;
+  }
+
+  /* ============ TEXT COLUMN ============ */
+  .text-col {
+    opacity: 0;
+    animation: fadeUp 0.9s var(--ease-reveal) 0.1s forwards;
+  }
+  @keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(12px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .eyebrow {
+    font-family: var(--font-body);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: var(--ink-muted);
+  }
+
+  h1 {
+    font-size: clamp(56px, 8vw, 92px);
+    line-height: 0.95;
+    margin: 0;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--accent-red);
+  }
+
+  .scribble {
+    display: block;
+    width: 260px;
+    height: 12px;
+    margin-top: 8px;
+  }
+  .scribble path {
+    stroke: var(--accent-red);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    fill: none;
+    stroke-dasharray: 320;
+    stroke-dashoffset: 320;
+    animation: drawLine 1s var(--ease-physical) 0.9s forwards;
+  }
+  @keyframes drawLine { to { stroke-dashoffset: 0; } }
+
+  .lede {
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--ink-primary);
+    max-width: 580px;
+    margin: 40px 0 0;
+  }
+  .lede strong {
+    color: var(--ink-headline);
+    font-weight: 600;
+    border-bottom: 2px solid var(--accent-red);
+    padding-bottom: 1px;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    margin-top: 36px;
+  }
+  .stamp {
+    padding: 5px 14px;
+    border: 2px double var(--accent-red);
+    color: var(--accent-red);
+    font-family: var(--font-body);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 700;
+    transform: rotate(-1deg);
+    opacity: 0.85;
+  }
+  .now-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: var(--paper-card);
+    border-radius: 100px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--ink-primary);
+    box-shadow: 0 1px 3px rgba(60, 40, 20, 0.12);
+  }
+  .now-pill .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-red);
+    animation: breathe 2.5s ease infinite;
+  }
+  @keyframes breathe {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.15); }
+  }
+
+  /* ============ IMAGE COLUMN ============ */
+  .image-col {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    padding-top: 40px;
+  }
+
+  .polaroid {
+    background: var(--paper-card);
+    padding: 12px 12px 36px;
+    box-shadow:
+      0 2px 4px rgba(60, 40, 20, 0.1),
+      0 14px 30px rgba(60, 40, 20, 0.14);
+    font-family: var(--font-hand);
+    margin: 0;
+    width: 200px;
+    opacity: 0;
+    transform: rotate(-1deg);
+    animation: polaDrop 0.8s var(--ease-drop) 0.5s forwards;
+    transition: transform 0.3s var(--ease-reveal);
+  }
+  .pola-2 {
+    transform: rotate(1deg);
+    animation-delay: 0.7s;
+    animation-name: polaDrop2;
+  }
+  @keyframes polaDrop {
+    0% { opacity: 0; transform: rotate(-6deg) translateY(-30px); }
+    100% { opacity: 1; transform: rotate(-1deg); }
+  }
+  @keyframes polaDrop2 {
+    0% { opacity: 0; transform: rotate(6deg) translateY(-30px); }
+    100% { opacity: 1; transform: rotate(1deg); }
+  }
+  .polaroid:hover {
+    transform: rotate(0deg) translateY(-4px);
+  }
+  .polaroid .img {
+    width: 176px;
+    height: 140px;
+    background: linear-gradient(135deg, #6a5230, #3d2814);
+    position: relative;
+  }
+  .polaroid .img.grid {
+    background: #0f1a15;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 2px;
+    padding: 6px;
+  }
+  .polaroid .img.grid div { border-radius: 1px; }
+  .polaroid .img.portoai {
+    background: linear-gradient(135deg, #c23617 0%, #5a1608 100%);
+  }
+  .polaroid figcaption {
+    text-align: center;
+    font-size: 16px;
+    color: var(--ink-primary);
+    margin-top: 10px;
+  }
+
+  /* ============ MOBILE ============ */
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 48px;
+      padding: 48px 20px 60px;
+    }
+    .image-col {
+      flex-direction: row;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding-top: 0;
+    }
+  }
+</style>

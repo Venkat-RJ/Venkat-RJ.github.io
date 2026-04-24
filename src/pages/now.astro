@@ -1,0 +1,200 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const updated = 'April 2026';
+---
+
+<BaseLayout title="Now — Venkateshwar Reddy Jambula">
+  <section class="now-page">
+    <div class="pushpin" aria-hidden="true"></div>
+    <article class="big-sticky">
+      <div class="sticky-label">
+        <span>what I'm doing right now</span>
+        <span class="updated">updated · {updated}</span>
+      </div>
+
+      <h1>Now</h1>
+
+      <div class="section">
+        <div class="label">Building</div>
+        <p>
+          <strong>PortoAI</strong> — pushing Zerodha Kite features into production,
+          starting Groww integration, teaching the agent to read a portfolio
+          like a friend, not a dashboard.
+        </p>
+      </div>
+
+      <div class="section">
+        <div class="label">Reading</div>
+        <p>
+          Chollet on ARC and program synthesis. Anthropic's latest papers on
+          agent memory. A reread of <em>Thinking in Systems</em> (Meadows).
+        </p>
+      </div>
+
+      <div class="section">
+        <div class="label">Thinking about</div>
+        <p>
+          Why agents forget mid-session &mdash; and whether "forget" is even
+          the right word for what's actually happening. Related: what it takes
+          for a consumer AI to be trusted with real money.
+        </p>
+      </div>
+
+      <div class="section">
+        <div class="label">Not working on</div>
+        <p>
+          New trading strategies. No more hackathons this quarter. Not
+          replying to DMs about "can we partner on my startup."
+        </p>
+      </div>
+
+      <div class="signoff">
+        <p>&mdash; Venkat</p>
+        <p class="small">
+          This page is updated monthly. Git history is the old-nows archive.
+          Inspired by <a href="https://nownownow.com/about" target="_blank" rel="noopener">Derek Sivers' /now convention</a>.
+        </p>
+      </div>
+    </article>
+  </section>
+</BaseLayout>
+
+<style>
+  .now-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px 120px;
+    position: relative;
+  }
+
+  .pushpin {
+    position: absolute;
+    top: 80px; left: 50%;
+    transform: translateX(-50%);
+    width: 22px;
+    height: 22px;
+    background: radial-gradient(circle at 35% 35%, #e84a1f, #a5220c 55%, #6d1205);
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4), inset -3px -4px 5px rgba(0,0,0,0.2);
+    z-index: 10;
+  }
+
+  .big-sticky {
+    width: min(680px, 92vw);
+    padding: 56px 56px 72px;
+    background: linear-gradient(160deg, #fce88a 0%, #f7d878 100%);
+    box-shadow:
+      3px 3px 3px rgba(60,40,20,0.08),
+      18px 30px 60px rgba(60, 40, 20, 0.3);
+    transform: rotate(-2deg);
+    font-family: var(--font-hand);
+    margin-top: 40px;
+    position: relative;
+    animation: bigDropIn 0.9s var(--ease-drop) both;
+  }
+
+  @keyframes bigDropIn {
+    0% { opacity: 0; transform: rotate(-12deg) translateY(-80px); }
+    100% { opacity: 1; transform: rotate(-2deg); }
+  }
+
+  /* subtle paper grain */
+  .big-sticky::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.4  0 0 0 0 0.35  0 0 0 0 0.2  0 0 0 0.06 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+
+  .sticky-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-body);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #6b5520;
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+  .sticky-label .updated {
+    font-family: var(--font-hand);
+    font-size: 14px;
+    text-transform: none;
+    letter-spacing: 0;
+    color: #8a6b20;
+  }
+
+  .big-sticky h1 {
+    font-family: var(--font-display);
+    font-size: clamp(72px, 10vw, 120px);
+    line-height: 0.9;
+    margin: 0 0 30px;
+    color: var(--ink-primary);
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  .section {
+    margin-bottom: 24px;
+  }
+  .section .label {
+    font-family: var(--font-body);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #6b5520;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .section p {
+    font-size: 20px;
+    line-height: 1.4;
+    color: var(--ink-primary);
+    margin: 0;
+  }
+  .section p strong {
+    font-weight: 400;
+    color: var(--accent-red);
+    border-bottom: 2px solid var(--accent-red);
+    padding-bottom: 1px;
+  }
+  .section p em { font-style: italic; color: var(--ink-headline); }
+
+  .signoff {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px dashed rgba(107, 85, 32, 0.3);
+  }
+  .signoff p {
+    font-size: 24px;
+    margin: 0;
+    color: var(--ink-primary);
+  }
+  .signoff .small {
+    font-family: var(--font-body);
+    font-size: 11px;
+    color: #8a6b20;
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+  .signoff a {
+    color: var(--accent-red);
+    text-decoration: underline;
+  }
+
+  @media (max-width: 900px) {
+    .big-sticky {
+      padding: 36px 28px 48px;
+      transform: rotate(-1deg);
+    }
+    .big-sticky h1 { font-size: 64px; }
+    .section p { font-size: 18px; }
+    .pushpin { top: 40px; }
+  }
+</style>

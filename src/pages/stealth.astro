@@ -1,0 +1,111 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ChapterStyles from '../components/ChapterStyles.astro';
+
+const lessons = [
+  { icon: '$', label: 'reliability as the benchmark', body: "Backtest-beautiful strategies that lost on day three got killed ruthlessly. That's where my reliability thesis sharpened — it isn't a feature, it's the whole game." },
+  { icon: '◑', label: 'four algos, one discipline', body: 'Four proprietary strategies around risk and money management. Risk/money management isn\'t the boring part — it\'s the part that decides whether any of the cool algorithms actually get to run tomorrow.' },
+  { icon: '▤', label: 'building the whole stack', body: 'Login, algorithm deployment, precise execution, analytics — I built all of it from blank slate. No PM, no SRE, no "data team" to ask. First real taste of what a founder actually owns.' },
+  { icon: '⚙', label: 'ai + markets', body: 'Stock-analysis app: Yahoo Finance pipelines, technical indicators, volume analysis, news sentiment via Google News, statistical insights, ARIMA forecasts. The seed of everything PortoAI became.' },
+];
+---
+
+<BaseLayout title="The 2023 Pivot — Venkateshwar Reddy Jambula">
+  <ChapterStyles />
+  <article class="ch">
+    <header class="ch-header">
+      <a href="/" class="ch-back">&larr; home</a>
+      <div class="ch-eyebrow">June 2023 – May 2024 &middot; solo &middot; Founder &amp; Quantitative Researcher</div>
+      <h1>The quiet year.</h1>
+    </header>
+
+    <section class="ch-opener">
+      <p class="ch-lede">
+        I left Samsung in mid-2023 to build an automated trading system
+        from zero &mdash; alone, unfunded, no deck, no stealth branding.
+        Just me, a laptop, and Indian options markets that
+        <em>didn&rsquo;t care</em> about my previous titles.
+      </p>
+      <figure class="feature-photo">
+        <img src="/images/stealth/terminal.jpg" alt="Trading terminal with financial data" loading="eager" />
+        <figcaption>the tools &middot; the quietest year of my career</figcaption>
+      </figure>
+    </section>
+
+    <section class="ch-section">
+      <h2>Why I left a Chief-level role.</h2>
+      <p>
+        On paper it looked crazy. At Samsung I had the title, the salary,
+        the team, the comfortable Bangalore life. I walked away to be solo
+        for a year.
+      </p>
+      <p>
+        The reason was simple: I could see the LLM wave coming and I wanted
+        to understand it without an org chart in the way. So I built an
+        end-to-end automated trading system that used AI as the decision
+        layer &mdash; and spent a year learning exactly where that layer
+        breaks down under real, non-stationary markets.
+      </p>
+      <p>
+        The trading <em>was</em> the research. Every failure mode that
+        showed up &mdash; fixation, decision drift, reward hacking,
+        overfitting to recent conditions &mdash; is the exact same failure
+        mode I now name in <a href="https://github.com/Venkateshwar-Reddy-Jambula/coherencebench">CoherenceBench</a>.
+        The benchmark came from the broken P&amp;L statement, not the
+        other way around.
+      </p>
+    </section>
+
+    <section class="ch-section">
+      <h2>What I built.</h2>
+      <div class="lesson-grid">
+        {lessons.map((l) => (
+          <article class="lesson">
+            <div class="l-icon">{l.icon}</div>
+            <div class="l-label">{l.label}</div>
+            <p>{l.body}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="ch-section">
+      <h2>The surface area.</h2>
+      <div class="gallery g-3">
+        <figure>
+          <img src="/images/stealth/candles.jpg" alt="Candlestick chart" loading="lazy" />
+          <figcaption>candles &middot; the language of the day</figcaption>
+        </figure>
+        <figure>
+          <img src="/images/stealth/terminal.jpg" alt="Trading terminal" loading="lazy" />
+          <figcaption>terminal &middot; where every decision lived</figcaption>
+        </figure>
+        <figure>
+          <img src="/images/stealth/bse.jpg" alt="Bombay Stock Exchange" loading="lazy" />
+          <figcaption>BSE &middot; the market I studied, mostly humbled by</figcaption>
+        </figure>
+      </div>
+      <p class="photo-credit">Photos: Wikimedia Commons (CC).</p>
+    </section>
+
+    <section class="ch-section ch-close">
+      <blockquote>
+        <p>
+          A year later I wasn&rsquo;t rich, but I was <em>educated</em> in
+          a way nothing else in my career had matched. The instincts I
+          formed in those twelve months &mdash; about reliability, about
+          long-horizon coherence, about how much of an AI system&rsquo;s
+          value lives in what it <em>refuses</em> to do &mdash; are what
+          PranaAlpha Labs is built on today.
+        </p>
+        <p>
+          That year&rsquo;s instincts are what keep PortoAI honest. If an
+          agent can&rsquo;t stay coherent across a trading day, it has no
+          business touching anyone else&rsquo;s portfolio.
+        </p>
+      </blockquote>
+    </section>
+
+    <footer class="ch-foot"><a href="/" class="ch-back-cta">&larr; back to the story</a></footer>
+  </article>
+</BaseLayout>

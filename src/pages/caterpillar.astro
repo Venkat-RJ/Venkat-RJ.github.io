@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ChapterStyles from '../components/ChapterStyles.astro';
+
+const lessons = [
+  { icon: '◎', label: 'first model in production', body: 'Going from academic ML on Kaggle notebooks to a CNN that actually decides whether a PCB ships or not is a transition you never forget. The uncomfortable truth: the data is always messier than you think.' },
+  { icon: '▤', label: 'industrial vs research', body: 'In a factory, a 95%-accurate model isn\'t good — it means one in twenty boards ships broken. I learnt to ask what kind of error costs what. "Accuracy" stopped being one number.' },
+  { icon: '▣', label: 'vision at the edge', body: 'The CNN that inspected PCBs had to run fast, cheap, and locally. I spent more time fighting image pipelines and lighting than tuning model weights. That\'s the job.' },
+  { icon: '⧇', label: 'the pivot that stuck', body: 'Caterpillar is where I stopped thinking of myself as a software engineer doing some ML and started thinking of myself as a data scientist. It was the first job where I knew why I was there.' },
+];
+---
+
+<BaseLayout title="Caterpillar — Venkateshwar Reddy Jambula">
+  <ChapterStyles />
+  <article class="ch">
+    <header class="ch-header">
+      <a href="/" class="ch-back">&larr; home</a>
+      <div class="ch-eyebrow">2015 – 2017 &middot; Chennai &middot; the pivot from software to data science</div>
+      <h1>Caterpillar.</h1>
+    </header>
+
+    <section class="ch-opener">
+      <p class="ch-lede">
+        I left Bosch to become a <em>data scientist</em> at a time when
+        nobody in Indian industry was quite sure what one of those was.
+        Two years in Chennai is where ML stopped being academic for me
+        and started being a job &mdash; with a quality team at the other
+        end of it who didn&rsquo;t care about my validation accuracy.
+      </p>
+      <figure class="feature-photo">
+        <img src="/images/caterpillar/cat-machine.jpg" alt="A large industrial Caterpillar machine" loading="eager" />
+        <figcaption>industrial scale &middot; the constraints you can&rsquo;t ignore</figcaption>
+      </figure>
+    </section>
+
+    <section class="ch-section">
+      <h2>Two problems, two years.</h2>
+      <p>
+        My main work was on two industrial problems. First: reducing
+        <strong>injector misfires</strong> on diesel engines &mdash; a
+        time-series + fault-classification problem that ran on actual engine
+        telemetry, not Kaggle datasets. Second: <strong>automated PCB
+        defect detection</strong> using convolutional neural networks,
+        which turned out to be 10% model architecture and 90% data
+        cleaning, lighting calibration, and edge-case triage.
+      </p>
+      <p>
+        Industrial ML is a genre of its own. Your model isn&rsquo;t graded
+        on a held-out test set &mdash; it&rsquo;s graded on whether the
+        quality team stops getting complaints. That difference is the
+        whole education.
+      </p>
+    </section>
+
+    <section class="ch-section">
+      <h2>What Caterpillar put in me.</h2>
+      <div class="lesson-grid">
+        {lessons.map((l) => (
+          <article class="lesson">
+            <div class="l-icon">{l.icon}</div>
+            <div class="l-label">{l.label}</div>
+            <p>{l.body}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="ch-section">
+      <h2>What I worked on.</h2>
+      <div class="gallery g-2">
+        <figure>
+          <img src="/images/caterpillar/pcb.jpg" alt="A printed circuit board" loading="lazy" />
+          <figcaption>pcb inspection &middot; cnns at the edge</figcaption>
+        </figure>
+        <figure>
+          <img src="/images/caterpillar/injector.jpg" alt="A diesel fuel injector" loading="lazy" />
+          <figcaption>injector misfires &middot; time-series telemetry</figcaption>
+        </figure>
+      </div>
+      <p class="photo-credit">Photos: Wikimedia Commons (CC).</p>
+    </section>
+
+    <section class="ch-section ch-close">
+      <blockquote>
+        <p>
+          Two years doing industrial ML was the best decision I made
+          in my twenties. Everything after &mdash; Continental&rsquo;s
+          supply-chain RL, Samsung&rsquo;s voice anomalies, Sigmoid&rsquo;s
+          enterprise LLMs, PortoAI&rsquo;s agent reliability &mdash;
+          inherits the instincts I built here, staring at production
+          dashboards that didn&rsquo;t care what my validation accuracy was.
+        </p>
+      </blockquote>
+    </section>
+
+    <footer class="ch-foot"><a href="/" class="ch-back-cta">&larr; back to the story</a></footer>
+  </article>
+</BaseLayout>

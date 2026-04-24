@@ -1,0 +1,215 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ChapterStyles from '../components/ChapterStyles.astro';
+
+interface Item {
+  title: string;
+  tag: string;
+  desc: string;
+  link?: string;
+  linkLabel?: string;
+}
+
+const openSource: Item[] = [
+  {
+    title: 'Razorpay Plugin for Claude Code',
+    tag: 'OSS · Claude Code',
+    desc: 'Production-grade Razorpay integration with skills and agents covering the full billing lifecycle.',
+    link: 'https://github.com/Venkateshwar-Reddy-Jambula/razorpay-integration-plugin',
+    linkLabel: 'github →',
+  },
+  {
+    title: 'Autoresearch on Apple Silicon',
+    tag: 'OSS · Fork',
+    desc: "Karpathy's autoresearch running on Mac Mini — auto-detects CUDA / MPS / CPU. No NVIDIA GPU required.",
+    link: 'https://github.com/Venkateshwar-Reddy-Jambula/autoresearch-mac-mini',
+    linkLabel: 'github →',
+  },
+  {
+    title: 'AlgoTrade-Analyzer',
+    tag: 'OSS · Legacy',
+    desc: 'Streamlit dashboard for analysing algorithmic trading strategy performance. My earliest public tool.',
+    link: 'https://github.com/Venkateshwar-Reddy-Jambula/AlgoTrade-Analyzer',
+    linkLabel: 'github →',
+  },
+];
+
+const news: Item[] = [
+  {
+    title: 'AWS Tech Summit · Las Vegas 2024',
+    tag: 'Demo',
+    desc: 'Showcased "Data Companion" — an enterprise Text2SQL system on AWS Bedrock + Snowflake + Claude 3.5 Sonnet.',
+  },
+  {
+    title: 'MagicBall Agentic Summit · 2025',
+    tag: 'Demo',
+    desc: 'Delivered a live PortoAI product demo and walkthrough for the founder / industry audience.',
+  },
+  {
+    title: 'Sigmoid GenAI Hackathon Winner · 2024',
+    tag: 'Award',
+    desc: 'Won a month-long GenAI hackathon against developers from Tiger Analytics, McKinsey, and TCS Research.',
+  },
+];
+
+const sections = [
+  { id: 'open-source', label: 'Open source', items: openSource, blurb: 'Code I&rsquo;ve written for other people to use.' },
+  { id: 'news',        label: 'News',        items: news,       blurb: 'Talks, demos, and things that happened.' },
+];
+---
+
+<BaseLayout title="Public work — Venkateshwar Reddy Jambula">
+  <ChapterStyles />
+  <article class="ch">
+
+    <header class="ch-header">
+      <a href="/" class="ch-back">&larr; home</a>
+      <div class="ch-eyebrow">out in the world</div>
+      <h1>Public work.</h1>
+    </header>
+
+    <section class="ch-opener">
+      <p class="ch-lede">
+        The bits of my work that live outside this website &mdash;
+        open-source code, research I&rsquo;ve published, and places where
+        I&rsquo;ve talked about any of it.
+      </p>
+    </section>
+
+    <nav class="jumpnav" aria-label="Sections">
+      {sections.map((s) => (
+        <a href={`#${s.id}`}>{s.label}</a>
+      ))}
+    </nav>
+
+    {sections.map((sec) => (
+      <section id={sec.id} class="pw-section">
+        <header class="pw-head">
+          <div class="pw-eyebrow">{sec.label}</div>
+          <p class="pw-blurb" set:html={sec.blurb}></p>
+        </header>
+
+        <div class="pw-grid">
+          {sec.items.map((item) => (
+            <article class="pw-item">
+              <div class="pw-tag">{item.tag}</div>
+              <h3>{item.title}</h3>
+              <p>{item.desc}</p>
+              {item.link && (
+                <a href={item.link} target="_blank" rel="noopener" class="pw-link">
+                  {item.linkLabel}
+                </a>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <footer class="ch-foot"><a href="/" class="ch-back-cta">&larr; back to the story</a></footer>
+  </article>
+</BaseLayout>
+
+<style>
+  /* Anchor jump nav */
+  .jumpnav {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    margin: 12px 0 48px;
+    flex-wrap: wrap;
+  }
+  .jumpnav a {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--ink-muted);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 3px;
+    transition: color 0.2s, background 0.2s;
+  }
+  .jumpnav a:hover {
+    color: var(--accent-red);
+    background: rgba(194, 54, 23, 0.08);
+    text-decoration: none;
+  }
+
+  /* Section heads */
+  .pw-section {
+    margin: 56px 0;
+    scroll-margin-top: 80px;
+  }
+  .pw-head {
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed rgba(60, 40, 20, 0.15);
+  }
+  .pw-eyebrow {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 3.5vw, 36px);
+    color: var(--ink-headline);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .pw-blurb {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--ink-muted);
+    margin: 0;
+    font-style: italic;
+  }
+
+  /* Grid */
+  .pw-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .pw-item {
+    background: var(--paper-card);
+    padding: 22px 24px 20px;
+    box-shadow: 0 2px 4px rgba(60,40,20,0.08), 0 10px 22px rgba(60,40,20,0.1);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s var(--ease-reveal), box-shadow 0.25s;
+  }
+  .pw-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 3px 6px rgba(60,40,20,0.1), 0 18px 36px rgba(60,40,20,0.14);
+  }
+  .pw-tag {
+    font-family: var(--font-body);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-red);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .pw-item h3 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    line-height: 1.15;
+    color: var(--ink-headline);
+    margin: 0 0 10px;
+  }
+  .pw-item p {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink-primary);
+    margin: 0 0 14px;
+    flex-grow: 1;
+  }
+  .pw-link {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent-red) !important;
+    text-decoration: none !important;
+    letter-spacing: 0.05em;
+    align-self: flex-start;
+    border-bottom: 1px solid rgba(194, 54, 23, 0.3) !important;
+  }
+</style>

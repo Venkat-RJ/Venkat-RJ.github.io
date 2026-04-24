@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ChapterStyles from '../components/ChapterStyles.astro';
+
+const lessons = [
+  { icon: 'Σ', label: 'hackathon → $1.5M', body: "Won a month-long GenAI hackathon against 50+ developers from Tiger Analytics, McKinsey, and TCS Research. The team's end-to-end AI product recommendation system on Azure converted straight into a $1.5M CPG contract." },
+  { icon: '◐', label: 'Data Companion', body: 'Built an enterprise-grade Text2SQL system on AWS Bedrock + Snowflake + Claude 3.5 Sonnet. 90% query accuracy. Showcased at AWS Tech Summit 2024 in Las Vegas. Generated $1M in revenue off rapid-deploy capability.' },
+  { icon: '◈', label: 'Visualize', body: "Architected a platform where users generate analytics dashboards in natural language. Dashboard creation: days → minutes. Also shipped an industry-first auto-generation of Power BI dashboards with LLM-derived DAX queries." },
+  { icon: '⇄', label: 'multi-agent RAG', body: 'Led the creation of a multi-agent GenAI recommendation engine on Azure — RAG, dynamic knowledge graphs, semantic search, enterprise-grade reliability. The closest I got to PortoAI\'s architectural pattern before starting PranaAlpha Labs.' },
+];
+---
+
+<BaseLayout title="Sigmoid — Venkateshwar Reddy Jambula">
+  <ChapterStyles />
+  <article class="ch">
+    <header class="ch-header">
+      <a href="/" class="ch-back">&larr; home</a>
+      <div class="ch-eyebrow">June 2024 – May 2025 &middot; Principal Data Scientist &middot; GenAI</div>
+      <h1>Sigmoid.</h1>
+    </header>
+
+    <section class="ch-opener">
+      <p class="ch-lede">
+        A year at Sigmoid doing enterprise GenAI &mdash; the chapter
+        where I got to stress-test my reliability instincts at real
+        client scale, demo&rsquo;d in <em>Las Vegas</em>, and quietly
+        assembled the instincts for what PranaAlpha Labs would become.
+      </p>
+      <figure class="feature-photo">
+        <img src="/images/sigmoid/conference.jpg" alt="Tech conference keynote" loading="eager" />
+        <figcaption>data companion &middot; demo&rsquo;d at AWS Tech Summit, Las Vegas 2024</figcaption>
+      </figure>
+    </section>
+
+    <section class="ch-section">
+      <h2>A year in four shipped systems.</h2>
+      <div class="lesson-grid">
+        {lessons.map((l) => (
+          <article class="lesson">
+            <div class="l-icon">{l.icon}</div>
+            <div class="l-label">{l.label}</div>
+            <p>{l.body}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="ch-section">
+      <h2>Enterprise GenAI, at scale.</h2>
+      <p>
+        Sigmoid was where I applied everything I&rsquo;d learnt &mdash;
+        from industrial ML at Caterpillar, supply-chain RL at Continental,
+        voice at Samsung, markets solo &mdash; to a new generation of
+        clients with real budgets and real urgency. I led an
+        innovative proof-of-concept on using GenAI to automate traditional
+        ML workflows: model selection, feature engineering, hyperparameter
+        tuning, all via natural language.
+      </p>
+      <p>
+        The year compressed a lot. A prestigious hackathon against
+        McKinsey teams turned into a $1.5M contract with a CPG client.
+        <em>Data Companion</em>, a Text2SQL system we built on AWS
+        Bedrock + Snowflake + Claude 3.5 Sonnet, reached 90% query
+        accuracy through query optimization and contextual enrichment.
+        AWS flew the system to <strong>Las Vegas</strong> as a Tech
+        Summit showcase. Rapid deployment alone drove $1M in revenue.
+      </p>
+    </section>
+
+    <section class="ch-section">
+      <h2>The stack of a year.</h2>
+      <div class="gallery g-2">
+        <figure>
+          <img src="/images/sigmoid/vegas.jpg" alt="Las Vegas" loading="lazy" />
+          <figcaption>AWS Tech Summit &middot; Las Vegas &middot; 2024</figcaption>
+        </figure>
+        <figure>
+          <img src="/images/sigmoid/datacenter.jpg" alt="Data center" loading="lazy" />
+          <figcaption>enterprise scale &middot; where the demos had to hold</figcaption>
+        </figure>
+      </div>
+      <p class="photo-credit">Photos: Wikimedia Commons (CC).</p>
+    </section>
+
+    <section class="ch-section ch-close">
+      <blockquote>
+        <p>
+          By mid-2025 I knew two things. First: enterprise GenAI was
+          going to be a crowded, competitive, highly-funded space. Second:
+          the hard problem &mdash; the one nobody was solving &mdash;
+          wasn&rsquo;t &ldquo;can an agent complete a task.&rdquo; It
+          was &ldquo;can an agent stay trustworthy across days, not
+          minutes.&rdquo; I left Sigmoid to work on exactly that
+          question. PranaAlpha Labs was founded two weeks later.
+        </p>
+      </blockquote>
+    </section>
+
+    <footer class="ch-foot"><a href="/" class="ch-back-cta">&larr; back to the story</a></footer>
+  </article>
+</BaseLayout>

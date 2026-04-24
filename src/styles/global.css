@@ -1,0 +1,83 @@
+/* ==================================================================
+   Personal site — global styles
+   Paper assets + motion design system
+   ================================================================== */
+
+@import '@fontsource/instrument-serif/400.css';
+@import '@fontsource/instrument-serif/400-italic.css';
+@import '@fontsource-variable/inter/index.css';
+@import '@fontsource/caveat/400.css';
+@import '@fontsource/caveat/700.css';
+
+:root {
+  /* Palette (from design spec §4.1) */
+  --paper-bg: #e8ddc7;
+  --paper-card: #fdfbf2;
+  --sticky-yellow: #fce88a;
+  --index-ruled: #fef8e8;
+  --ink-primary: #3d2814;
+  --ink-headline: #1a1410;
+  --ink-muted: #6b5d4a;
+  --accent-red: #c23617;
+  --accent-red-wash: rgba(194, 54, 23, 0.15);
+  --edge-sepia: #c9b993;
+
+  /* Fonts */
+  --font-display: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
+  --font-body: 'Inter Variable', 'Inter', -apple-system, sans-serif;
+  --font-hand: 'Caveat', 'Marker Felt', cursive;
+
+  /* Motion easings (from design spec §4.4) */
+  --ease-drop: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-reveal: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-physical: cubic-bezier(0.85, 0, 0.15, 1);
+}
+
+* { box-sizing: border-box; }
+*::before, *::after { box-sizing: border-box; }
+
+html {
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  color: var(--ink-primary);
+  background: var(--paper-bg);
+  /* Subtle paper grain */
+  background-image:
+    radial-gradient(ellipse at 20% 30%, rgba(139, 94, 40, 0.08), transparent 40%),
+    radial-gradient(ellipse at 80% 70%, rgba(139, 94, 40, 0.06), transparent 50%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.4  0 0 0 0 0.3  0 0 0 0 0.2  0 0 0 0.06 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--ink-headline);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+p { margin: 0 0 1em; }
+
+a { color: var(--accent-red); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Reduced motion — kills heavy animations, preserves layout */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

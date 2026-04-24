@@ -1,0 +1,136 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ChapterStyles from '../components/ChapterStyles.astro';
+
+const lessons = [
+  { icon: '◐', label: 'voice, but harder', body: 'Voice assistants look like an AI problem on the outside and turn out to be an orchestration problem on the inside. Bixby taught me that the model is 20% — the rest is classifiers, fallbacks, privacy layers, and trust scaffolding.' },
+  { icon: '⚛', label: 'LLMs before they were LLMs', body: 'I led the AI council exploring LLM integration with Bixby before "LLM" was on every deck. We saw what was coming. We also saw how much reliability engineering the demos quietly hid.' },
+  { icon: '▣', label: 'anomaly detection, one line', body: 'Built a Python library that lets platform teams detect anomalies with a single line. Boring wrapper, enormous time saved. I still believe the best research lives inside a really good import.' },
+  { icon: '⧉', label: 'industry + university', body: 'Ran collaborations with MS Ramaiah and VIT on multivariate anomaly detection and out-of-domain problems. Best work happens when industry problems have academic skepticism sitting next to them.' },
+];
+---
+
+<BaseLayout title="Samsung — Venkateshwar Reddy Jambula">
+  <ChapterStyles />
+  <article class="ch">
+    <header class="ch-header">
+      <a href="/" class="ch-back">&larr; home</a>
+      <div class="ch-eyebrow">2022 – 2023 &middot; Bangalore &middot; Chief Data Scientist &middot; Bixby voice</div>
+      <h1>Samsung.</h1>
+    </header>
+
+    <section class="ch-opener">
+      <p class="ch-lede">
+        A year and a half at Samsung R&amp;D India working on Bixby voice,
+        then running the AI council exploring LLM integration
+        <em>before</em> &ldquo;LLM&rdquo; was on every deck. A short
+        chapter, but the one where I got to watch an inflection point
+        from the inside.
+      </p>
+      <figure class="feature-photo">
+        <img src="/images/samsung/galaxy.jpg" alt="Samsung Galaxy devices" loading="eager" />
+        <figcaption>the devices &middot; the surface where the voice actually landed</figcaption>
+      </figure>
+    </section>
+
+    <section class="ch-section">
+      <h2>What the title was for.</h2>
+      <p>
+        The Chief Data Scientist title meant two kinds of work. The public
+        kind: leading a team on device feedback pipelines, classifier
+        systems for user-intent routing, and transformer-based
+        sensitive-data detection to keep Bixby privacy-compliant. The
+        quieter kind: running the <strong>AI council for LLMs</strong>,
+        evaluating whether and how to bring the new generation of models
+        into a voice product used by hundreds of millions of phones.
+      </p>
+      <p>
+        The second kind of work was more important. 2022&ndash;2023 was
+        the inflection point where the industry&rsquo;s answer to
+        &ldquo;what should consumer AI look like&rdquo; pivoted overnight.
+        I got to watch that pivot from the inside of a company that had
+        to ship.
+      </p>
+    </section>
+
+    <section class="ch-section">
+      <h2>What Samsung put in me.</h2>
+      <div class="lesson-grid">
+        {lessons.map((l) => (
+          <article class="lesson">
+            <div class="l-icon">{l.icon}</div>
+            <div class="l-label">{l.label}</div>
+            <p>{l.body}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="ch-section">
+      <h2>What I actually shipped.</h2>
+      <ul class="bullet-list">
+        <li>An end-to-end automatic anomaly-detection Python library (one-line API, used across Bixby platform teams globally).</li>
+        <li>A classifier system for relevant / irrelevant user requests &mdash; measurably improved Bixby UX.</li>
+        <li>A device-feedback tool using LLMs to draft incident reports, cutting developer toil.</li>
+        <li>Transformer models for handling sensitive data detection &mdash; the privacy layer beneath everything else.</li>
+        <li>Summarisation + log analysis models for root-cause analysis of user feedback.</li>
+      </ul>
+    </section>
+
+    <section class="ch-section">
+      <h2>The texture.</h2>
+      <div class="gallery g-2">
+        <figure>
+          <img src="/images/samsung/waveform.jpg" alt="Voice waveform and spectrum" loading="lazy" />
+          <figcaption>voice &middot; waveform + spectrum</figcaption>
+        </figure>
+        <figure>
+          <img src="/images/samsung/neural.jpg" alt="Neural network diagram" loading="lazy" />
+          <figcaption>the models behind the voice</figcaption>
+        </figure>
+      </div>
+      <p class="photo-credit">Photos: Wikimedia Commons (CC).</p>
+    </section>
+
+    <section class="ch-section ch-close">
+      <blockquote>
+        <p>
+          Samsung is where I realised I was going to leave corporate.
+          Not because the work was bad &mdash; it was some of the best
+          work I&rsquo;d done. But because I could see the next wave
+          forming on the horizon, and the only way to ride it honestly
+          was to be small, quick, and accountable to no committee but
+          reality. I left in mid-2023 to find out what I could build alone.
+        </p>
+      </blockquote>
+    </section>
+
+    <footer class="ch-foot"><a href="/" class="ch-back-cta">&larr; back to the story</a></footer>
+  </article>
+</BaseLayout>
+
+<style>
+  .bullet-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px dashed rgba(60, 40, 20, 0.15);
+  }
+  .bullet-list li {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--ink-primary);
+    padding: 14px 0 14px 24px;
+    border-bottom: 1px dashed rgba(60, 40, 20, 0.12);
+    position: relative;
+  }
+  .bullet-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    color: var(--accent-red);
+    font-size: 14px;
+  }
+</style>

@@ -1,0 +1,214 @@
+---
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+interface Tab {
+  href: string;
+  letter: string;
+  label: string;
+  color: string;      // tab background
+  ink: string;        // text color
+  rotate: number;
+}
+
+const tabs: Tab[] = [
+  { href: '/',        letter: 'H', label: 'Home',    color: '#fdfbf2', ink: '#1a1410', rotate: -1 },
+  { href: '/bosch',   letter: 'B', label: 'Bosch',   color: '#c8102e', ink: '#fdfbf2', rotate:  1 },
+  { href: '/japan',   letter: '日', label: 'Japan',  color: '#c23617', ink: '#fdfbf2', rotate: -1 },
+  { href: '/work',    letter: 'W', label: 'Work',    color: '#3d2814', ink: '#fdfbf2', rotate:  1 },
+  { href: '/life',    letter: 'L', label: 'Life',    color: '#8a6b20', ink: '#fdfbf2', rotate: -1 },
+  { href: '/writing', letter: 'R', label: 'Writing', color: '#fef8e8', ink: '#3d2814', rotate:  1 },
+  { href: '/now',     letter: 'N', label: 'Now',     color: '#fce88a', ink: '#3d2814', rotate: -1 },
+  { href: '/about',   letter: 'A', label: 'About',   color: '#a89078', ink: '#fdfbf2', rotate:  1 },
+];
+
+const isActive = (href: string) => {
+  if (href === '/') return pathname === '/';
+  return pathname === href || pathname.startsWith(href + '/');
+};
+---
+
+<nav class="binder-tabs" aria-label="Sections">
+  <div class="spine" aria-hidden="true"></div>
+  <ul>
+    {tabs.map((tab) => (
+      <li
+        class={`tab ${isActive(tab.href) ? 'is-active' : ''}`}
+        style={`--tab-bg: ${tab.color}; --tab-ink: ${tab.ink}; --tab-rot: ${tab.rotate}deg;`}
+      >
+        <a href={tab.href}>
+          <span class="letter">{tab.letter}</span>
+          <span class="label">{tab.label}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  /* ============ DESKTOP: vertical tabs on right edge ============ */
+  .binder-tabs {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 50;
+    pointer-events: none;
+  }
+
+  .spine {
+    position: absolute;
+    top: -80px;
+    bottom: -80px;
+    right: 0;
+    width: 8px;
+    background: linear-gradient(
+      180deg,
+      rgba(60, 40, 20, 0.2),
+      rgba(60, 40, 20, 0.35) 50%,
+      rgba(60, 40, 20, 0.2)
+    );
+    box-shadow: -1px 0 3px rgba(0,0,0,0.1) inset;
+  }
+
+  .binder-tabs ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    pointer-events: auto;
+  }
+
+  .tab {
+    position: relative;
+    transform: rotate(var(--tab-rot)) translateX(24px);
+    transition: transform 0.35s var(--ease-reveal), box-shadow 0.35s;
+  }
+
+  .tab a {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px 18px 10px 14px;
+    background: var(--tab-bg);
+    color: var(--tab-ink);
+    text-decoration: none;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    border-radius: 6px 0 0 6px;
+    box-shadow:
+      -1px 1px 2px rgba(60,40,20,0.15),
+      -3px 3px 8px rgba(60,40,20,0.18);
+    position: relative;
+    min-width: 44px;
+  }
+
+  /* Small "hole" punched in the tab so it looks like it's bound to the spine */
+  .tab a::before {
+    content: '';
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 4px;
+    background: rgba(0,0,0,0.25);
+    border-radius: 50%;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.25);
+  }
+
+  .tab .letter {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1;
+    width: 20px;
+    text-align: center;
+  }
+
+  .tab .label {
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    opacity: 0;
+    margin-left: 0;
+    transition: max-width 0.4s var(--ease-reveal), opacity 0.3s, margin-left 0.4s var(--ease-reveal);
+  }
+
+  .tab:hover {
+    transform: rotate(0deg) translateX(0);
+  }
+  .tab:hover .label {
+    max-width: 120px;
+    opacity: 1;
+    margin-left: 10px;
+  }
+
+  /* Active tab — sticks out further, label always visible, subtle pulse */
+  .tab.is-active {
+    transform: rotate(0deg) translateX(0);
+  }
+  .tab.is-active a {
+    box-shadow:
+      -1px 1px 2px rgba(60,40,20,0.2),
+      -6px 6px 14px rgba(60,40,20,0.25);
+  }
+  .tab.is-active .label {
+    max-width: 120px;
+    opacity: 1;
+    margin-left: 10px;
+  }
+  .tab.is-active::after {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 4px;
+    background: var(--accent-red);
+    border-radius: 50%;
+  }
+
+  /* ============ MOBILE: horizontal tabs at top ============ */
+  @media (max-width: 900px) {
+    .binder-tabs {
+      position: sticky;
+      top: 0;
+      right: auto;
+      transform: none;
+      width: 100%;
+      background: var(--paper-bg);
+      padding: 8px 12px;
+      border-bottom: 1px solid rgba(60,40,20,0.1);
+      backdrop-filter: blur(6px);
+    }
+    .spine { display: none; }
+    .binder-tabs ul {
+      flex-direction: row;
+      gap: 8px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 4px 0;
+    }
+    .tab {
+      transform: rotate(0deg) translateX(0);
+      flex-shrink: 0;
+    }
+    .tab a {
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+    .tab a::before { display: none; }
+    .tab .label {
+      max-width: 100px;
+      opacity: 1;
+      margin-left: 6px;
+    }
+    .tab .letter { display: none; }
+  }
+</style>

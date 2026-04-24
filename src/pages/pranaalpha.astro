@@ -1,0 +1,179 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ChapterStyles from '../components/ChapterStyles.astro';
+
+const properties = [
+  { jp: 'I', label: 'Reliability',       body: 'The system behaves correctly on the objective.' },
+  { jp: 'II', label: 'Determinism',      body: 'The system behaves reproducibly under equivalent inputs.' },
+  { jp: 'III', label: 'Self-correction', body: 'The system recovers from drift without human intervention.' },
+  { jp: 'IV', label: 'Evolution',        body: 'The system improves from experience without forgetting what it already knows.' },
+];
+---
+
+<BaseLayout title="PranaAlpha Labs — Venkateshwar Reddy Jambula">
+  <ChapterStyles />
+  <article class="ch">
+
+    <header class="ch-header">
+      <a href="/" class="ch-back">&larr; home</a>
+      <div class="ch-eyebrow">research lab &middot; Bengaluru &middot; founder-led</div>
+      <h1>PranaAlpha.</h1>
+    </header>
+
+    <section class="ch-opener">
+      <p class="ch-lede">
+        I run <a href="https://www.pranaalpha.com" target="_blank" rel="noopener">PranaAlpha</a>
+        &mdash; an early-stage AI research lab designing the architectural
+        foundations of <em>autonomous agent systems</em>. We study reliability,
+        determinism, self-correction, and evolution as <em>properties</em>
+        of agent systems, and build the architectures that make those
+        properties tractable.
+      </p>
+    </section>
+
+    <!-- The problem -->
+    <section class="ch-section">
+      <h2>The problem we study.</h2>
+      <p>
+        Frontier models are capable. The systems built on top of them are
+        not yet reliable.
+      </p>
+      <p>
+        Under sustained operation, agents drift from their goals, loop on
+        unproductive trajectories, contradict their own earlier reasoning,
+        and satisfy surface metrics while missing the objective underneath.
+        These failures recur across orchestration frameworks and across
+        foundation models &mdash; they are not artifacts of any particular
+        implementation.
+      </p>
+      <p>
+        Understanding why these failures happen, and designing the
+        architectures that avoid them, is the foundational research
+        question our program is built around.
+      </p>
+    </section>
+
+    <!-- Four properties -->
+    <section class="ch-section">
+      <h2>Four properties. One design program.</h2>
+      <div class="props">
+        {properties.map((p) => (
+          <article class="prop">
+            <div class="prop-num">{p.jp}</div>
+            <div>
+              <h3>{p.label}.</h3>
+              <p>{p.body}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+      <p>
+        Each property fails in characteristic ways in today&rsquo;s agent
+        systems. Our job is to understand why, and to design the
+        architectural systems &mdash; memory, verification, orchestration,
+        recovery &mdash; that make the properties tractable. Measurement
+        is a tool we use; the output of the lab is systems, and the
+        research that produces them.
+      </p>
+    </section>
+
+    <!-- How we work -->
+    <section class="ch-section">
+      <h2>Open research. Closed implementations.</h2>
+      <p>
+        Research is released openly: what we learn about agent failures,
+        which architectural choices work, and how the properties interact.
+        Production implementations of the systems we design are developed
+        internally and released selectively over time &mdash; the same
+        shape as established research labs that have evolved into
+        commercial organizations. Research as the anchor.
+      </p>
+    </section>
+
+    <!-- Where we are -->
+    <section class="ch-section">
+      <h2>Where we are.</h2>
+      <p>
+        Early stage. Founder-led. Not actively hiring. We haven&rsquo;t
+        yet made our first formal public research release. The program is
+        very early.
+      </p>
+      <p>
+        We welcome correspondence from researchers working on LLM agents,
+        agent architectures, or AI reliability.
+      </p>
+      <a class="pa-cta" href="https://www.pranaalpha.com" target="_blank" rel="noopener">
+        Visit pranaalpha.com &rarr;
+      </a>
+    </section>
+
+    <section class="ch-section ch-close">
+      <blockquote>
+        <p>
+          The output of the lab is systems, and the research that
+          produces them.
+        </p>
+      </blockquote>
+    </section>
+
+    <footer class="ch-foot"><a href="/" class="ch-back-cta">&larr; back to the story</a></footer>
+  </article>
+</BaseLayout>
+
+<style>
+  .props {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 28px 0;
+  }
+  .prop {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 14px;
+    align-items: start;
+    padding: 20px 22px;
+    background: var(--paper-card);
+    box-shadow: 0 2px 4px rgba(60,40,20,0.08), 0 10px 22px rgba(60,40,20,0.1);
+  }
+  .prop-num {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--accent-red);
+    line-height: 1;
+    padding-top: 2px;
+  }
+  .prop h3 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    line-height: 1.1;
+    color: var(--ink-headline);
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+  .prop p {
+    font-family: var(--font-body);
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    color: var(--ink-primary) !important;
+    margin: 0 !important;
+  }
+  .pa-cta {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 10px 20px;
+    background: var(--accent-red);
+    color: var(--paper-card) !important;
+    text-decoration: none !important;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    border-radius: 3px;
+    border-bottom: none !important;
+  }
+  @media (max-width: 900px) {
+    .props { grid-template-columns: 1fr; }
+  }
+</style>

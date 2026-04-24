@@ -1,0 +1,573 @@
+---
+// Landing — one clean scroll through the whole story.
+// Sections: Hero → Companies → Japan → 2023 Pivot → Now → Proof of Work.
+
+const companies = [
+  { name: 'Bosch',        years: '2011 – 2015', role: 'Senior Software Engineer',         mono: 'B',  color: '#c8102e', link: '/bosch' },
+  { name: 'Caterpillar',  years: '2015 – 2017', role: 'Data Scientist',                   mono: 'C',  color: '#ffcd11', link: '/caterpillar' },
+  { name: 'Continental',  years: '2017 – 2022', role: 'Lead Data Scientist',              mono: 'K',  color: '#f59e0b', link: '/continental' },
+  { name: 'Samsung',      years: '2022 – 2023', role: 'Chief Data Scientist · Bixby',     mono: 'S',  color: '#1428a0', link: '/samsung' },
+  { name: 'Stealth',      years: '2023 – 2024', role: 'Founder · Quant Research',         mono: '$',  color: '#10a97a', link: '/stealth' },
+  { name: 'Sigmoid',      years: '2024 – 2025', role: 'Principal Data Scientist · GenAI', mono: 'Σ',  color: '#0066ff', link: '/sigmoid' },
+  { name: 'PranaAlpha',      years: 'May 2025 —',  role: 'Founder · AI research lab',          mono: 'PA', color: '#c23617', link: '/pranaalpha' },
+];
+
+---
+
+<article class="landing">
+
+  <!-- ==================== 1. HERO ==================== -->
+  <section id="about" class="hero">
+    <div class="eyebrow">hi, I&rsquo;m Venkat.</div>
+    <h1>
+      I&rsquo;m wired for the <em>tail</em> of the distribution,<br />
+      not the middle.
+    </h1>
+    <svg class="scribble" viewBox="0 0 280 12" aria-hidden="true">
+      <path d="M4 8 Q 40 2, 90 7 T 180 6 T 276 6" />
+    </svg>
+
+    <p class="lede">
+      I think in ways most people can&rsquo;t sample from. I take risks
+      most people won&rsquo;t touch. And I have the kind of resilience
+      that treats mountains as open questions &mdash; the sort of work
+      ethic and stubbornness you need when the obvious path is also
+      the losing one.
+    </p>
+
+    <p class="lede">
+      Grew up in Hyderabad. Live in Bengaluru. Spent about a year of
+      my early career flying between Bangalore and Yokohama, and that
+      single chapter permanently changed how I think about craft,
+      humility, and patience. Outlier conviction up front, quiet
+      rigour underneath. That&rsquo;s the mix.
+    </p>
+
+    <div class="meta">
+      <span class="stamp">Bengaluru &middot; via Yokohama</span>
+      <a class="mail" href="mailto:venkateshwar.jambula@gmail.com">venkateshwar.jambula@gmail.com</a>
+    </div>
+  </section>
+
+  <!-- ==================== 2. COMPANIES ==================== -->
+  <section id="companies" class="companies">
+    <header class="sh">
+      <div class="sh-eyebrow">where I&rsquo;ve worked</div>
+      <h2>Places I&rsquo;ve built things.</h2>
+      <p class="sh-note">
+        Every row is clickable &mdash; each opens into a proper chapter
+        about what I did there and what it taught me.
+      </p>
+    </header>
+
+    <ol class="ladder">
+      {companies.map((c, i) => {
+        const Tag = c.link ? 'a' : 'div';
+        return (
+          <li class="rung" style={`--badge: ${c.color};`}>
+            <div class="rung-num">{String(i + 1).padStart(2, '0')}</div>
+            <div class="badge"><span>{c.mono}</span></div>
+            <Tag
+              class="rung-body"
+              href={c.link}
+              target={c.link?.startsWith('http') ? '_blank' : undefined}
+              rel={c.link?.startsWith('http') ? 'noopener' : undefined}
+            >
+              <div class="co-row">
+                <span class="co-name">{c.name}</span>
+                <span class="co-years">{c.years}</span>
+              </div>
+              <div class="co-role">
+                {c.role}
+                {c.link && <span class="co-chev" aria-hidden="true">&rarr;</span>}
+              </div>
+            </Tag>
+          </li>
+        );
+      })}
+    </ol>
+  </section>
+
+  <!-- ==================== 3. JAPAN TEASER (links to /japan) ==================== -->
+  <section class="japan-teaser">
+    <a href="/japan" class="jt-card">
+      <div class="jt-left">
+        <div class="jt-eyebrow">a chapter that changed me &middot; 2011–2015</div>
+        <h2>Japan.</h2>
+        <p>
+          I spent part of my Bosch years flying between Bangalore and
+          Yokohama. Japan rewired how I think about humility, punctuality,
+          craft, and friendships that outlast geography. It&rsquo;s the
+          single piece of my past I keep going back to.
+        </p>
+        <span class="jt-link">read the Japan chapter &rarr;</span>
+      </div>
+      <div class="jt-right">
+        <div class="jt-kanji" aria-hidden="true">信頼</div>
+        <div class="jt-rom">shinrai</div>
+      </div>
+    </a>
+  </section>
+
+
+  <!-- ==================== 4. TEASER CARDS (→ dedicated pages) ==================== -->
+  <section class="teasers">
+    <a href="/pranaalpha" class="tc-card tc-accent">
+      <div class="tc-tag"><span class="tc-dot" aria-hidden="true"></span>what I&rsquo;m working on now</div>
+      <h2>PranaAlpha.</h2>
+      <p>
+        An early-stage AI research lab I run, studying the architectural
+        foundations of autonomous agent systems &mdash; reliability,
+        determinism, self-correction, evolution.
+      </p>
+      <span class="tc-link">read about the lab &rarr;</span>
+    </a>
+
+    <a href="/proof" class="tc-card">
+      <div class="tc-tag">out in the world</div>
+      <h2>Public work.</h2>
+      <p>
+        Open source and news &mdash; things I&rsquo;ve put out that you
+        can read, run, or verify.
+      </p>
+      <span class="tc-link">see the work &rarr;</span>
+    </a>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="foot">
+    <div class="foot-ornament" aria-hidden="true">✦ &middot; ✦</div>
+    <p class="links">
+      <a href="mailto:venkateshwar.jambula@gmail.com">email</a>
+      ·
+      <a href="https://www.linkedin.com/in/venkateshwar-jambula" target="_blank" rel="noopener">linkedin</a>
+      ·
+      <a href="https://github.com/Venkateshwar-Reddy-Jambula" target="_blank" rel="noopener">github</a>
+      ·
+      <a href="https://www.pranaalpha.com" target="_blank" rel="noopener">pranaalpha.com</a>
+    </p>
+  </footer>
+
+</article>
+
+<style>
+  .landing {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  /* ============ SHARED SECTION HEADER ============ */
+  .sh {
+    max-width: 680px;
+    margin-bottom: 56px;
+  }
+  .sh.center { text-align: center; margin-left: auto; margin-right: auto; }
+  .sh-eyebrow {
+    font-family: var(--font-body);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .sh-eyebrow::before {
+    content: '';
+    width: 28px; height: 1px;
+    background: var(--ink-muted);
+  }
+  .sh h2 {
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1.05;
+    margin: 0 0 20px;
+    letter-spacing: -0.02em;
+  }
+  .sh-note {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--ink-muted);
+    margin: 0;
+  }
+  .sh-note em { color: var(--ink-headline); font-style: italic; }
+
+  /* ============ 1. HERO ============ */
+  .hero {
+    padding: 100px 0 80px;
+    max-width: 720px;
+  }
+  .eyebrow {
+    font-family: var(--font-body);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 28px; height: 1px;
+    background: var(--ink-muted);
+  }
+  .hero h1 {
+    font-size: clamp(52px, 7.5vw, 88px);
+    line-height: 1;
+    margin: 0;
+    letter-spacing: -0.03em;
+    font-weight: 400;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent-red); }
+  .scribble {
+    display: block;
+    width: 260px; height: 12px;
+    margin-top: 8px;
+  }
+  .scribble path {
+    stroke: var(--accent-red);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    fill: none;
+    stroke-dasharray: 320;
+    stroke-dashoffset: 320;
+    animation: drawLine 1s var(--ease-physical) 0.9s forwards;
+  }
+  @keyframes drawLine { to { stroke-dashoffset: 0; } }
+
+  .hero .lede {
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--ink-primary);
+    margin: 40px 0 0;
+  }
+  .hero .lede strong {
+    color: var(--ink-headline);
+    font-weight: 600;
+    border-bottom: 2px solid var(--accent-red);
+    padding-bottom: 1px;
+  }
+  .hero .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+    margin-top: 32px;
+  }
+  .hero .stamp {
+    padding: 5px 14px;
+    border: 2px double var(--accent-red);
+    color: var(--accent-red);
+    font-family: var(--font-body);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 700;
+    transform: rotate(-1deg);
+    opacity: 0.85;
+  }
+  .hero .mail {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--accent-red);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(194, 54, 23, 0.3);
+    padding-bottom: 1px;
+    transition: border-bottom-color 0.2s;
+  }
+  .hero .mail:hover { border-bottom-color: var(--accent-red); text-decoration: none; }
+  @keyframes breathe {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.15); }
+  }
+
+  /* ============ 2. COMPANIES ============ */
+  .companies { padding: 80px 0; }
+  .ladder {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .rung {
+    display: grid;
+    grid-template-columns: 48px 56px 1fr;
+    gap: 24px;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px dashed rgba(60, 40, 20, 0.15);
+  }
+  .rung:last-child { border-bottom: none; }
+  .rung-num {
+    font-family: var(--font-display);
+    font-size: 24px;
+    color: var(--ink-muted);
+    font-style: italic;
+  }
+  .badge {
+    width: 48px; height: 48px;
+    background: var(--badge);
+    color: white;
+    font-family: var(--font-display);
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(60, 40, 20, 0.2);
+    flex-shrink: 0;
+  }
+  .badge span { display: block; line-height: 1; }
+  .rung-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-decoration: none;
+    color: inherit;
+    padding: 4px 0;
+    transition: transform 0.25s var(--ease-reveal);
+  }
+  a.rung-body { cursor: pointer; }
+  a.rung-body:hover {
+    transform: translateX(6px);
+    text-decoration: none;
+  }
+  a.rung-body:hover .co-name { color: var(--accent-red); }
+  .co-chev {
+    display: inline-block;
+    margin-left: 8px;
+    color: var(--accent-red);
+    opacity: 0.6;
+    font-weight: 600;
+    transition: opacity 0.2s, transform 0.25s var(--ease-reveal);
+  }
+  a.rung-body:hover .co-chev { opacity: 1; transform: translateX(3px); }
+  .co-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .co-name {
+    font-family: var(--font-display);
+    font-size: 26px;
+    color: var(--ink-headline);
+    line-height: 1;
+  }
+  .co-years {
+    font-family: var(--font-body);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--ink-muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .co-role {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--ink-muted);
+  }
+
+  /* ============ 3. JAPAN TEASER ============ */
+  .japan-teaser {
+    padding: 60px 0;
+  }
+  .jt-card {
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: 32px;
+    align-items: center;
+    padding: 48px 56px;
+    background: var(--paper-card);
+    box-shadow:
+      0 2px 4px rgba(60, 40, 20, 0.1),
+      0 14px 32px rgba(60, 40, 20, 0.14);
+    text-decoration: none;
+    color: var(--ink-primary);
+    transition: transform 0.3s var(--ease-reveal), box-shadow 0.3s;
+    position: relative;
+  }
+  .jt-card:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 4px 8px rgba(60, 40, 20, 0.12),
+      0 22px 48px rgba(60, 40, 20, 0.18);
+    text-decoration: none;
+  }
+  .jt-eyebrow {
+    font-family: var(--font-body);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 12px;
+  }
+  .jt-left h2 {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 5vw, 56px);
+    line-height: 1;
+    margin: 0 0 16px;
+    letter-spacing: -0.03em;
+  }
+  .jt-left p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink-primary);
+    margin: 0 0 16px;
+    max-width: 480px;
+  }
+  .jt-link {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent-red);
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid rgba(194, 54, 23, 0.3);
+    padding-bottom: 1px;
+  }
+  .jt-right {
+    border-left: 1px dashed rgba(60, 40, 20, 0.2);
+    padding-left: 32px;
+    text-align: center;
+  }
+  .jt-kanji {
+    font-family: 'Noto Serif JP', 'Hiragino Mincho ProN', 'YuMincho', 'Times New Roman', serif;
+    font-size: 88px;
+    line-height: 1;
+    color: var(--accent-red);
+    margin-bottom: 4px;
+  }
+  .jt-rom {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ============ TEASER CARDS ============ */
+  .teasers {
+    padding: 60px 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .tc-card {
+    display: flex;
+    flex-direction: column;
+    padding: 36px 40px;
+    background: var(--paper-card);
+    box-shadow:
+      0 2px 4px rgba(60, 40, 20, 0.1),
+      0 14px 32px rgba(60, 40, 20, 0.14);
+    text-decoration: none;
+    color: var(--ink-primary);
+    transition: transform 0.3s var(--ease-reveal), box-shadow 0.3s;
+    position: relative;
+  }
+  .tc-card:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 4px 8px rgba(60, 40, 20, 0.12),
+      0 22px 48px rgba(60, 40, 20, 0.18);
+    text-decoration: none;
+  }
+  .tc-accent {
+    background: var(--accent-red);
+    color: var(--paper-card);
+  }
+  .tc-tag {
+    font-family: var(--font-body);
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--accent-red);
+    margin-bottom: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tc-accent .tc-tag { color: var(--paper-card); }
+  .tc-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: currentColor;
+    animation: breathe 2s ease infinite;
+  }
+  .tc-card h2 {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4vw, 44px);
+    line-height: 1.05;
+    margin: 0 0 14px;
+    letter-spacing: -0.02em;
+  }
+  .tc-accent h2 { color: var(--paper-card); }
+  .tc-card p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0 0 20px;
+  }
+  .tc-link {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent-red);
+    letter-spacing: 0.02em;
+    border-bottom: 1px solid rgba(194, 54, 23, 0.3);
+    padding-bottom: 1px;
+    align-self: flex-start;
+  }
+  .tc-accent .tc-link {
+    color: var(--paper-card);
+    border-bottom-color: rgba(253, 251, 242, 0.5);
+  }
+
+  /* ============ FOOTER ============ */
+  .foot {
+    padding: 40px 0 80px;
+    text-align: center;
+    border-top: 1px dashed rgba(60, 40, 20, 0.15);
+  }
+  .foot-ornament {
+    color: var(--accent-red);
+    font-size: 14px;
+    letter-spacing: 0.3em;
+    opacity: 0.5;
+    margin-bottom: 20px;
+  }
+  .foot p {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin: 0 0 10px;
+  }
+  .foot .links a {
+    color: var(--ink-primary);
+    text-decoration: none;
+    margin: 0 2px;
+    transition: color 0.2s;
+  }
+  .foot .links a:hover { color: var(--accent-red); }
+
+  /* ============ MOBILE ============ */
+  @media (max-width: 900px) {
+    .landing { padding: 0 20px; }
+    .hero { padding: 40px 0 40px; }
+    .companies, .japan-teaser, .teasers { padding: 40px 0; }
+    .teasers { grid-template-columns: 1fr; }
+    .jt-card { grid-template-columns: 1fr; gap: 24px; padding: 32px 28px; }
+    .jt-right { border-left: none; border-top: 1px dashed rgba(60,40,20,0.2); padding-left: 0; padding-top: 24px; }
+    .rung { grid-template-columns: 32px 40px 1fr; gap: 14px; }
+    .badge { width: 40px; height: 40px; font-size: 18px; }
+    .co-name { font-size: 20px; }
+  }
+</style>
