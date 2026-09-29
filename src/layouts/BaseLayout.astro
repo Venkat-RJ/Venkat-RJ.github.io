@@ -12,7 +12,7 @@ const {
   description = "Personal site of Venkateshwar Reddy Jambula — engineer, builder, outlier. Bengaluru, via Yokohama.",
 } = Astro.props;
 
-const site = Astro.site?.toString().replace(/\/$/, '') ?? 'https://venkateshwar-reddy-jambula.github.io';
+const site = Astro.site?.toString().replace(/\/$/, '') ?? 'https://venkat-rj.github.io';
 const canonical = new URL(Astro.url.pathname, site).toString();
 const ogImage = `${site}/og-image.png`;
 ---
