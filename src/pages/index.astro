@@ -1,38 +1,238 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const selected=[
-{title:'Talos · contributor onboarding',description:'A draft contribution to Cajal Technologies’ Wasm interpreter in Lean: making the README quick start reproducible, documenting traps and exit codes, and fixing a dead contributor path.',meta:'open source · 2026',href:'https://github.com/cajal-technologies/talos/pull/249',link:'pull request #249 ↗'},
-{title:'CoherenceBench',description:'An exploratory benchmark for whether long-running agents stay coherent as context, decisions and earlier commitments accumulate.',meta:'evaluation · 2026',href:'https://github.com/Venkat-RJ/coherencebench',link:'github ↗'},
-{title:'Data Companion',description:'Enterprise natural-language-to-SQL work at Sigmoid. The public article describes an evaluation-first system for reliable query generation and names me as an author.',meta:'enterprise genai · 2024',href:'https://www.sigmoid.com/blogs/unlocking-data-intelligence-with-gen-ai-powered-sql-queries/',link:'read the Sigmoid article ↗'},
-{title:'Lokaah',description:'A source-grounded entity and relationship layer for agents. The local US graph reached 145,776 entities and more than 2.16 million relationships.',meta:'research prototype · 2026'}];
-const career=[
-['2011–2015','Bosch','Senior Software Engineer','Engine and exhaust-control software, diagnostics, embedded C, work with teams in India and Japan.'],
-['2015–2017','Caterpillar','Senior Embedded Systems Engineer','Computer vision for PCB inspection and optimization work around diesel injector systems.'],
-['2017–2022','Continental','Lead Data Scientist','Built and led a 12-person data-science team across industrial ML, optimization and supply-chain systems.'],
-['2022–2023','Samsung Research','Chief Data Scientist','Bixby intelligence, anomaly analysis and root-cause systems connecting user feedback with logs.'],
-['2023–2024','Independent','Founder · quantitative systems','Built automated research, execution and risk systems with proprietary capital.'],
-['2024–2025','Sigmoid','Principal Data Scientist','Enterprise GenAI, Text2SQL, internal AI capability and a prototype that helped secure a $1.5M client contract.'],
-['2025–2026','PranaAlpha Labs','Founder & CEO','Built PortoAI, Lokaah and a series of agentic research and finance prototypes from zero.']];
+
+const research = [
+  ['01','CoherenceBench','Long-horizon agent evaluation','Exploratory tests for whether agents stay coherent as context, commitments and earlier decisions accumulate.','https://github.com/Venkat-RJ/coherencebench'],
+  ['02','FACET','Faithful explanations','Probes into whether model explanations reflect the factors that actually drove multi-factor decisions.','https://github.com/Venkat-RJ/facet-benchmark'],
+  ['03','Razorpay × Claude Code','Open-source integration','Skills and agent workflows around checkout, subscriptions, webhooks and reconciliation.','https://github.com/Venkat-RJ/razorpay-integration-plugin'],
+  ['04','Autoresearch / Apple Silicon','Research tooling','An adaptation of the autoresearch workflow for MPS, CPU and CUDA.','https://github.com/Venkat-RJ/autoresearch-mac-mini'],
+];
+
+const career = [
+  ['2011–15','Bosch','Senior Software Engineer','Embedded C, engine and exhaust control, diagnostics, real machines and real consequences.'],
+  ['2015–17','Caterpillar','Senior Embedded Systems Engineer','Computer vision and optimization inside industrial engineering workflows.'],
+  ['2017–22','Continental','Lead Data Scientist','Built a 12-person team; industrial ML, optimization, forecasting and supply-chain systems.'],
+  ['2022–23','Samsung Research','Chief Data Scientist','Bixby intelligence, anomaly analysis, root cause and production AI reliability.'],
+  ['2024–25','Sigmoid','Principal Data Scientist','Enterprise GenAI, Text2SQL, internal AI capability and a $1.5M client outcome.'],
+  ['2025–26','PranaAlpha Labs','Founder & CEO','PortoAI, Lokaah and agent systems built from zero.'],
+];
 ---
+
 <BaseLayout title="Venkateshwar Jambula — AI systems, engineering and research">
-<section class="home-hero"><div><p class="eyebrow">Venkateshwar Jambula · Bengaluru</p><h1>I build systems that have to work.</h1>
-<p class="lede">I’ve spent 15 years making complicated systems behave: engine ECUs, industrial optimization, Bixby, enterprise GenAI, and most recently long-running agents.</p>
-<p class="secondary">I’m a hands-on AI engineer and technical leader, and I spent the last founder chapter building products from zero. These days I’m going deeper on agent reliability, formal verification, and the boundary between impressive demos and systems people can actually depend on.</p>
-<div class="text-links"><a href="/work">work</a><a href="/notes">notes</a><a href="https://github.com/Venkat-RJ" target="_blank" rel="noopener">github ↗</a><a href="https://www.linkedin.com/in/venkateshwar-jambula/" target="_blank" rel="noopener">linkedin ↗</a><a href="mailto:venkateshwar.jambula@gmail.com">email</a></div></div>
-<figure class="portrait"><img src="/headshot-src.jpg" width="220" height="256" alt="Venkateshwar Jambula"/><figcaption>VENKAT / BENGALURU</figcaption></figure></section>
+  <section class="atlas-hero">
+    <div class="atlas-hero-top">
+      <div>
+        <p class="eyebrow">AI systems engineer · technical leader · founder</p>
+        <h1 class="hero-name">VENKAT<span>Jambula.</span></h1>
+        <p class="hero-copy">
+          Fifteen years across <strong>machines, models and agents</strong>.
+          I started with embedded control software, moved through industrial ML
+          and Bixby, built enterprise GenAI systems, then spent a founder chapter
+          building agentic products from scratch.
+        </p>
+        <div class="hero-links">
+          <a href="/work">Selected work</a>
+          <a href="/notes">Research notes</a>
+          <a href="https://github.com/Venkat-RJ" target="_blank" rel="noopener">GitHub ↗</a>
+          <a href="https://www.linkedin.com/in/venkateshwar-jambula/" target="_blank" rel="noopener">LinkedIn ↗</a>
+          <a href="mailto:venkateshwar.jambula@gmail.com">Email</a>
+        </div>
+      </div>
 
-<section class="home-section"><div class="section-head"><div><p class="eyebrow">Current question</p><h2>Reliability after the demo.</h2></div><p>The question that now connects my old embedded-systems instincts with the agentic systems I’m studying and building.</p></div>
-<div class="current-question"><p class="question">How do we make increasingly autonomous AI systems remain coherent, inspectable and safe when they run for a long time, use tools, and act in the real world?</p>
-<p class="why">This feels less like a new problem than it first appears. Embedded software taught me to think in invariants, failure modes, protocols and verification. Industrial ML taught me that offline accuracy is not the same thing as production reliability. Agents are forcing those two worlds back together.</p>
-<p class="current-link">Current rabbit hole: <a href="https://github.com/cajal-technologies/talos/pull/249" target="_blank" rel="noopener">contributing to Talos, a Wasm interpreter in Lean ↗</a></p></div></section>
+      <figure class="hero-portrait">
+        <img src="/headshot-src.jpg" alt="Venkateshwar Jambula" />
+        <figcaption><span>Bengaluru / India</span><span>2026</span></figcaption>
+      </figure>
+    </div>
 
-<section class="home-section"><div class="section-head"><div><p class="eyebrow">Selected artifacts</p><h2>Things you can inspect.</h2></div><p>I prefer links, code and concrete systems over a wall of adjectives.</p></div>
-<div class="artifact-list">{selected.map((item,index)=><article class="artifact-row"><span class="artifact-index">{String(index+1).padStart(2,'0')}</span><div><h3>{item.title}</h3><p>{item.description}</p></div><span class="artifact-meta">{item.meta}</span>{item.href&&<a class="artifact-link" href={item.href} target="_blank" rel="noopener">{item.link}</a>}</article>)}</div>
-<p class="more-link"><a href="/work">See the full work archive →</a></p></section>
+    <div class="hero-axis" aria-label="Technical trajectory">
+      <div class="axis-label">Technical arc</div>
+      <div class="axis-step"><strong>Machines</strong><span>embedded · control</span></div>
+      <div class="axis-step"><strong>Models</strong><span>ml · optimization</span></div>
+      <div class="axis-step"><strong>Intelligence</strong><span>bixby · genai</span></div>
+      <div class="axis-step"><strong>Agents</strong><span>reliability · formal methods</span></div>
+    </div>
+  </section>
 
-<section class="home-section"><div class="section-head"><div><p class="eyebrow">Career</p><h2>The thread is systems.</h2></div><p>Different industries, same instinct: understand the real constraints, then make the system more reliable.</p></div>
-<div class="career-list">{career.map(([dates,company,role,description])=><div class="career-row"><span class="dates">{dates}</span><strong>{company} · {role}</strong><p>{description}</p></div>)}</div></section>
+  <section class="visual-arc">
+    <div class="arc-heading">
+      <div>
+        <p class="eyebrow">01 / trajectory</p>
+        <h2>Built in increasingly uncertain systems.</h2>
+      </div>
+      <p>
+        The technology changed. The instinct stayed the same: understand the
+        constraints deeply, then make the system behave outside the demo.
+      </p>
+    </div>
 
-<section class="home-section"><div class="section-head"><div><p class="eyebrow">A non-technical influence</p><h2>Japan stayed with me.</h2></div><p>Roughly a year of trips between India and Yokohama early in my Bosch career changed how I think about craft, punctuality and quiet competence.</p></div>
-<div class="human-note"><img src="/images/japan/friends-yokohama.jpg" alt="Venkat with friends in Yokohama" loading="lazy"/><blockquote><p>Good engineering is often the unglamorous work somebody cared enough to do properly.</p><p>That lesson came from embedded systems, but also from watching a culture take ordinary things seriously.</p><p class="more-link"><a href="/japan">Read the Japan note →</a></p></blockquote></div></section>
+    <div class="arc-film">
+      <figure class="arc-frame">
+        <img src="/images/bosch/ecu.jpg" alt="Automotive ECU" loading="lazy" />
+        <figcaption class="arc-caption"><span class="year">2011—2015</span><strong>Embedded control</strong><span>Bosch · engines · diagnostics</span></figcaption>
+      </figure>
+      <figure class="arc-frame">
+        <img src="/images/caterpillar/pcb.jpg" alt="Printed circuit board" loading="lazy" />
+        <figcaption class="arc-caption"><span class="year">2015—2022</span><strong>Industrial intelligence</strong><span>Caterpillar + Continental</span></figcaption>
+      </figure>
+      <figure class="arc-frame">
+        <img src="/images/samsung/neural.jpg" alt="Neural network visualization" loading="lazy" />
+        <figcaption class="arc-caption"><span class="year">2022—2025</span><strong>AI at scale</strong><span>Samsung Research + Sigmoid</span></figcaption>
+      </figure>
+      <figure class="arc-frame">
+        <img src="/images/stealth/terminal.jpg" alt="Technical trading terminal" loading="lazy" />
+        <figcaption class="arc-caption"><span class="year">2025—2026</span><strong>Agent systems</strong><span>PortoAI · Lokaah · research</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="thesis-band">
+    <div class="label">Current thesis</div>
+    <blockquote>
+      The interesting AI problem is no longer just making a model look smart.
+      It is making an <em>autonomous system remain trustworthy</em> after
+      thousands of tokens, tool calls, state changes and decisions.
+    </blockquote>
+  </section>
+
+  <section class="showcase">
+    <div class="showcase-head">
+      <div>
+        <p class="eyebrow">02 / selected systems</p>
+        <h2>Three exhibits.</h2>
+      </div>
+      <p>
+        Not a project grid. Three systems that explain where my thinking is
+        going now.
+      </p>
+    </div>
+
+    <article class="exhibit">
+      <div class="exhibit-copy">
+        <span class="exhibit-index">EXHIBIT A / 2026</span>
+        <p class="exhibit-kicker">Knowledge infrastructure for agents</p>
+        <h3>Lokaah</h3>
+        <p>
+          A source-grounded entity and relationship layer built from fragmented
+          public records. The design goal was not “search.” It was giving an
+          agent structured claims it could trace back to evidence.
+        </p>
+        <div class="exhibit-stats">
+          <div><strong>145,776</strong><span>entities</span></div>
+          <div><strong>2.16M+</strong><span>relationships</span></div>
+          <div><strong>MCP + REST</strong><span>interfaces</span></div>
+        </div>
+      </div>
+      <div class="exhibit-visual" aria-hidden="true">
+        <svg class="graph-svg" viewBox="0 0 720 520">
+          <line x1="115" y1="92" x2="300" y2="168"/><line x1="300" y1="168" x2="520" y2="88"/><line x1="300" y1="168" x2="480" y2="276"/><line x1="115" y1="92" x2="172" y2="322"/><line x1="172" y1="322" x2="480" y2="276"/><line x1="480" y1="276" x2="590" y2="410"/><line x1="172" y1="322" x2="312" y2="432"/><line x1="312" y1="432" x2="590" y2="410"/><line x1="520" y1="88" x2="640" y2="194"/>
+          <circle cx="115" cy="92" r="24" class="major"/><circle cx="300" cy="168" r="34"/><circle cx="520" cy="88" r="21"/><circle cx="480" cy="276" r="31" class="major"/><circle cx="172" cy="322" r="25"/><circle cx="590" cy="410" r="27"/><circle cx="312" cy="432" r="19"/><circle cx="640" cy="194" r="17"/>
+          <text x="80" y="55">PERSON</text><text x="265" y="120">COMPANY</text><text x="493" y="50">DIRECTOR</text><text x="446" y="330">OWNERSHIP</text><text x="126" y="372">FILING</text><text x="552" y="458">CONTROL</text><text x="615" y="165">SOURCE</text>
+        </svg>
+      </div>
+    </article>
+
+    <article class="exhibit reverse">
+      <div class="exhibit-copy">
+        <span class="exhibit-index">EXHIBIT B / 2025—2026</span>
+        <p class="exhibit-kicker">Broker-connected agent system</p>
+        <h3>PortoAI</h3>
+        <p>
+          Research, portfolio context, risk and execution in one system.
+          Fourteen specialist agents made the model layer interesting; memory,
+          handoffs, approval gates and failure recovery made the system hard.
+        </p>
+        <div class="exhibit-stats">
+          <div><strong>14</strong><span>specialist agents</span></div>
+          <div><strong>Human-in-loop</strong><span>execution</span></div>
+          <div><strong>Real users</strong><span>operated product</span></div>
+        </div>
+      </div>
+      <div class="exhibit-visual" aria-hidden="true">
+        <div class="agent-map">
+          <div class="agent-column">
+            <div class="agent-box">portfolio context</div><div class="agent-box">market research</div><div class="agent-box">thesis memory</div><div class="agent-box">regime analysis</div>
+          </div>
+          <div><div class="agent-arrow">→</div><div class="agent-core">AGENT<br/>CORE</div><div class="agent-arrow">→</div></div>
+          <div class="agent-column">
+            <div class="agent-box">risk checks</div><div class="agent-box">tool calls</div><div class="agent-box">approval gate</div><div class="agent-box">broker action</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="exhibit">
+      <div class="exhibit-copy">
+        <span class="exhibit-index">EXHIBIT C / NOW</span>
+        <p class="exhibit-kicker">Learning formal systems by contributing</p>
+        <h3>Talos</h3>
+        <p>
+          I am working through Cajal Technologies’ WebAssembly interpreter in
+          Lean from the outside in: first making the contributor path
+          reproducible, then going deeper into semantics and verification.
+        </p>
+        <a class="exhibit-link" href="https://github.com/cajal-technologies/talos/pull/249" target="_blank" rel="noopener">Open draft PR #249 ↗</a>
+      </div>
+      <div class="exhibit-visual">
+        <div class="pr-receipt">
+          <div class="pr-top"><span>cajal-technologies / talos</span><span>PR #249 · DRAFT</span></div>
+          <div class="pr-body">
+            <div class="repo">docs · reproducibility · contributor experience</div>
+            <h4>Complete the README quick start and fix a dead CONTRIBUTING link</h4>
+            <div class="diff-line"><span class="num">01</span><span class="plus">+ clone --recurse-submodules</span></div>
+            <div class="diff-line"><span class="num">02</span><span class="plus">+ lake exe cache get</span></div>
+            <div class="diff-line"><span class="num">03</span><span class="plus">+ trap / out-of-fuel examples</span></div>
+            <div class="diff-line"><span class="num">04</span><span class="plus">+ runner exit codes 0 / 1 / 2 / 3</span></div>
+            <div class="diff-line"><span class="num">05</span><span class="plus">+ repair contributor path</span></div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section class="research">
+    <div class="research-head">
+      <div><p class="eyebrow">03 / research & open source</p><h2>Public work.</h2></div>
+      <p>Small enough to inspect. Concrete enough to argue with.</p>
+    </div>
+    <div class="research-list">
+      {research.map(([num,title,kicker,body,href]) => (
+        <article class="research-item">
+          <span class="num">{num}</span>
+          <div><h3>{title}</h3><p class="eyebrow" style="margin-top:6px">{kicker}</p></div>
+          <p>{body}</p>
+          <a href={href} target="_blank" rel="noopener">GitHub ↗</a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="career">
+    <div class="career-head">
+      <div><p class="eyebrow">04 / experience</p><h2>15 years, compressed.</h2></div>
+      <p>Enough context to understand the arc. The details live in the work.</p>
+    </div>
+    <div class="career-grid">
+      {career.map(([when,company,role,body]) => (
+        <article class="career-chapter">
+          <span class="when">{when}</span>
+          <div><h3>{company}</h3><div class="role">{role}</div><p>{body}</p></div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="human-panel">
+    <div class="human-image"><img src="/images/japan/friends-yokohama.jpg" alt="Venkat with friends in Yokohama" loading="lazy" /></div>
+    <div class="human-copy">
+      <p class="eyebrow">05 / the human bit</p>
+      <blockquote>Japan taught me that reliability can be a culture, not just a feature.</blockquote>
+      <p>
+        Roughly a year of trips during my early Bosch career changed what I
+        thought careful work looked like. It still shows up in how I judge
+        engineering today.
+      </p>
+      <a href="/japan">Read that chapter →</a>
+    </div>
+  </section>
 </BaseLayout>
