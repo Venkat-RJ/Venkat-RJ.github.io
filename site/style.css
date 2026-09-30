@@ -1,0 +1,175 @@
+@font-face {
+  font-family: Inter;
+  src: url('./assets/inter.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+:root {
+  color-scheme: light;
+  --ink: #262a30;
+  --muted: #666c75;
+  --link: #245a94;
+  --line: #e2e5e8;
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 26px; }
+body {
+  margin: 0;
+  color: var(--ink);
+  background: #fff;
+  font: 15px/1.75 Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.page { max-width: 930px; padding: 0 38px; margin: 0 auto; }
+a { color: var(--link); text-decoration: underline; text-decoration-color: #aabdd2; text-underline-offset: 3px; }
+a:hover { color: #173b62; text-decoration-color: currentColor; }
+a:focus-visible { outline: 2px solid var(--link); outline-offset: 5px; }
+.site-header { display: flex; align-items: center; justify-content: space-between; gap: 25px; padding: 24px 0 19px; border-bottom: 1px solid var(--line); font-size: 12px; }
+.home-link { color: #555b63; text-decoration: none; }
+nav { display: flex; gap: 24px; }
+nav a { color: #555b63; text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+.profile { display: grid; grid-template-columns: 1fr 148px; column-gap: 44px; padding-top: 47px; }
+.profile-heading { align-self: center; }
+h1 { margin: 0 0 7px; font-size: 32px; font-weight: 600; letter-spacing: -1.1px; line-height: 1.25; }
+.byline { color: var(--muted); font-size: 13px; margin: 0; }
+.profile-links { display: flex; gap: 13px; align-items: center; font-size: 13px; margin-top: 16px; }
+.profile-links span { color: #b8bec5; font-size: 11px; }
+.portrait { width: 148px; height: 148px; object-fit: cover; border-radius: 3px; }
+.bio { grid-column: 1 / -1; margin-top: 26px; }
+p { margin: 0 0 15px; }
+.bio p:last-child { margin-bottom: 0; }
+.section { margin-top: 43px; }
+h2 { font-size: 21px; line-height: 1.4; font-weight: 600; letter-spacing: -.45px; margin: 0 0 19px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+h3 { font-size: 15px; line-height: 1.6; font-weight: 600; margin: 0; }
+.research-entry { margin-top: 22px; }
+.research-entry p { margin-top: 6px; }
+.entry-type { display: inline-block; font-weight: 400; font-size: 11px; color: var(--muted); margin-left: 9px; }
+.note { font-size: 12px; color: var(--muted); margin-top: 5px; }
+.history { padding-top: 2px; }
+.position { display: grid; grid-template-columns: 104px 1fr; gap: 25px; padding-bottom: 30px; }
+.position:last-child { padding-bottom: 0; }
+.period { font-size: 12px; color: var(--muted); padding-top: 2px; font-variant-numeric: tabular-nums; }
+.company-logo { display: block; width: 94px; max-height: 36px; object-fit: contain; object-position: left center; margin-top: 14px; }
+.logo-pranaalpha { width: 40px; max-height: 40px; }
+.logo-samsung { width: 96px; }
+.position-content { border-left: 1px solid var(--line); padding-left: 23px; position: relative; }
+.position-content::before { content: ''; position: absolute; left: -3px; top: 9px; width: 5px; height: 5px; border-radius: 50%; background: #a4adb8; }
+.position-content h3 { font-size: 17px; font-weight: 600; letter-spacing: -.2px; }
+.role { font-size: 12px; color: var(--muted); margin: 1px 0 12px; }
+.position-content p, .position-content li { font-size: 14px; }
+.position-content p:last-child, .position-content ul:last-child { margin-bottom: 0; }
+.position-content ul { margin: 0 0 15px; padding-left: 18px; }
+.position-content li { padding-left: 3px; margin-bottom: 12px; }
+.position-content strong { font-weight: 600; }
+.publication { margin: 0 0 24px; }
+.publication p { margin-bottom: 0; font-size: 14px; }
+.publication .meta { font-size: 12px; color: var(--muted); margin: 4px 0 7px; }
+.patent-record { display: grid; grid-template-columns: 175px 1fr; gap: 25px; align-items: start; margin-top: 18px; }
+.patent-preview { display: block; border: 1px solid var(--line); background: #fff; }
+.patent-preview img { display: block; width: 100%; height: auto; }
+.patent-facts { margin: 15px 0; font-size: 12px; }
+.patent-facts div { display: grid; grid-template-columns: 76px 1fr; gap: 8px; margin-bottom: 4px; }
+.patent-facts dt { color: var(--muted); }
+.patent-facts dd { margin: 0; }
+.publication .patent-links { font-size: 12px; }
+.publication .source-note { font-size: 11px; color: var(--muted); margin-top: 10px; }
+.code-list { padding-left: 18px; margin: 0; }
+.code-list li { margin-bottom: 15px; padding-left: 3px; }
+.code-list a { font-size: 14px; font-weight: 500; }
+.code-list p { font-size: 13px; color: #565e68; margin: 2px 0 0; }
+#background p { font-size: 14px; }
+footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 21px 0 32px; display: flex; justify-content: space-between; gap: 20px; font-size: 11px; color: var(--muted); }
+.skip { position: absolute; top: -100px; left: 15px; background: #fff; padding: 12px; }
+.skip:focus { top: 12px; z-index: 10; }
+@media (max-width: 650px) {
+  .page { padding: 0 23px; }
+  body { font-size: 14px; }
+  .site-header { padding: 19px 0 15px; font-size: 11px; gap: 15px; }
+  nav { gap: 16px; }
+  .home-link { display: none; }
+  .profile { grid-template-columns: 1fr 92px; gap: 19px; padding-top: 32px; }
+  h1 { font-size: 26px; letter-spacing: -.75px; }
+  .byline { font-size: 11px; line-height: 1.6; max-width: 210px; }
+  .portrait { width: 92px; height: 104px; }
+  .profile-links { font-size: 12px; gap: 10px; margin-top: 12px; }
+  .bio { margin-top: 5px; }
+  .section { margin-top: 34px; }
+  h2 { font-size: 19px; margin-bottom: 17px; }
+  .entry-type { display: block; margin: 2px 0 0; }
+  .research-entry { margin-top: 20px; }
+  .research-entry p { font-size: 13px; }
+  .position { grid-template-columns: 1fr; gap: 4px; padding-bottom: 27px; }
+  .period { font-size: 11px; padding-left: 18px; display: flex; align-items: center; justify-content: space-between; gap: 15px; min-height: 32px; margin-bottom: 5px; }
+  .company-logo { width: 83px; max-height: 25px; margin-top: 0; }
+  .logo-pranaalpha { width: 30px; max-height: 30px; }
+  .patent-record { grid-template-columns: 95px 1fr; gap: 16px; }
+  .patent-facts div { display: block; margin-bottom: 8px; }
+  .patent-facts dt { font-size: 10px; }
+  .patent-facts dd { font-size: 11px; }
+  .position-content { padding-left: 17px; }
+  .position-content h3 { font-size: 16px; }
+  .position-content p, .position-content li { font-size: 13px; }
+  .role { font-size: 11px!important; }
+  .publication h3 { font-size: 14px; }
+  .publication p { font-size: 13px; }
+  .publication .meta { font-size: 11px; }
+  #background p { font-size: 13px; }
+  #background a { overflow-wrap: anywhere; }
+  footer { font-size: 10px; }
+}
+@media print {
+  .site-header, .skip, footer a { display: none; }
+  .page { max-width: none; padding: 0; }
+  .profile { padding-top: 0; }
+  body { font-size: 11px; }
+  .section { margin-top: 25px; }
+  a { color: inherit; }
+  h2, h3 { break-after: avoid; }
+  p, li { orphans: 3; widows: 3; }
+}
+
+.work-figure { margin: 20px 0 0; }
+.work-figure img { display: block; width: 100%; height: auto; border-radius: 2px; }
+.work-figure a { display: block; }
+.work-figure figcaption { margin-top: 9px; color: var(--muted); font-size: 11px; line-height: 1.65; }
+.work-figure figcaption a { display: inline; }
+.neo-photo { max-width: 340px; }
+.evidence-detail { margin: 16px 0 0; font-size: 12px; }
+.evidence-detail summary { cursor: pointer; color: var(--link); text-decoration: underline; text-underline-offset: 3px; }
+.evidence-detail summary:focus-visible { outline: 2px solid var(--link); outline-offset: 5px; }
+.evidence-detail .work-figure { margin-top: 14px; }
+
+.github-accounts { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px 28px; list-style: none; padding: 0; margin: 23px 0 18px; }
+.github-accounts li { display: flex; flex-direction: column; }
+.github-accounts a { font-size: 14px; font-weight: 500; }
+.github-accounts span, .github-meta, .github-totals { color: var(--muted); font-size: 11px; }
+.github-totals { margin-bottom: 26px; }
+.github-subheading { display: flex; align-items: baseline; justify-content: space-between; gap: 15px; margin: 25px 0 13px; }
+.github-subheading > span, .github-subheading > a { font-size: 11px; font-weight: 400; }
+.github-subheading > span { color: var(--muted); }
+.github-repos { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 30px; list-style: none; padding: 0; margin: 0; }
+.github-repo { padding: 14px 0; border-top: 1px solid var(--line); }
+.github-row-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 9px; font-size: 13px; font-weight: 500; }
+.github-row-title a, .github-pull a { overflow-wrap: anywhere; }
+.github-tag { font-size: 10px; color: var(--muted); font-weight: 400; }
+.github-repo p { font-size: 12px; line-height: 1.65; margin: 6px 0 7px; }
+.github-pulls { list-style: none; margin: 0; padding: 0; }
+.github-pull { display: flex; justify-content: space-between; align-items: baseline; gap: 18px; border-top: 1px solid var(--line); padding: 12px 0; font-size: 13px; }
+.github-pull > div { min-width: 0; }
+.github-pull .github-meta { margin-top: 4px; }
+.github-state { flex-shrink: 0; font-size: 10px; color: #626975; border: 1px solid var(--line); border-radius: 3px; padding: 0 6px; }
+.state-open { color: #24613b; }
+.state-merged { color: #7047a5; }
+.github-more { font-size: 12px; margin: 6px 0 18px; }
+.github-more summary { cursor: pointer; color: var(--link); }
+.github-more summary:focus-visible { outline: 2px solid var(--link); outline-offset: 5px; }
+.github-more .github-pulls { margin-top: 12px; }
+#github-status { margin-top: 18px; font-size: 11px; }
+@media (max-width:650px) {
+  .github-accounts { column-gap: 18px; }
+  .github-accounts a { font-size: 12px; }
+  .github-repos { grid-template-columns: 1fr; }
+  .github-pull { gap: 10px; }
+}
