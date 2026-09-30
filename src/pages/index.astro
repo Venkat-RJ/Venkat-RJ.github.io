@@ -1,5 +1,38 @@
 ---
-import Portfolio from '../components/Portfolio.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+const selected=[
+{title:'Talos · contributor onboarding',description:'A draft contribution to Cajal Technologies’ Wasm interpreter in Lean: making the README quick start reproducible, documenting traps and exit codes, and fixing a dead contributor path.',meta:'open source · 2026',href:'https://github.com/cajal-technologies/talos/pull/249',link:'pull request #249 ↗'},
+{title:'CoherenceBench',description:'An exploratory benchmark for whether long-running agents stay coherent as context, decisions and earlier commitments accumulate.',meta:'evaluation · 2026',href:'https://github.com/Venkat-RJ/coherencebench',link:'github ↗'},
+{title:'Data Companion',description:'Enterprise natural-language-to-SQL work at Sigmoid. The public article describes an evaluation-first system for reliable query generation and names me as an author.',meta:'enterprise genai · 2024',href:'https://www.sigmoid.com/blogs/unlocking-data-intelligence-with-gen-ai-powered-sql-queries/',link:'read the Sigmoid article ↗'},
+{title:'Lokaah',description:'A source-grounded entity and relationship layer for agents. The local US graph reached 145,776 entities and more than 2.16 million relationships.',meta:'research prototype · 2026'}];
+const career=[
+['2011–2015','Bosch','Senior Software Engineer','Engine and exhaust-control software, diagnostics, embedded C, work with teams in India and Japan.'],
+['2015–2017','Caterpillar','Senior Embedded Systems Engineer','Computer vision for PCB inspection and optimization work around diesel injector systems.'],
+['2017–2022','Continental','Lead Data Scientist','Built and led a 12-person data-science team across industrial ML, optimization and supply-chain systems.'],
+['2022–2023','Samsung Research','Chief Data Scientist','Bixby intelligence, anomaly analysis and root-cause systems connecting user feedback with logs.'],
+['2023–2024','Independent','Founder · quantitative systems','Built automated research, execution and risk systems with proprietary capital.'],
+['2024–2025','Sigmoid','Principal Data Scientist','Enterprise GenAI, Text2SQL, internal AI capability and a prototype that helped secure a $1.5M client contract.'],
+['2025–2026','PranaAlpha Labs','Founder & CEO','Built PortoAI, Lokaah and a series of agentic research and finance prototypes from zero.']];
 ---
+<BaseLayout title="Venkateshwar Jambula — AI systems, engineering and research">
+<section class="home-hero"><div><p class="eyebrow">Venkateshwar Jambula · Bengaluru</p><h1>I build systems that have to work.</h1>
+<p class="lede">I’ve spent 15 years making complicated systems behave: engine ECUs, industrial optimization, Bixby, enterprise GenAI, and most recently long-running agents.</p>
+<p class="secondary">I’m a hands-on AI engineer and technical leader, and I spent the last founder chapter building products from zero. These days I’m going deeper on agent reliability, formal verification, and the boundary between impressive demos and systems people can actually depend on.</p>
+<div class="text-links"><a href="/work">work</a><a href="/notes">notes</a><a href="https://github.com/Venkat-RJ" target="_blank" rel="noopener">github ↗</a><a href="https://www.linkedin.com/in/venkateshwar-jambula/" target="_blank" rel="noopener">linkedin ↗</a><a href="mailto:venkateshwar.jambula@gmail.com">email</a></div></div>
+<figure class="portrait"><img src="/headshot-src.jpg" width="220" height="256" alt="Venkateshwar Jambula"/><figcaption>VENKAT / BENGALURU</figcaption></figure></section>
 
-<Portfolio />
+<section class="home-section"><div class="section-head"><div><p class="eyebrow">Current question</p><h2>Reliability after the demo.</h2></div><p>The question that now connects my old embedded-systems instincts with the agentic systems I’m studying and building.</p></div>
+<div class="current-question"><p class="question">How do we make increasingly autonomous AI systems remain coherent, inspectable and safe when they run for a long time, use tools, and act in the real world?</p>
+<p class="why">This feels less like a new problem than it first appears. Embedded software taught me to think in invariants, failure modes, protocols and verification. Industrial ML taught me that offline accuracy is not the same thing as production reliability. Agents are forcing those two worlds back together.</p>
+<p class="current-link">Current rabbit hole: <a href="https://github.com/cajal-technologies/talos/pull/249" target="_blank" rel="noopener">contributing to Talos, a Wasm interpreter in Lean ↗</a></p></div></section>
+
+<section class="home-section"><div class="section-head"><div><p class="eyebrow">Selected artifacts</p><h2>Things you can inspect.</h2></div><p>I prefer links, code and concrete systems over a wall of adjectives.</p></div>
+<div class="artifact-list">{selected.map((item,index)=><article class="artifact-row"><span class="artifact-index">{String(index+1).padStart(2,'0')}</span><div><h3>{item.title}</h3><p>{item.description}</p></div><span class="artifact-meta">{item.meta}</span>{item.href&&<a class="artifact-link" href={item.href} target="_blank" rel="noopener">{item.link}</a>}</article>)}</div>
+<p class="more-link"><a href="/work">See the full work archive →</a></p></section>
+
+<section class="home-section"><div class="section-head"><div><p class="eyebrow">Career</p><h2>The thread is systems.</h2></div><p>Different industries, same instinct: understand the real constraints, then make the system more reliable.</p></div>
+<div class="career-list">{career.map(([dates,company,role,description])=><div class="career-row"><span class="dates">{dates}</span><strong>{company} · {role}</strong><p>{description}</p></div>)}</div></section>
+
+<section class="home-section"><div class="section-head"><div><p class="eyebrow">A non-technical influence</p><h2>Japan stayed with me.</h2></div><p>Roughly a year of trips between India and Yokohama early in my Bosch career changed how I think about craft, punctuality and quiet competence.</p></div>
+<div class="human-note"><img src="/images/japan/friends-yokohama.jpg" alt="Venkat with friends in Yokohama" loading="lazy"/><blockquote><p>Good engineering is often the unglamorous work somebody cared enough to do properly.</p><p>That lesson came from embedded systems, but also from watching a culture take ordinary things seriously.</p><p class="more-link"><a href="/japan">Read the Japan note →</a></p></blockquote></div></section>
+</BaseLayout>
