@@ -50,3 +50,51 @@ test('public fetch paginates, excludes private records and deduplicates repos',a
   assert.ok(visited.some(url=>url.endsWith('&page=2')));
  } finally {globalThis.fetch=original;}
 });
+test('merged PRs beyond the first twelve remain visible',async()=>{
+ const original=globalThis.fetch;
+ const pulls=Array.from({length:19},(_,index)=>({...snapshot.pulls.items[0],id:index,html_url:`https://github.com/owner/repo/pull/${index+1}`,state:index>=12?'closed':'open',draft:false,pull_request:{merged_at:index>=12?'2026-10-06T10:00:00Z':null}}));
+ globalThis.fetch=async url=>({ok:true,json:async()=>url.includes('/search/issues')?{items:new URL(url).searchParams.get('per_page')==='100'?pulls:pulls.slice(0,12),total_count:19,incomplete_results:false}:[]});
+ try {
+  const data=await loadPublicData();
+  assert.equal(data.pulls.items.length,19);
+  assert.equal(data.pulls.items.filter(pull=>pullState(pull)==='Merged').length,7);
+  assert.match(render(data),/19 public pull requests · 7 merged/);
+  assert.match(render(data),/Show 15 more pull requests \(7 merged\)/);
+ } finally {globalThis.fetch=original;}
+});
+test('an unavailable repository account cannot prevent a merged PR refresh',async()=>{
+ const original=globalThis.fetch;
+ const merged={...snapshot.pulls.items[0],state:'closed',draft:false,pull_request:{merged_at:'2026-10-06T10:00:00Z'}};
+ globalThis.fetch=async url=>{
+  if(url.includes('/users/Venkat-RJ/')) throw Error('account unavailable');
+  return {ok:true,json:async()=>url.includes('/search/issues')?{items:[merged],total_count:1,incomplete_results:false}:[]};
+ };
+ try {
+  const container={},status={},old={...snapshot,fetchedAt:'2020-01-01T00:00:00Z'};
+  await refresh(container,status,old);
+  assert.match(container.innerHTML,/state-merged/);
+  assert.match(container.innerHTML,/1 public pull requests · 1 merged/);
+  assert.match(status.textContent,/Some repository details use saved data/);
+  await assert.rejects(loadPublicData(),/Repository data unavailable/);
+ } finally {globalThis.fetch=original;}
+});
+test('incomplete PR results preserve the previous view',async()=>{
+ const original=globalThis.fetch;
+ globalThis.fetch=async url=>({ok:true,json:async()=>url.includes('/search/issues')?{items:[],total_count:19,incomplete_results:true}:[]});
+ try {
+  const old={...snapshot,fetchedAt:'2020-01-01T00:00:00Z'},container={},status={};
+  await refresh(container,status,old);
+  assert.equal(container.innerHTML,render(old));
+  assert.match(status.textContent,/Live update unavailable/);
+ } finally {globalThis.fetch=original;}
+});
+test('build authentication is request-only and never saved in public data',async()=>{
+ const original=globalThis.fetch;
+ globalThis.fetch=async(url,options)=>{
+  assert.equal(options.headers.Authorization,'Bearer test-build-token');
+  assert.equal(options.credentials,'omit');
+  return {ok:true,json:async()=>url.includes('/search/issues')?{items:[],total_count:0,incomplete_results:false}:[]};
+ };
+ try {assert.ok(!JSON.stringify(await loadPublicData({token:'test-build-token'})).includes('test-build-token'));}
+ finally {globalThis.fetch=original;}
+});

@@ -24,6 +24,7 @@ function githubURL(value) {
 export function render(data) {
   const repos = [...data.repos].sort((a,b) => Date.parse(b.pushed_at) - Date.parse(a.pushed_at));
   const pulls = [...data.pulls.items].sort((a,b) => Date.parse(b.updated_at) - Date.parse(a.updated_at));
+  const merged = pulls.filter(pull => pullState(pull) === 'Merged').length;
   const accountRows = accounts.map(name => {
     const count = repos.filter(repo => repo.owner.login.toLowerCase() === name.toLowerCase()).length;
     return `<li><a href="https://github.com/${name}">@${name}</a><span>${count ? `${count} public ${count === 1 ? 'repository' : 'repositories'}` : 'No public repositories'}</span></li>`;
@@ -41,27 +42,29 @@ export function render(data) {
     return `<li class="github-pull"><div><a href="${esc(url)}">${esc(pull.title)}</a><div class="github-meta">${esc(context)} · ${esc(pull.user.login)}<br>Updated ${esc(date(pull.updated_at))}</div></div><span class="github-state state-${state.toLowerCase()}">${state}</span></li>`;
   });
   return `<ul class="github-accounts">${accountRows}</ul>
-    <p class="github-totals">${repos.length} public repositories, including ${repos.filter(repo => repo.fork).length} forks · ${data.pulls.total_count} public pull requests</p>
+    <p class="github-totals">${repos.length} public repositories, including ${repos.filter(repo => repo.fork).length} forks · ${data.pulls.total_count} public pull requests · ${merged} merged${pulls.length < data.pulls.total_count ? ' among recent PRs' : ''}</p>
     <div class="github-subheading"><h3>Repositories</h3><span>Latest updates first</span></div>
     <ul class="github-repos">${repoRows || '<li>No public repositories available.</li>'}</ul>
     <div class="github-subheading"><h3>Recent pull requests</h3><a href="${search}">All pull requests ↗</a></div>
     <ul class="github-pulls">${pullRows.slice(0,4).join('') || '<li>No public pull requests available.</li>'}</ul>
-    ${pullRows.length > 4 ? `<details class="github-more"><summary>Show ${pullRows.length - 4} more recent pull requests</summary><ul class="github-pulls">${pullRows.slice(4).join('')}</ul></details>` : ''}`;
+    ${pullRows.length > 4 ? `<details class="github-more"><summary>Show ${pullRows.length - 4} more pull requests (${pulls.slice(4).filter(pull => pullState(pull) === 'Merged').length} merged)</summary><ul class="github-pulls">${pullRows.slice(4).join('')}</ul></details>` : ''}`;
 }
-async function getJSON(url) {
+async function getJSON(url, token) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(),10000);
   try {
-    const response = await fetch(url, {headers:{Accept:'application/vnd.github+json'},signal:controller.signal,credentials:'omit'});
+    const headers = {Accept:'application/vnd.github+json'};
+    if (token) headers.Authorization = `Bearer ${token}`;
+    const response = await fetch(url, {headers,signal:controller.signal,credentials:'omit',cache:'no-store'});
     if (!response.ok) throw new Error(`GitHub returned ${response.status}`);
     return await response.json();
   } finally { clearTimeout(timeout); }
 }
-export async function loadPublicData() {
+export async function loadPublicData({token, fallback} = {}) {
   async function repositories(account) {
     const repos = [];
     for (let page=1; ; page++) {
-      const batch = await getJSON(`https://api.github.com/users/${account}/repos?sort=pushed&per_page=100&page=${page}`);
+      const batch = await getJSON(`https://api.github.com/users/${account}/repos?sort=pushed&per_page=100&page=${page}`, token);
       if (!Array.isArray(batch)) throw new Error('Invalid repository response');
       repos.push(...batch.filter(repo => !repo.private).map(repo => ({
         id:repo.id,name:repo.name,full_name:repo.full_name,html_url:repo.html_url,description:repo.description,
@@ -72,13 +75,16 @@ export async function loadPublicData() {
   }
   const results = await Promise.allSettled([
     ...accounts.map(repositories),
-    getJSON(`https://api.github.com/search/issues?q=${encodeURIComponent(query)}&sort=updated&order=desc&per_page=12`),
+    getJSON(`https://api.github.com/search/issues?q=${encodeURIComponent(query)}&sort=updated&order=desc&per_page=100`, token),
   ]);
-  if (results.some(result => result.status !== 'fulfilled')) throw new Error('Public data unavailable');
-  const pulls = results.pop().value;
+  const pullResult = results.pop();
+  if (pullResult.status !== 'fulfilled') throw new Error('Pull request data unavailable');
+  const pulls = pullResult.value;
   if (!Array.isArray(pulls.items) || pulls.incomplete_results || !Number.isInteger(pulls.total_count)) throw new Error('Incomplete pull request response');
-  const repos = [...new Map(results.flatMap(result => result.value).map(repo => [repo.id,repo])).values()];
-  return {accounts,fetchedAt:new Date().toISOString(),repos,pulls:{total_count:pulls.total_count,items:pulls.items.map(pull => ({
+  const repositoriesPartial = results.some(result => result.status !== 'fulfilled');
+  if (repositoriesPartial && !valid(fallback)) throw new Error('Repository data unavailable');
+  const repos = [...new Map(results.flatMap((result, index) => result.status === 'fulfilled' ? result.value : fallback.repos.filter(repo => repo.owner.login.toLowerCase() === accounts[index].toLowerCase())).map(repo => [repo.id,repo])).values()];
+  return {accounts,fetchedAt:new Date().toISOString(),repositoriesPartial,repos,pulls:{total_count:pulls.total_count,items:pulls.items.map(pull => ({
     id:pull.id,title:pull.title,html_url:pull.html_url,state:pull.state,draft:pull.draft,updated_at:pull.updated_at,
     user:{login:pull.user.login},pull_request:{merged_at:pull.pull_request?.merged_at},
   }))}};
@@ -87,7 +93,7 @@ function valid(data) {
   return data && JSON.stringify(data.accounts) === JSON.stringify(accounts) && Number.isFinite(Date.parse(data.fetchedAt)) && Array.isArray(data.repos) && data.repos.every(repo => repo?.owner?.login && repo.name) && Number.isInteger(data.pulls?.total_count) && Array.isArray(data.pulls.items) && data.pulls.items.every(pull => pull?.user?.login && pull.title);
 }
 export async function refresh(container,status,snapshot,storage) {
-  const key = 'portfolio-github-four-accounts-v1';
+  const key = 'portfolio-github-four-accounts-v2';
   let saved = snapshot;
   try {
     const cache = JSON.parse(storage?.getItem(key) || 'null');
@@ -95,13 +101,13 @@ export async function refresh(container,status,snapshot,storage) {
   } catch { /* Storage is optional. */ }
   container.innerHTML = render(saved);
   if (Date.now() - Date.parse(saved.fetchedAt) < 15*60*1000) {
-    status.textContent = `Public GitHub data checked ${date(saved.fetchedAt)}. Private work is not included.`;
+    status.textContent = `Public GitHub data checked ${date(saved.fetchedAt)}.${saved.repositoriesPartial ? ' Some repository details use saved data.' : ''} Private work is not included.`;
     return;
   }
   try {
-    const data = await loadPublicData();
+    const data = await loadPublicData({fallback:saved});
     container.innerHTML = render(data);
-    status.textContent = `Updated from GitHub ${date(data.fetchedAt)}. Private work is not included.`;
+    status.textContent = `Updated from GitHub ${date(data.fetchedAt)}.${data.repositoriesPartial ? ' Some repository details use saved data.' : ''} Private work is not included.`;
     try { storage?.setItem(key,JSON.stringify(data)); } catch { /* Keep the live view without caching. */ }
   } catch {
     status.textContent = `Saved public GitHub data from ${date(saved.fetchedAt)}. Live update unavailable; profile links still work.`;

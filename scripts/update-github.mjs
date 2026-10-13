@@ -1,8 +1,8 @@
 import {readFile, writeFile} from 'node:fs/promises';
 import {loadPublicData, render} from '../site/github.mjs';
 
-// Read-only public requests. No token or private repository data is used.
-const data = await loadPublicData();
+// The build token raises API limits. Only public data is saved to the site.
+const data = await loadPublicData({token:process.env.GH_TOKEN});
 const file = new URL('../site/index.html', import.meta.url);
 const html = await readFile(file, 'utf8');
 const stamp = new Date(data.fetchedAt).toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric',timeZone:'Asia/Kolkata'});
