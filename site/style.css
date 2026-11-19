@@ -147,19 +147,97 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 21px 0 32
 .github-contributions-link img { width: 100%; min-width: 720px; max-width: none; }
 .github-contributions figcaption { margin-top: 9px; }
 
-/* Selected Work grid, using existing portfolio typography, colors and borders. */
-.work-intro { font-size: 14px; margin: 0 0 22px; }
-.work-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 30px; list-style: none; padding: 0; margin: 0; }
-.work-item { padding: 18px 0 19px; border-top: 1px solid var(--line); }
-.work-item h3 { font-size: 15px; }
-.work-item p { font-size: 13px; line-height: 1.7; margin: 8px 0 7px; }
-.work-item .evidence { font-size: 11px; line-height: 1.7; color: var(--muted); }
-.work-item .evidence a { white-space: normal; }
-.work-item .evidence span { color: #b8bec5; margin: 0 4px; }
-@media (max-width: 650px) {
-  .work-intro, .work-item p { font-size: 13px; }
-  .work-grid { grid-template-columns: 1fr; }
-  .work-item { padding: 17px 0; }
+/* Hand-drawn notebook cards for selected work. All content remains HTML text and links. */
+.work-intro { font-size:14px; margin:0 0 25px; }
+.work-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px 19px;
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+.work-item {
+  position:relative;
+  min-width:0;
+  display:grid;
+  grid-template-columns:60px minmax(0,1fr);
+  gap:17px;
+  padding:19px 19px 18px;
+  border:1px solid #b8bab9;
+  border-radius:11px;
+  background:#fffefa;
+  box-shadow:0 2px 0 rgba(42,46,47,.045);
+}
+.work-item::after {
+  content:"";
+  position:absolute;
+  inset:3px;
+  border:1px solid rgba(80,82,82,.06);
+  border-radius:8px;
+  pointer-events:none;
+}
+.work-icon {
+  width:60px;
+  height:60px;
+  display:grid;
+  place-items:center;
+  border-radius:8px;
+  border:1px solid #e8e7e2;
+  color:#636763;
+  background:repeating-linear-gradient(135deg,#f7f7f3 0px,#f7f7f3 3px,#efefeb 3px,#efefeb 4px);
+}
+.work-icon svg { width:42px; height:42px; overflow:visible; }
+.work-card-body { min-width:0; display:flex; flex-direction:column; }
+.work-item h3 {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:baseline;
+  gap:4px 9px;
+  justify-content:space-between;
+  margin:0;
+  font-size:15px;
+  line-height:1.4;
+  font-weight:600;
+}
+.work-item h3 a { min-width:0; overflow-wrap:anywhere; }
+.work-item .entry-type {
+  display:inline-block;
+  flex:0 1 auto;
+  max-width:100%;
+  margin:0;
+  padding:2px 8px 3px;
+  border:1px solid #c9c8c2;
+  border-radius:100px;
+  font-size:10px;
+  line-height:1.25;
+  color:#5b5c59;
+  background:transparent;
+  white-space:normal;
+}
+.work-item p { font-size:13px; line-height:1.68; margin:9px 0 10px; }
+.work-item .evidence { font-size:11px; line-height:1.7; color:var(--muted); margin-top:auto; }
+.work-item .evidence a { white-space:normal; }
+.work-item .evidence span { color:#a1a6a8; margin:0 4px; }
+.work-item .publication { margin:0; }
+.work-item .publication .meta { font-size:11px; margin:4px 0 7px; color:var(--muted); }
+.work-item .publication p { margin:8px 0 10px; }
+.work-item .evidence-detail { margin:7px 0 0; }
+.work-item .neo-photo { max-width:100%; }
+.work-item:focus-within { border-color:#8a9dad; }
+@media (hover:hover) and (prefers-reduced-motion:no-preference) {
+  .work-item { transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease; }
+  .work-item:hover { border-color:#979d9b; box-shadow:0 5px 12px rgba(42,46,47,.055); transform:translateY(-2px); }
+}
+@media (max-width:750px) {
+  .work-grid { grid-template-columns:1fr; gap:13px; }
+}
+@media (max-width:650px) {
+  .work-intro { font-size:13px; }
+  .work-item { grid-template-columns:52px minmax(0,1fr); gap:13px; padding:16px 14px; }
+  .work-icon { width:52px; height:52px; }
+  .work-icon svg { width:35px; height:35px; }
+  .work-item p { font-size:13px; }
 }
 
 /* A natural-history illustration that follows scroll, without covering career content. */
