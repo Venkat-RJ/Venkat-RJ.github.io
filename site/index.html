@@ -19,8 +19,8 @@
     <header class="site-header">
       <a class="home-link" href="#about">Venkat Reddy</a>
       <nav aria-label="On this page">
+        <a href="#work">Work</a>
         <a href="#experience">Experience</a>
-        <a href="#current">Current work</a>
         <a href="#writing">Writing</a>
         <a href="#code">Code</a>
       </nav>
@@ -43,8 +43,61 @@
         <div class="bio">
           <p>I’m an AI research leader and engineer. My work spans industrial optimization, reinforcement learning, language models, and agent systems. Over a career of about 15 years, I’ve moved from real-time embedded engineering into applied research, led research and engineering teams, and taken AI systems from investigation through deployment.</p>
           <p>At <a href="#continental">Continental</a>, I built a data-science team working on optimization and machine learning for industrial problems. At <a href="#samsung">Samsung Research</a>, I led data scientists and PhD researchers working on voice AI, anomaly detection, and language models. At <a href="#sigmoid">Sigmoid</a>, I established the GenAI Center of Excellence and developed systems for enterprise reasoning and analytics.</p>
-          <p>I stay involved in the technical work: developing models, building evaluation systems, and investigating failures. As the solo technical founder of <a href="#pranaalpha">PranaAlpha Labs</a>, I also owned product discovery, implementation, and operations. That experience informs my <a href="#current">current research on agent reliability</a>: how systems maintain state, use evidence, and make consistent decisions over time.</p>
+          <p>I stay involved in the technical work: developing models, building evaluation systems, and investigating failures. As the solo technical founder of <a href="#pranaalpha">PranaAlpha Labs</a>, I also owned product discovery, implementation, and operations. That experience informs my <a href="#work">current research on agent reliability</a>: how systems maintain state, use evidence, and make consistent decisions over time.</p>
         </div>
+      </section>
+
+      <section id="work" class="section" aria-labelledby="work-title">
+        <span id="current"></span>
+        <h2 id="work-title">Work</h2>
+        <p class="work-intro">Selected research, engineering and systems I've worked on. Each entry links to the project, underlying evidence or upstream contributions.</p>
+        <ul class="work-grid">
+          <li class="work-item">
+            <h3><a href="https://github.com/Venkat-RJ/dexters-laboratory-v1">Dexter's Laboratory</a><span class="entry-type">Research environment</span></h3>
+            <p>A customizable workspace for investigating scientific and engineering problems, from problem formulation and literature to experiments and evidence.</p>
+            <div class="evidence"><a href="https://github.com/Venkat-RJ/dexters-laboratory-v1">Repository</a></div>
+          </li>
+          <li class="work-item">
+            <h3><a href="https://rekursiv.ai/blog/supply-chain/">FrontierOR</a><span class="entry-type">Algorithm discovery</span></h3>
+            <p>Using an AI scientist to develop a factory scheduling solver, then validating the frozen program against a specialist baseline on new problems.</p>
+            <div class="evidence"><a href="https://rekursiv.ai/blog/supply-chain/">Research article</a> <span aria-hidden="true">·</span> <a href="https://github.com/Venkat-RJ/openresearch">Experiment archive</a></div>
+          </li>
+          <li class="work-item">
+            <h3><a href="#pranaalpha">Lokaah</a><span class="entry-type">Knowledge systems</span></h3>
+            <p>AI-native search and knowledge infrastructure with entity resolution, typed relationships, knowledge graphs, and provenance.</p>
+            <div class="evidence"><a href="#pranaalpha">Founder work</a></div>
+          </li>
+          <li class="work-item">
+            <h3><a href="#pranaalpha">PortoAI</a><span class="entry-type">AI product</span></h3>
+            <p>A multi-agent investment research platform with specialist agents, persistent context, portfolio analysis, and approval-gated broker actions.</p>
+            <div class="evidence"><a href="#pranaalpha">Founder work</a> <span aria-hidden="true">·</span> <a href="https://x.com/PortoAIHq">Project history</a></div>
+          </li>
+          <li class="work-item">
+            <h3><a href="https://github.com/Venkat-RJ/facet-benchmark">FACET</a><span class="entry-type">Research experiment</span></h3>
+            <p>Probing whether explanations of multi-factor LLM decisions change consistently when their underlying evidence changes.</p>
+            <div class="evidence"><a href="https://github.com/Venkat-RJ/facet-benchmark">Code and data</a> <span aria-hidden="true">·</span> <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6564479">Working paper</a></div>
+          </li>
+          <li class="work-item">
+            <h3><a href="https://github.com/Venkat-RJ/coherencebench">CoherenceBench</a><span class="entry-type">Research experiment</span></h3>
+            <p>An exploratory evaluation of whether an agent maintains coherent decisions across changing conditions in a long sequence.</p>
+            <div class="evidence"><a href="https://github.com/Venkat-RJ/coherencebench">Repository</a></div>
+          </li>
+          <li class="work-item">
+            <h3><a href="https://github.com/cajal-technologies/talos">Talos</a><span class="entry-type">Open-source engineering</span></h3>
+            <p>Contributions to WebAssembly interpreter correctness in Lean, including local initialization, table validation, and typed selection.</p>
+            <div class="evidence"><a href="https://github.com/cajal-technologies/talos/pulls?q=is%3Apr+is%3Amerged+author%3AVenkat-RJ">Merged changes</a> <span aria-hidden="true">·</span> <a href="https://github.com/cajal-technologies/talos/pull/250">Local initialization</a></div>
+          </li>
+          <li class="work-item">
+            <h3><a href="https://github.com/rekursiv-ai">Rekursiv</a><span class="entry-type">Open-source engineering</span></h3>
+            <p>Work across Sagent and Trackinizer, from a merged CLI contribution to proposed improvements in agent messaging and graph usability.</p>
+            <div class="evidence"><a href="https://github.com/rekursiv-ai/sagent/pull/629">Merged Sagent PR</a> <span aria-hidden="true">·</span> <a href="https://github.com/rekursiv-ai/trackinizer/pull/607">Trackinizer proposal</a></div>
+          </li>
+          <li class="work-item">
+            <h3><a href="https://github.com/Venkat-RJ/hermes-tallyseal">Hermes / TallySeal</a><span class="entry-type">Open-source engineering</span></h3>
+            <p>A plugin that checks grouped CSV reports against pinned source data and seals validated output, listed in the upstream community catalog.</p>
+            <div class="evidence"><a href="https://github.com/Venkat-RJ/hermes-tallyseal">Plugin</a> <span aria-hidden="true">·</span> <a href="https://github.com/NousResearch/hermes-agent/pull/153588">Merged catalog PR</a></div>
+          </li>
+        </ul>
       </section>
 
       <section id="experience" class="section" aria-labelledby="experience-title">
@@ -142,24 +195,6 @@
               <p>Developed a major HINO software-sharing implementation from scratch and worked on Kubota programs. Multiple engineering deputations in Yokohama involved direct collaboration with Bosch Japan system designers and Japanese OEM teams. I also coordinated delivery across international software-sharing teams and led knowledge transfer.</p>
             </div>
           </article>
-        </div>
-      </section>
-
-      <section id="current" class="section" aria-labelledby="current-title">
-        <h2 id="current-title">Current research & open source</h2>
-        <p>My current research asks how to evaluate agents over sequences of decisions. Building and operating agent systems exposed failures in memory, evidence use, consistency, and coordination. These experiments examine specific parts of that problem: whether decisions track changing conditions, and whether explanations track the evidence behind them.</p>
-        <div class="research-entry">
-          <h3><a href="https://github.com/Venkat-RJ/coherencebench">CoherenceBench</a> <span class="entry-type">Exploratory evaluation</span></h3>
-          <p>A controlled experiment in whether a model keeps tracking changing conditions over a long session. The model monitors six subsystems across 200 sequential decisions. I compare what it discusses with the action it chooses as the source of the problem changes.</p>
-        </div>
-        <div class="research-entry">
-          <h3><a href="https://github.com/Venkat-RJ/facet-benchmark">FACET</a> <span class="entry-type">Exploratory evaluation</span></h3>
-          <p>An experiment on attribution faithfulness in decisions involving multiple factors. Four probes examine which factors a model says matter, how it assigns importance, and whether those explanations respond to changes in the evidence. <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6564479">Earlier working paper on SSRN</a>.</p>
-        </div>
-        <p class="note">These are personal experiments, not validated benchmarks or peer-reviewed research.</p>
-        <div class="research-entry">
-          <h3><a href="https://github.com/cajal-technologies/talos">Talos: a WebAssembly interpreter in Lean</a> <span class="entry-type">Open-source contributions</span></h3>
-          <p>My merged contributions cover <a href="https://github.com/cajal-technologies/talos/pull/250">uninitialized local reads</a>, <a href="https://github.com/cajal-technologies/talos/pull/253">table declaration validation</a>, <a href="https://github.com/cajal-technologies/talos/pull/255">select instruction validation</a>, and <a href="https://github.com/cajal-technologies/talos/pull/260">a visual introduction to the project</a>. Further contributions cover setup documentation, reference casts, value types, and CI caching.</p>
         </div>
       </section>
 

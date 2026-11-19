@@ -179,3 +179,18 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 21px 0 32
 .github-contributions-link { display: block; overflow-x: auto; }
 .github-contributions-link img { width: 100%; min-width: 720px; max-width: none; }
 .github-contributions figcaption { margin-top: 9px; }
+
+/* Selected Work grid, using existing portfolio typography, colors and borders. */
+.work-intro { font-size: 14px; margin: 0 0 22px; }
+.work-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 30px; list-style: none; padding: 0; margin: 0; }
+.work-item { padding: 18px 0 19px; border-top: 1px solid var(--line); }
+.work-item h3 { font-size: 15px; }
+.work-item p { font-size: 13px; line-height: 1.7; margin: 8px 0 7px; }
+.work-item .evidence { font-size: 11px; line-height: 1.7; color: var(--muted); }
+.work-item .evidence a { white-space: normal; }
+.work-item .evidence span { color: #b8bec5; margin: 0 4px; }
+@media (max-width: 650px) {
+  .work-intro, .work-item p { font-size: 13px; }
+  .work-grid { grid-template-columns: 1fr; }
+  .work-item { padding: 17px 0; }
+}
