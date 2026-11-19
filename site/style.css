@@ -298,3 +298,116 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 21px 0 32
   html { scroll-behavior:auto }
   .snake-animated, .python-head { display:none }
 }
+
+/* Notebook-inspired writing and patent cards, matched to the Projects grid. */
+.writing-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+  margin:0 0 17px;
+}
+#writing .writing-card {
+  min-width:0;
+  position:relative;
+  margin:0;
+  padding:19px;
+  border:1px solid #b8bab9;
+  border-radius:11px;
+  background:#fffefa;
+  box-shadow:0 2px 0 rgba(42,46,47,.045);
+}
+#writing .writing-card::after {
+  content:"";
+  position:absolute;
+  inset:3px;
+  pointer-events:none;
+  border:1px solid rgba(80,82,82,.06);
+  border-radius:8px;
+}
+.writing-card-top {
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  justify-content:space-between;
+  margin:0 0 14px;
+}
+.writing-icon {
+  width:52px;
+  height:52px;
+  flex:0 0 52px;
+  display:grid;
+  place-items:center;
+  border-radius:8px;
+  border:1px solid #e8e7e2;
+  color:#636763;
+  background:repeating-linear-gradient(135deg,#f7f7f3 0px,#f7f7f3 3px,#efefeb 3px,#efefeb 4px);
+}
+.writing-icon svg {width:38px;height:38px;}
+.writing-kind {
+  display:inline-block;
+  max-width:calc(100% - 58px);
+  font-size:10px;
+  line-height:1.25;
+  color:#5b5c59;
+  border:1px solid #c9c8c2;
+  border-radius:100px;
+  padding:3px 8px;
+  text-align:center;
+}
+#writing .writing-card h3 {
+  font-size:15px;
+  line-height:1.45;
+  overflow-wrap:anywhere;
+}
+#writing .writing-card p {
+  font-size:13px;
+  line-height:1.7;
+  margin:9px 0 0;
+}
+#writing .writing-card .meta {
+  font-size:11px;
+  line-height:1.6;
+  color:var(--muted);
+  margin:7px 0 0;
+}
+#writing .writing-patent {
+  padding:21px;
+}
+#writing .writing-patent .writing-card-top {
+  margin-bottom:13px;
+}
+#writing .writing-patent .patent-record {
+  grid-template-columns:175px minmax(0,1fr);
+  gap:25px;
+}
+#writing .writing-patent .patent-preview {border-color:var(--line);}
+#writing .writing-patent .patent-facts {font-size:12px;}
+#writing .writing-patent .patent-facts dt {font-size:12px;}
+#writing .writing-patent .patent-facts dd {font-size:12px;}
+#writing .writing-patent .source-note {font-size:11px;}
+@media (hover:hover) and (prefers-reduced-motion:no-preference) {
+  #writing .writing-card {
+    transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease;
+  }
+  #writing .writing-card:hover {
+    border-color:#979d9b;
+    box-shadow:0 5px 12px rgba(42,46,47,.055);
+    transform:translateY(-2px);
+  }
+}
+@media (max-width:750px) {
+  .writing-grid {grid-template-columns:1fr;gap:13px;}
+}
+@media (max-width:650px) {
+  #writing .writing-card {padding:16px 14px;}
+  .writing-icon {width:48px;height:48px;flex-basis:48px;}
+  .writing-icon svg {width:35px;height:35px;}
+  #writing .writing-patent .patent-record {
+    grid-template-columns:minmax(80px,95px) minmax(0,1fr);
+    gap:14px;
+  }
+}
+@media (max-width:360px) {
+  #writing .writing-patent .patent-record {grid-template-columns:1fr;}
+  #writing .writing-patent .patent-preview {max-width:140px;}
+}
