@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="735" height="126" viewBox="0 0 735 126" role="img" aria-label="GitHub activity chart will be generated at deployment">
+  <rect width="735" height="126" fill="#fff"/>
+  <text x="10" y="65" fill="#666c75" font-family="Inter, sans-serif" font-size="13">GitHub contribution activity is generated during deployment.</text>
+</svg>

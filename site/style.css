@@ -173,3 +173,9 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 21px 0 32
   .github-repos { grid-template-columns: 1fr; }
   .github-pull { gap: 10px; }
 }
+
+/* GitHub contribution calendar, using the site's existing typography and colors. */
+.github-contributions { margin: 3px 0 26px; }
+.github-contributions-link { display: block; overflow-x: auto; }
+.github-contributions-link img { width: 100%; min-width: 720px; max-width: none; }
+.github-contributions figcaption { margin-top: 9px; }

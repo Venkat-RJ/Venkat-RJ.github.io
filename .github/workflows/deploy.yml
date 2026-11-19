@@ -29,6 +29,12 @@ jobs:
           GH_TOKEN: ${{ github.token }}
       - name: Check GitHub activity rendering
         run: node --test tests/github.test.mjs
+      - name: Check contribution calendar SVG renderer
+        run: node --test tests/contributions.test.mjs
+      - name: Fetch official GitHub contribution activity
+        run: node scripts/update-contributions.mjs
+        env:
+          GH_TOKEN: ${{ github.token }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
