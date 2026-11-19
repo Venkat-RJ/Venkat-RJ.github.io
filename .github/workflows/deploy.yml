@@ -23,12 +23,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - name: Refresh public GitHub activity
-        run: node scripts/update-github.mjs
-        env:
-          GH_TOKEN: ${{ github.token }}
-      - name: Check GitHub activity rendering
-        run: node --test tests/github.test.mjs
       - name: Check contribution calendar SVG renderer
         run: node --test tests/contributions.test.mjs
       - name: Fetch official GitHub contribution activity

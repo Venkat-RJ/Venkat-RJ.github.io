@@ -141,39 +141,6 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 21px 0 32
 .evidence-detail summary:focus-visible { outline: 2px solid var(--link); outline-offset: 5px; }
 .evidence-detail .work-figure { margin-top: 14px; }
 
-.github-accounts { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px 28px; list-style: none; padding: 0; margin: 23px 0 18px; }
-.github-accounts li { display: flex; flex-direction: column; }
-.github-accounts a { font-size: 14px; font-weight: 500; }
-.github-accounts span, .github-meta, .github-totals { color: var(--muted); font-size: 11px; }
-.github-totals { margin-bottom: 26px; }
-.github-subheading { display: flex; align-items: baseline; justify-content: space-between; gap: 15px; margin: 25px 0 13px; }
-.github-subheading > span, .github-subheading > a { font-size: 11px; font-weight: 400; }
-.github-subheading > span { color: var(--muted); }
-.github-repos { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 30px; list-style: none; padding: 0; margin: 0; }
-.github-repo { padding: 14px 0; border-top: 1px solid var(--line); }
-.github-row-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 9px; font-size: 13px; font-weight: 500; }
-.github-row-title a, .github-pull a { overflow-wrap: anywhere; }
-.github-tag { font-size: 10px; color: var(--muted); font-weight: 400; }
-.github-repo p { font-size: 12px; line-height: 1.65; margin: 6px 0 7px; }
-.github-pulls { list-style: none; margin: 0; padding: 0; }
-.github-pull { display: flex; justify-content: space-between; align-items: baseline; gap: 18px; border-top: 1px solid var(--line); padding: 12px 0; font-size: 13px; }
-.github-pull > div { min-width: 0; }
-.github-pull .github-meta { margin-top: 4px; }
-.github-state { flex-shrink: 0; font-size: 10px; color: #626975; border: 1px solid var(--line); border-radius: 3px; padding: 0 6px; }
-.state-open { color: #24613b; }
-.state-merged { color: #7047a5; }
-.github-more { font-size: 12px; margin: 6px 0 18px; }
-.github-more summary { cursor: pointer; color: var(--link); }
-.github-more summary:focus-visible { outline: 2px solid var(--link); outline-offset: 5px; }
-.github-more .github-pulls { margin-top: 12px; }
-#github-status { margin-top: 18px; font-size: 11px; }
-@media (max-width:650px) {
-  .github-accounts { column-gap: 18px; }
-  .github-accounts a { font-size: 12px; }
-  .github-repos { grid-template-columns: 1fr; }
-  .github-pull { gap: 10px; }
-}
-
 /* GitHub contribution calendar, using the site's existing typography and colors. */
 .github-contributions { margin: 3px 0 26px; }
 .github-contributions-link { display: block; overflow-x: auto; }
