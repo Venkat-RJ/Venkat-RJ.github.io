@@ -24,11 +24,6 @@ function githubURL(value) {
 export function render(data) {
   const repos = [...data.repos].sort((a,b) => Date.parse(b.pushed_at) - Date.parse(a.pushed_at));
   const pulls = [...data.pulls.items].sort((a,b) => Date.parse(b.updated_at) - Date.parse(a.updated_at));
-  const merged = pulls.filter(pull => pullState(pull) === 'Merged').length;
-  const accountRows = accounts.map(name => {
-    const count = repos.filter(repo => repo.owner.login.toLowerCase() === name.toLowerCase()).length;
-    return `<li><a href="https://github.com/${name}">@${name}</a><span>${count ? `${count} public ${count === 1 ? 'repository' : 'repositories'}` : 'No public repositories'}</span></li>`;
-  }).join('');
   const repoRows = repos.map(repo => `<li class="github-repo">
     <div class="github-row-title"><a href="${esc(githubURL(repo.html_url))}">${esc(repo.name)}</a>${repo.fork ? '<span class="github-tag">Fork</span>' : ''}${repo.archived ? '<span class="github-tag">Archived</span>' : ''}</div>
     <p>${esc(descriptions[repo.full_name] || repo.description || 'Public repository.')}</p>
@@ -41,9 +36,7 @@ export function render(data) {
     const state = pullState(pull);
     return `<li class="github-pull"><div><a href="${esc(url)}">${esc(pull.title)}</a><div class="github-meta">${esc(context)} · ${esc(pull.user.login)}<br>Updated ${esc(date(pull.updated_at))}</div></div><span class="github-state state-${state.toLowerCase()}">${state}</span></li>`;
   });
-  return `<ul class="github-accounts">${accountRows}</ul>
-    <p class="github-totals">${repos.length} public repositories, including ${repos.filter(repo => repo.fork).length} forks · ${data.pulls.total_count} public pull requests · ${merged} merged${pulls.length < data.pulls.total_count ? ' among recent PRs' : ''}</p>
-    <div class="github-subheading"><h3>Repositories</h3><span>Latest updates first</span></div>
+  return `<div class="github-subheading"><h3>Repositories</h3><span>Latest updates first</span></div>
     <ul class="github-repos">${repoRows || '<li>No public repositories available.</li>'}</ul>
     <div class="github-subheading"><h3>Recent pull requests</h3><a href="${search}">All pull requests ↗</a></div>
     <ul class="github-pulls">${pullRows.slice(0,4).join('') || '<li>No public pull requests available.</li>'}</ul>

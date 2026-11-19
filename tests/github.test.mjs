@@ -10,6 +10,9 @@ test('snapshot includes four confirmed accounts and only public fields', () => {
  assert.ok(snapshot.repos.every(r=>accounts.includes(r.owner.login)));
  assert.ok(!JSON.stringify(snapshot).includes('"body":'));
  assert.ok(html.includes(render(snapshot)));
+ assert.ok(!html.includes('class="github-accounts"'));
+ assert.ok(!html.includes('class="github-totals"'));
+ assert.ok(!render(snapshot).includes('No public repositories'));
 });
 test('pull request states are distinct', () => {
  assert.equal(pullState({state:'closed',pull_request:{merged_at:'2026-09-01'}}),'Merged');
@@ -58,7 +61,7 @@ test('merged PRs beyond the first twelve remain visible',async()=>{
   const data=await loadPublicData();
   assert.equal(data.pulls.items.length,19);
   assert.equal(data.pulls.items.filter(pull=>pullState(pull)==='Merged').length,7);
-  assert.match(render(data),/19 public pull requests · 7 merged/);
+  assert.doesNotMatch(render(data),/public pull requests ·/);
   assert.match(render(data),/Show 15 more pull requests \(7 merged\)/);
  } finally {globalThis.fetch=original;}
 });
@@ -73,7 +76,7 @@ test('an unavailable repository account cannot prevent a merged PR refresh',asyn
   const container={},status={},old={...snapshot,fetchedAt:'2020-01-01T00:00:00Z'};
   await refresh(container,status,old);
   assert.match(container.innerHTML,/state-merged/);
-  assert.match(container.innerHTML,/1 public pull requests · 1 merged/);
+  assert.doesNotMatch(container.innerHTML,/public pull requests ·/);
   assert.match(status.textContent,/Some repository details use saved data/);
   await assert.rejects(loadPublicData(),/Repository data unavailable/);
  } finally {globalThis.fetch=original;}
