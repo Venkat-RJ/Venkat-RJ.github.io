@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101e2c">
+  <meta name="description" content="RecursiveCal physical inquiry. Watch an agent investigate a liftgate, infer its dynamics, commit a calibration, and verify it on new trajectories.">
+  <title>RecursiveCal | Learn the machine</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="inquiry.css">
+  <script src="inquiry-cad.js" defer></script><script src="inquiry-geometry.js" defer></script>
+  <script src="inquiry-renderer.js" defer></script><script src="inquiry-reference.js" defer></script><script src="inquiry.js" defer></script>
+</head>
+<body>
+<a href="#workspace" class="skip">Skip to the experiment</a>
+<header class="topbar">
+  <a class="brand" href="inquiry.html"><span class="mark">R<span>↻</span></span><span>RecursiveCal<small>PHYSICAL INQUIRY</small></span></a>
+  <nav aria-label="Workspace"><a class="active" href="inquiry.html" aria-current="page">Investigation</a><a href="index.html">Model & measurements</a></nav>
+  <span id="connection" class="connection">Connecting to the rig</span>
+</header>
+<div class="layout">
+  <aside class="setup">
+    <div class="eyebrow">EXPERIMENT SETUP</div><h1>Learn the<br> machine.</h1>
+    <p class="intro">Test a physical system.<br> Build a belief. Prove the calibration.</p>
+    <form id="inquiryForm">
+      <label for="case">Hidden plant condition</label><select id="case">
+        <option value="weak_motor">Reduced drive effectiveness</option><option value="nominal">Nominal mechanism</option>
+        <option value="payload">Additional hatch mass</option><option value="friction">Increased hinge friction</option>
+        <option value="gas_loss">Reduced gas assistance</option><option value="sensor_bias">Encoder offset</option>
+        <option value="compound">Combined changes</option><option value="directional_friction">Unmodeled closing friction</option><option value="overload">Mass outside the model bank</option>
+      </select><p class="field-note">You choose the condition. The investigator receives sensor readings only.</p>
+      <label for="policy">Investigator</label><select id="policy"><option value="bayes">Bayesian adaptive tests</option><option value="fixed">Fixed high → low → mid tests</option><option value="no_probe">Nominal controller, no tests</option></select>
+      <div class="pair"><div><label for="seed">Sensor seed</label><input id="seed" type="number" min="0" max="2147453647" step="1" value="7" required></div><div><label for="budget">Test budget</label><input id="budget" type="number" min="0" max="12" step="0.1" value="8" required></div></div>
+      <label for="maxTests">Maximum experiments</label><input id="maxTests" type="number" min="0" max="6" step="1" value="5" required>
+      <button id="runStudy" type="submit" class="primary" disabled>Run investigation <span>↗</span></button>
+    </form>
+    <button id="loadRecorded" class="secondary">Open recorded investigation</button>
+    <label class="import-label" for="importStudy">Import a report <span>↑</span><input id="importStudy" type="file" accept=".json,application/json"></label>
+    <div class="rig-spec"><span class="eyebrow">PHYSICAL RIG</span><dl><div><dt>Mechanism</dt><dd>1 hinge · 2 struts</dd></div><div><dt>Travel</dt><dd>0–78 degrees</dd></div><div><dt>Command limit</dt><dd>±330 N / strut</dd></div><div><dt>Instruments</dt><dd>Angle · rate · force</dd></div></dl><p>SI mechanics and CAD geometry.<br>Synthetic parameters and sensors.</p></div>
+    <a class="source" href="https://github.com/Venkat-RJ/RecursiveCal" target="_blank" rel="noopener noreferrer">Source & citation ↗</a>
+  </aside>
+  <main id="workspace">
+    <div class="workspace-title"><div><span class="eyebrow">OBSERVE → EXPERIMENT → INFER → VERIFY</span><h2>The machine is the test.</h2></div><span id="runKind" class="pill">No investigation loaded</span></div>
+    <div id="message" role="status" aria-live="polite" class="message">Choose a hidden condition and run an investigation, or open recorded evidence.</div>
+    <section class="metrics" aria-label="Investigation results">
+      <article><span>Independent motion checks</span><strong id="motionResult">Ready</strong><small id="motionDetail">Four unseen motion profiles</small></article>
+      <article><span>Tracking error, before → after</span><strong id="errorResult">n/a</strong><small>Mean RMSE across four profiles · degrees</small></article>
+      <article><span>Experiments / cost</span><strong id="costResult">n/a</strong><small id="budgetDetail">Bounded by the declared budget</small></article>
+      <article><span>Model adequacy</span><strong id="modelResult">Unknown</strong><small id="modelDetail">Checked against observed measurements</small></article>
+    </section>
+    <div class="primary-grid">
+      <section class="panel rig-panel" aria-label="CAD replay">
+        <div class="panel-heading"><div><span class="eyebrow">MECHANISM REPLAY</span><h3>One plant. Two calibrations.</h3></div><button id="cutaway" class="small" type="button" aria-pressed="false">Show mechanism</button></div>
+        <div class="cad-wrap"><canvas id="cad" aria-label="Interactive CAD liftgate. Drag to orbit, scroll to zoom, double-click to reset." tabindex="0"></canvas><div class="cad-labels"><span>BEFORE <b id="beforeAngle">0.0°</b></span><span>AFTER <b id="afterAngle">0.0°</b></span></div><span class="cad-help">Drag to orbit · Scroll to zoom</span><div id="cadFallback" hidden>3D display unavailable. The trace and verification remain available below.</div></div>
+        <div class="playback"><button id="play" type="button" aria-label="Play comparison" disabled>▶</button><span id="cursorTime">0.00 s</span><input id="scrubber" aria-label="Playback time" type="range" min="0" max="1000" value="0" disabled><span id="endTime">0.00 s</span></div>
+        <div class="profile-row"><label for="profile">Verification trajectory</label><select id="profile" disabled><option>No run loaded</option></select></div>
+      </section>
+      <section class="panel agent-panel"><div class="panel-heading"><div><span class="eyebrow">INVESTIGATOR JOURNAL</span><h3>Every decision, visible.</h3></div><span id="testCount" class="pill">0 tests</span></div><ol id="journal" class="journal"><li class="empty">Selected experiments, measurements, and belief updates will appear here.</li></ol><div id="commitment" class="commitment">A calibration is committed before independent verification begins.</div></section>
+    </div>
+    <section class="panel plot-panel"><div class="panel-heading"><div><span class="eyebrow">TRAJECTORY COMPARISON</span><h3>Does the physical response improve?</h3></div><div class="legend"><span class="target">Target</span><span class="before">Before</span><span class="after">After</span></div></div><svg id="trajectory" viewBox="0 0 1000 220" role="img" aria-label="Hinge angle versus time, before and after calibration"></svg><p class="plot-note">Simulator hinge angle in degrees. Curves stop at the recorded termination time. The investigator itself sees noisy instrumentation.</p></section>
+    <div class="secondary-grid">
+      <section class="panel"><div class="panel-heading"><div><span class="eyebrow">INFERRED DYNAMICS</span><h3>What the agent believes.</h3></div></div><div class="table-scroll"><table><thead><tr><th>Parameter</th><th>Estimate</th><th>Posterior σ</th></tr></thead><tbody id="beliefTable"><tr><td colspan="3">No evidence yet.</td></tr></tbody></table></div><p class="panel-note">Uncertainty is conditional on a finite 72-hypothesis bank. A narrow posterior does not establish that the model is correct.</p></section>
+      <section class="panel"><div class="panel-heading"><div><span class="eyebrow">INDEPENDENT VERIFICATION</span><h3>New motion. Same commitment.</h3></div></div><div class="table-scroll"><table><thead><tr><th>Profile</th><th>RMSE before</th><th>RMSE after</th><th>Check</th></tr></thead><tbody id="verificationTable"><tr><td colspan="4">The verifier runs after calibration is locked.</td></tr></tbody></table></div><p class="panel-note">Limits: RMSE ≤ 3°, final error ≤ 2°, speed ≤ 1.15 rad/s, saturation ≤ 35%. No tuning from these results.</p></section>
+    </div>
+    <section class="support-note"><span class="support-icon">!</span><div><h3>Unpowered behavior is a separate requirement.</h3><p id="supportDetail">The verifier tests passive holding and power loss. Controller calibration cannot supply a missing mechanical brake.</p></div><span class="pill">No hardware validation</span></section>
+    <section class="panel evidence"><div class="panel-heading"><div><span class="eyebrow">REPRODUCIBLE EVIDENCE</span><h3>Keep the complete experiment.</h3></div><button id="exportStudy" class="small" type="button" disabled>Export report ↓</button></div><p id="evidenceDetail">The report includes observations, decisions, source hashes, the sealed calibration, verification traces, and evaluator-only plant truth.</p><details><summary>Inspect protocol, calibration and provenance</summary><pre id="provenance">No report loaded.</pre></details></section>
+    <footer>RecursiveCal · Physical inquiry foundation <span>SI mechanics · Synthetic evidence · Bayesian baseline</span></footer>
+  </main>
+</div>
+</body></html>
