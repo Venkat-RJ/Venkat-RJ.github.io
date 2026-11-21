@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>RecursiveCal · Mechanical CAD Test Cell</title>
+<meta name="description" content="A parametric 69-component mechanical assembly with CAD-linked hinge physics, moving power struts, and controller comparison.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+<header class="mast">
+ <div class="identity"><span class="brandmark" aria-hidden="true"><span></span><span></span></span><div><strong>RecursiveCal</strong><span class="subhead">MECHANICAL ENGINEERING LAB</span></div></div>
+ <div class="mast-center"><span class="bullet live"></span> CAD-LINKED TEST CELL <span class="mast-sep">/</span> RCL-01 <span class="mast-sep">/</span> TAILGATE</div>
+ <div class="mast-right"><span class="state-dot"></span> MODEL IN THE LOOP <span class="mast-sep">|</span> <span class="build">PARAMETRIC CAD / 0.2</span></div>
+</header>
+<div class="workspace">
+ <aside class="control-pane">
+  <div class="control-head"><div class="eyebrow">EXPERIMENT SETUP</div><h1>Tailgate <span>CAD test cell</span></h1><p>Hinge • ball joints • two powered struts. Motion comes from the actual CAD geometry and dynamics model.</p></div>
+  <div class="pane-section">
+   <div class="section-name"><span>01</span> INJECT FAULT</div>
+   <label class="field-label" for="faultSelect">Simulated plant condition</label>
+   <select id="faultSelect" aria-label="Simulated plant condition">
+    <option value="combined" selected>Combined fault: motor + friction + load</option>
+    <option value="nominal">Nominal system</option><option value="hinge_friction">High hinge friction</option>
+    <option value="motor_fade">Motor power reduced</option><option value="heavy_hatch">Heavier tailgate</option>
+    <option value="sensor_bias">Angle sensor drift</option><option value="gas_leak">Leaking gas springs</option>
+   </select>
+   <div class="fault-note"><span class="fault-mark"></span><span id="faultInfo">Reduced drive power and increased hinge resistance.</span></div>
+  </div>
+  <div class="pane-section">
+   <div class="section-name"><span>02</span> CONTROLLER</div>
+   <div class="controller-selector"><button class="pill active" data-controller="factory" type="button">Factory</button><button class="pill" data-controller="tuned" type="button">Modified</button></div>
+   <div class="control-slider"><div><label for="gainInput">Feedback gain</label><output id="gainValue">1.00×</output></div><input id="gainInput" type="range" min="0.7" max="1.8" step="0.05" value="1"></div>
+   <div class="control-slider"><div><label for="frictionInput">Friction compensation</label><output id="frictionValue">1.00×</output></div><input id="frictionInput" type="range" min="0.3" max="3" step="0.1" value="1"></div>
+   <div class="control-slider"><div><label for="gravityInput">Gravity compensation</label><output id="gravityValue">1.00×</output></div><input id="gravityInput" type="range" min="0.7" max="1.35" step="0.05" value="1"></div>
+   <button id="suggestBtn" class="secondary-btn" type="button"><span class="btn-mono">▤</span> Apply modified preset <span class="small-right">MODEL-BASED</span></button>
+   <div class="fineprint">Model-specific preset is informed by the selected synthetic fault. This is not an RL result or automatic fault diagnosis.</div>
+  </div>
+  <div class="pane-section experiment-section">
+   <div class="section-name"><span>03</span> EXPERIMENT</div>
+   <div class="mode-title">Inspect physical assembly</div>
+   <div class="controller-selector view-selector"><button type="button" id="viewVehicle" class="pill active">CAD assembly</button><button type="button" id="viewMech" class="pill">Cutaway</button></div>
+   <button id="compareBtn" type="button" class="secondary-btn"><span class="square-icon"></span> Compare factory / modified</button>
+  </div>
+  <div class="start-group">
+   <button id="runBtn" class="primary-btn" type="button"><span id="playSymbol">▶</span><span id="playLabel">RUN OPENING TEST</span><span class="keyhint">SPACE</span></button>
+   <button id="resetBtn" class="reset-btn" type="button" title="Return to the beginning">↺</button>
+  </div>
+  <p class="side-disclaimer">Original parametric CAD and physics. All dimensions and load characteristics are illustrative, not OEM or measured hardware data.</p>
+ </aside>
+ <main class="main-pane">
+  <div class="viewport" id="viewport">
+    <canvas id="scene" aria-label="Interactive CAD-derived hatch and dual telescoping powered struts"></canvas>
+    <div id="unsupported" hidden>3D graphics unavailable in this browser. Try a current Chromium or Firefox browser with WebGL2 enabled.</div>
+    <button id="overlayPlay" aria-label="Play or pause mechanical simulation" class="overlay-play" type="button">▶</button><div class="viewport-hud top-left"><div class="eyebrow">LIVE MECHANISM</div><div class="scene-title">69-part hinge + twin power struts</div><div class="scene-description">Drag to orbit · Scroll to zoom · Double-click to reset</div></div>
+    <div class="viewport-hud top-right"><span class="sim-pill"><i></i> SYNTHETIC PHYSICS</span><span class="sim-pill sub" id="fpsText">SIM 100 Hz</span></div>
+    <div class="viewport-tools"><button id="resetCamera" aria-label="Reset camera" title="Reset camera" type="button">⌖</button><button id="toggleLabels" aria-label="Toggle component labels" title="Toggle component labels" type="button">◎</button><button id="fullscreenBtn" aria-label="Immersive mechanical view" title="Immersive mechanical view" type="button">⛶</button></div>
+    <div class="compare-half" id="compareHalf" hidden><div><span>FACTORY CONTROLLER</span><strong id="factoryAngle">0.0°</strong></div><div><span>MODIFIED CONTROLLER</span><strong id="tunedAngle">0.0°</strong></div></div>
+    <div id="callouts" class="callouts"><span id="callHinge" class="callout">HINGE AXLE <i></i></span><span id="callStrut" class="callout">POWER STRUT <i></i></span></div>
+    <div class="viewport-foot"><div class="swatches"><span><i class="target"></i> Target</span><span><i class="actual"></i> Actual</span><span><i class="fault"></i> Fault / factory</span><span><i class="test"></i> Diagnostic</span><span><i class="safety"></i> Safety</span></div><span class="caption-info">Original parametric STEP CAD · 10 ms dynamics</span></div>
+  </div>
+  <div class="instrument-strip">
+    <div class="instrument-header"><div class="label-group"><div class="eyebrow">MEASUREMENTS</div><div class="instrument-name">Motion response <span id="testState">READY</span></div></div><div class="time-pair"><span>TEST TIME</span><strong id="timeNow">0.00</strong><span class="units">s</span></div></div>
+    <div class="instruments">
+      <div class="signal-chart"><canvas id="plot" aria-label="Live opening angle chart comparing target and actual hinge angle"></canvas><div class="plot-legend"><span><i class="target"></i> Command</span><span><i class="actual"></i> Response</span><span id="baselineLegend" hidden><i class="fault"></i> Factory</span></div></div>
+      <div class="readouts"><div><small>OPEN ANGLE</small><strong id="angleNow">0.0<span>deg</span></strong></div><div><small>STRUT STROKE</small><strong id="strokeNow">0<span>mm</span></strong></div><div><small>MOTOR CURRENT</small><strong id="currentNow">0.0<span>A</span></strong></div><div><small>MOTOR TORQUE</small><strong id="errorNow">0.0<span>Nm</span></strong></div></div>
+    </div>
+    <div class="timeline"><span id="timelineStart">0.00s</span><input type="range" id="scrubber" min="0" max="6.5" step="0.01" value="0" aria-label="Scrub simulation timeline"><span>6.50s</span></div>
+  </div>
+  <div class="cad-resources"><a href="bill_of_materials.csv" download>69-PART BOM</a><span>ILLUSTRATIVE PARAMETRIC CAD · SYNTHETIC PHYSICS · NO REAL HARDWARE</span></div>
+  <div class="measurement-footer"><div id="resultSummary">Choose a fault and run the opening cycle to inspect physical response.</div><div>TIME STEP 10 ms <span class="sep">/</span> NO HARDWARE CONNECTED</div></div>
+ </main>
+</div>
+</div>
+<script src="physics_v2.js"></script>
+<script src="cad_mesh.js"></script>
+<script src="cad_renderer.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
