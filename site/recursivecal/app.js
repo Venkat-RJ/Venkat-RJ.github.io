@@ -214,22 +214,22 @@
     for (let index = 0; index <= 3; index++) {
       const value = low + (high - low) * index / 3, yy = y(value);
       ctx.strokeStyle = '#e6ecf4'; ctx.beginPath(); ctx.moveTo(margins.left, yy); ctx.lineTo(margins.right, yy); ctx.stroke();
-      ctx.fillStyle = '#96a5b8'; ctx.fillText(fmt(value, state.signal === 'current' ? 1 : 0), margins.left - 10, yy + 3);
+      ctx.fillStyle = '#64748b'; ctx.fillText(fmt(value, state.signal === 'current' ? 1 : 0), margins.left - 10, yy + 3);
     }
     ctx.textAlign = 'center';
     for (const time of [0, 1, 2, 3, 4, 5, 6]) {
       if (width < 450 && time % 2) continue;
       const xx = x(time);
       ctx.strokeStyle = '#f0f3f8'; ctx.beginPath(); ctx.moveTo(xx, margins.top); ctx.lineTo(xx, margins.bottom); ctx.stroke();
-      ctx.fillStyle = '#9ba8ba'; ctx.fillText(time + '.0', xx, height - 8);
+      ctx.fillStyle = '#64748b'; ctx.fillText(time + '.0', xx, height - 8);
     }
-    ctx.textAlign = 'right'; ctx.fillStyle = '#a2afc0'; ctx.fillText('s', margins.right, height - 8);
+    ctx.textAlign = 'right'; ctx.fillStyle = '#64748b'; ctx.fillText('s', margins.right, height - 8);
     const draw = (frames, property, factor, color, dash = false) => {
       ctx.strokeStyle = color; ctx.lineWidth = dash ? 1.4 : 2; ctx.setLineDash(dash ? [4, 4] : []); ctx.beginPath();
       frames.forEach((frame, index) => index ? ctx.lineTo(x(frame.t), y(frame[property] * factor)) : ctx.moveTo(x(frame.t), y(frame[property] * factor)));
       ctx.stroke(); ctx.setLineDash([]);
     };
-    if (state.signal === 'angle') draw(state.factoryRun.frames, 'q_target', DEG, '#a8b6ca', true);
+    if (state.signal === 'angle') draw(state.factoryRun.frames, 'q_target', DEG, '#7d91af', true);
     if (state.compare) {
       draw(state.factoryRun.frames, key, scale, '#3974db');
       draw(state.tunedRun.frames, key, scale, '#168c79');

@@ -77,6 +77,7 @@ async def run(html: Path, artifacts: Path):
                 time: window.__recursivecal.state.time
             })''')
             assert findings['comparison']['factory'] < findings['comparison']['modified']
+            await page.locator('#toast').wait_for(state='hidden', timeout=7000)
             await page.screenshot(path=str(artifacts / 'comparison.png'), full_page=True)
             await page.locator('#compareBtn').click()
             await page.locator('#viewMech').click()
@@ -120,6 +121,7 @@ async def run(html: Path, artifacts: Path):
             assert await page.locator('#results').is_visible()
             assert await page.locator('#metricsBody tr').count() == 7
             assert await page.locator('#checksGrid .check').count() == 3
+            await page.locator('#toast').wait_for(state='hidden', timeout=7000)
             await page.screenshot(path=str(artifacts / 'results.png'), full_page=True)
             async with page.expect_download() as downloading:
                 await page.locator('#exportJsonBtn').click()
@@ -142,6 +144,7 @@ async def run(html: Path, artifacts: Path):
             assert await page.locator('#modelDialog').is_visible()
             await page.locator('#closeModelBtn').click()
 
+            await page.locator('#toast').wait_for(state='hidden', timeout=7000)
             findings['layouts'] = []
             for width, height in [(1536, 1000), (1100, 900), (820, 1000), (390, 844), (360, 800)]:
                 await page.set_viewport_size({'width': width, 'height': height})
