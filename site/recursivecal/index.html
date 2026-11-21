@@ -1,78 +1,142 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>RecursiveCal · Mechanical CAD Test Cell</title>
-<meta name="description" content="A parametric 69-component mechanical assembly with CAD-linked hinge physics, moving power struts, and controller comparison.">
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f4f6f9">
+  <title>RecursiveCal · Tailgate Test Workbench</title>
+  <meta name="description" content="An interactive mechanical test workbench. Configure synthetic faults, inspect a 69-part CAD assembly, compare controller responses, and export simulation traces.">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="m9 5 11 7-11 7z"/></symbol>
+  <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 1 8M4 4v6h6"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="m12 3 9 5v9l-9 5-9-5V8zM3 8l9 5 9-5M12 13v9M7.5 5.5l9 5"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 3v17h17M7 14l4-5 4 3 5-7"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h5m4 0h7M4 17h10m4 0h2"/><circle cx="11" cy="7" r="2"/><circle cx="16" cy="17" r="2"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M4 16v5h16v-5"/></symbol>
+  <symbol id="i-expand" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 2v5m0 10v5M2 12h5m10 0h5"/></symbol>
+  <symbol id="i-label" viewBox="0 0 24 24"><path d="M3 4h8l10 10-7 7L3 10z"/><circle cx="7" cy="8" r="1"/></symbol>
+  <symbol id="i-compare" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 4v16M6 8h3m6 8h3"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/></symbol>
+</svg>
+<a class="skip-link" href="#workbench">Skip to workbench</a>
 <div id="app">
-<header class="mast">
- <div class="identity"><span class="brandmark" aria-hidden="true"><span></span><span></span></span><div><strong>RecursiveCal</strong><span class="subhead">MECHANICAL ENGINEERING LAB</span></div></div>
- <div class="mast-center"><span class="bullet live"></span> CAD-LINKED TEST CELL <span class="mast-sep">/</span> RCL-01 <span class="mast-sep">/</span> TAILGATE</div>
- <div class="mast-right"><span class="state-dot"></span> MODEL IN THE LOOP <span class="mast-sep">|</span> <span class="build">PARAMETRIC CAD / 0.2</span></div>
-</header>
-<div class="workspace">
- <aside class="control-pane">
-  <div class="control-head"><div class="eyebrow">EXPERIMENT SETUP</div><h1>Tailgate <span>CAD test cell</span></h1><p>Hinge • ball joints • two powered struts. Motion comes from the actual CAD geometry and dynamics model.</p></div>
-  <div class="pane-section">
-   <div class="section-name"><span>01</span> INJECT FAULT</div>
-   <label class="field-label" for="faultSelect">Simulated plant condition</label>
-   <select id="faultSelect" aria-label="Simulated plant condition">
-    <option value="combined" selected>Combined fault: motor + friction + load</option>
-    <option value="nominal">Nominal system</option><option value="hinge_friction">High hinge friction</option>
-    <option value="motor_fade">Motor power reduced</option><option value="heavy_hatch">Heavier tailgate</option>
-    <option value="sensor_bias">Angle sensor drift</option><option value="gas_leak">Leaking gas springs</option>
-   </select>
-   <div class="fault-note"><span class="fault-mark"></span><span id="faultInfo">Reduced drive power and increased hinge resistance.</span></div>
-  </div>
-  <div class="pane-section">
-   <div class="section-name"><span>02</span> CONTROLLER</div>
-   <div class="controller-selector"><button class="pill active" data-controller="factory" type="button">Factory</button><button class="pill" data-controller="tuned" type="button">Modified</button></div>
-   <div class="control-slider"><div><label for="gainInput">Feedback gain</label><output id="gainValue">1.00×</output></div><input id="gainInput" type="range" min="0.7" max="1.8" step="0.05" value="1"></div>
-   <div class="control-slider"><div><label for="frictionInput">Friction compensation</label><output id="frictionValue">1.00×</output></div><input id="frictionInput" type="range" min="0.3" max="3" step="0.1" value="1"></div>
-   <div class="control-slider"><div><label for="gravityInput">Gravity compensation</label><output id="gravityValue">1.00×</output></div><input id="gravityInput" type="range" min="0.7" max="1.35" step="0.05" value="1"></div>
-   <button id="suggestBtn" class="secondary-btn" type="button"><span class="btn-mono">▤</span> Apply modified preset <span class="small-right">MODEL-BASED</span></button>
-   <div class="fineprint">Model-specific preset is informed by the selected synthetic fault. This is not an RL result or automatic fault diagnosis.</div>
-  </div>
-  <div class="pane-section experiment-section">
-   <div class="section-name"><span>03</span> EXPERIMENT</div>
-   <div class="mode-title">Inspect physical assembly</div>
-   <div class="controller-selector view-selector"><button type="button" id="viewVehicle" class="pill active">CAD assembly</button><button type="button" id="viewMech" class="pill">Cutaway</button></div>
-   <button id="compareBtn" type="button" class="secondary-btn"><span class="square-icon"></span> Compare factory / modified</button>
-  </div>
-  <div class="start-group">
-   <button id="runBtn" class="primary-btn" type="button"><span id="playSymbol">▶</span><span id="playLabel">RUN OPENING TEST</span><span class="keyhint">SPACE</span></button>
-   <button id="resetBtn" class="reset-btn" type="button" title="Return to the beginning">↺</button>
-  </div>
-  <p class="side-disclaimer">Original parametric CAD and physics. All dimensions and load characteristics are illustrative, not OEM or measured hardware data.</p>
- </aside>
- <main class="main-pane">
-  <div class="viewport" id="viewport">
-    <canvas id="scene" aria-label="Interactive CAD-derived hatch and dual telescoping powered struts"></canvas>
-    <div id="unsupported" hidden>3D graphics unavailable in this browser. Try a current Chromium or Firefox browser with WebGL2 enabled.</div>
-    <button id="overlayPlay" aria-label="Play or pause mechanical simulation" class="overlay-play" type="button">▶</button><div class="viewport-hud top-left"><div class="eyebrow">LIVE MECHANISM</div><div class="scene-title">69-part hinge + twin power struts</div><div class="scene-description">Drag to orbit · Scroll to zoom · Double-click to reset</div></div>
-    <div class="viewport-hud top-right"><span class="sim-pill"><i></i> SYNTHETIC PHYSICS</span><span class="sim-pill sub" id="fpsText">SIM 100 Hz</span></div>
-    <div class="viewport-tools"><button id="resetCamera" aria-label="Reset camera" title="Reset camera" type="button">⌖</button><button id="toggleLabels" aria-label="Toggle component labels" title="Toggle component labels" type="button">◎</button><button id="fullscreenBtn" aria-label="Immersive mechanical view" title="Immersive mechanical view" type="button">⛶</button></div>
-    <div class="compare-half" id="compareHalf" hidden><div><span>FACTORY CONTROLLER</span><strong id="factoryAngle">0.0°</strong></div><div><span>MODIFIED CONTROLLER</span><strong id="tunedAngle">0.0°</strong></div></div>
-    <div id="callouts" class="callouts"><span id="callHinge" class="callout">HINGE AXLE <i></i></span><span id="callStrut" class="callout">POWER STRUT <i></i></span></div>
-    <div class="viewport-foot"><div class="swatches"><span><i class="target"></i> Target</span><span><i class="actual"></i> Actual</span><span><i class="fault"></i> Fault / factory</span><span><i class="test"></i> Diagnostic</span><span><i class="safety"></i> Safety</span></div><span class="caption-info">Original parametric STEP CAD · 10 ms dynamics</span></div>
-  </div>
-  <div class="instrument-strip">
-    <div class="instrument-header"><div class="label-group"><div class="eyebrow">MEASUREMENTS</div><div class="instrument-name">Motion response <span id="testState">READY</span></div></div><div class="time-pair"><span>TEST TIME</span><strong id="timeNow">0.00</strong><span class="units">s</span></div></div>
-    <div class="instruments">
-      <div class="signal-chart"><canvas id="plot" aria-label="Live opening angle chart comparing target and actual hinge angle"></canvas><div class="plot-legend"><span><i class="target"></i> Command</span><span><i class="actual"></i> Response</span><span id="baselineLegend" hidden><i class="fault"></i> Factory</span></div></div>
-      <div class="readouts"><div><small>OPEN ANGLE</small><strong id="angleNow">0.0<span>deg</span></strong></div><div><small>STRUT STROKE</small><strong id="strokeNow">0<span>mm</span></strong></div><div><small>MOTOR CURRENT</small><strong id="currentNow">0.0<span>A</span></strong></div><div><small>MOTOR TORQUE</small><strong id="errorNow">0.0<span>Nm</span></strong></div></div>
+  <header class="app-header">
+    <a class="identity" href="https://github.com/Venkat-RJ/RecursiveCal" aria-label="RecursiveCal source repository">
+      <svg class="brandmark" viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="9"/><path d="M10 24V12h8a4 4 0 0 1 0 8h-4m3 0 7 5M23 11h3v12"/></svg>
+      <span>RecursiveCal<small>TEST WORKBENCH</small></span>
+    </a>
+    <nav class="app-nav" aria-label="Workspace views">
+      <button type="button" class="nav-tab active" data-panel="workbench" aria-current="page"><svg class="icon"><use href="#i-box"/></svg>Workbench</button>
+      <button type="button" class="nav-tab" data-panel="results"><svg class="icon"><use href="#i-chart"/></svg>Results</button>
+    </nav>
+    <div class="header-end"><span class="environment-tag">Model in the loop</span><button id="modelInfoBtn" class="icon-button" type="button" aria-label="About the model" title="About the model"><svg class="icon"><use href="#i-info"/></svg></button></div>
+  </header>
+
+  <div class="run-toolbar" aria-label="Experiment controls">
+    <div class="experiment-path"><span class="project-code">RCL-01</span><span class="path-divider">/</span><strong>Tailgate opening</strong><span class="revision">v0.3</span></div>
+    <div class="run-actions">
+      <button id="setupToggle" class="button setup-toggle" type="button" aria-controls="experimentPanel" aria-expanded="false"><svg class="icon"><use href="#i-sliders"/></svg>Setup</button>
+      <span id="testState" class="run-state" role="status">Preview</span>
+      <button id="resetBtn" class="icon-button" type="button" aria-label="Reset test to beginning" title="Reset test"><svg class="icon"><use href="#i-reset"/></svg></button>
+      <button id="runBtn" class="button primary" type="button"><span id="playSymbol" aria-hidden="true">▶</span><span id="playLabel">Run test</span><kbd>Space</kbd></button>
+      <button id="exportBtn" class="button" type="button" title="Download both controller signal traces"><svg class="icon"><use href="#i-download"/></svg><span>Export CSV</span></button>
     </div>
-    <div class="timeline"><span id="timelineStart">0.00s</span><input type="range" id="scrubber" min="0" max="6.5" step="0.01" value="0" aria-label="Scrub simulation timeline"><span>6.50s</span></div>
   </div>
-  <div class="cad-resources"><a href="bill_of_materials.csv" download>69-PART BOM</a><span>ILLUSTRATIVE PARAMETRIC CAD · SYNTHETIC PHYSICS · NO REAL HARDWARE</span></div>
-  <div class="measurement-footer"><div id="resultSummary">Choose a fault and run the opening cycle to inspect physical response.</div><div>TIME STEP 10 ms <span class="sep">/</span> NO HARDWARE CONNECTED</div></div>
- </main>
+
+  <div class="workspace">
+    <aside id="experimentPanel" class="experiment-panel" aria-label="Experiment setup">
+      <div class="panel-heading"><span class="eyebrow">EXPERIMENT</span><span class="muted mono">001</span></div>
+      <div class="project-card"><svg class="icon"><use href="#i-box"/></svg><div><strong>Powered tailgate</strong><span>Rigid hinge · dual strut</span></div><span class="model-tag">CAD</span></div>
+      <section class="setup-section">
+        <div class="section-heading"><h2>Plant condition</h2><span class="count-tag">7 scenarios</span></div>
+        <label class="field-label" for="faultSelect">Fault scenario</label>
+        <select id="faultSelect">
+          <option value="combined" selected>Combined degradation</option>
+          <option value="nominal">Nominal plant</option>
+          <option value="hinge_friction">High hinge friction</option>
+          <option value="motor_fade">Reduced motor power</option>
+          <option value="heavy_hatch">Heavy tailgate</option>
+          <option value="sensor_bias">Angle sensor drift</option>
+          <option value="gas_leak">Gas spring leakage</option>
+        </select>
+        <p id="faultInfo" class="fault-note">Motor effectiveness 62%, hinge friction 2.5×, mass 29 kg.</p>
+        <dl class="plant-values"><div><dt>Hatch mass</dt><dd id="plantMass">29 <span>kg</span></dd></div><div><dt>Motor effectiveness</dt><dd id="plantMotor">62 <span>%</span></dd></div><div><dt>Hinge friction</dt><dd id="plantFriction">2.50<span>×</span></dd></div><div><dt>Gas assistance</dt><dd id="plantGas">100 <span>%</span></dd></div></dl>
+      </section>
+      <section class="setup-section">
+        <div class="section-heading"><h2>Controller</h2><span id="controllerTag" class="text-tag">Factory</span></div>
+        <div class="segmented" aria-label="Active controller"><button type="button" data-controller="factory" class="active" aria-pressed="true">Factory</button><button type="button" data-controller="tuned" aria-pressed="false">Modified</button></div>
+        <div class="control-slider"><div><label for="gainInput">Feedback gain</label><output for="gainInput" id="gainValue">1.00×</output></div><input id="gainInput" type="range" min="0.7" max="1.8" step="0.05" value="1"></div>
+        <div class="control-slider"><div><label for="frictionInput">Friction compensation</label><output for="frictionInput" id="frictionValue">1.00×</output></div><input id="frictionInput" type="range" min="0.3" max="3" step="0.1" value="1"></div>
+        <div class="control-slider"><div><label for="gravityInput">Gravity compensation</label><output for="gravityInput" id="gravityValue">1.00×</output></div><input id="gravityInput" type="range" min="0.7" max="1.35" step="0.01" value="1"></div>
+        <button id="suggestBtn" type="button" class="button preset-button"><svg class="icon"><use href="#i-sliders"/></svg>Apply fault preset</button>
+        <p class="help-text">Preset uses the selected fault parameters. Adjusting a slider selects Modified.</p>
+        <details class="advanced-settings"><summary>Additional preset values</summary><dl class="plant-values"><div><dt>Damping gain</dt><dd id="dampingValue">1.00×</dd></div><div><dt>Sensor correction</dt><dd id="sensorValue">0.00°</dd></div></dl></details>
+      </section>
+      <section class="setup-section cycle-section">
+        <div class="section-heading"><h2>Opening cycle</h2><svg class="icon muted"><use href="#i-clock"/></svg></div>
+        <div class="cycle-profile" aria-label="Smooth command rises from zero to 78 degrees in 4.8 seconds, then holds until 6.5 seconds"><svg viewBox="0 0 240 48" preserveAspectRatio="none" aria-hidden="true"><path class="profile-grid" d="M0 40H240M0 8H240M175 0v48"/><path class="profile-line" d="M0 40C65 40 85 8 175 8H240"/></svg><div><span>0° / 0 s</span><span>78° / 4.8 s</span><span>6.5 s</span></div></div>
+        <div class="cycle-note">Smooth open <span>then hold</span></div>
+      </section>
+      <div class="setup-footer"><svg class="icon"><use href="#i-info"/></svg><p>Synthetic plant and CAD. No hardware connected.</p></div>
+    </aside>
+
+    <main class="main-area">
+      <section id="workbench" class="view-panel" tabindex="-1" aria-label="Test workbench">
+        <div class="workbench-heading"><div><span class="eyebrow">MECHANICAL TEST CELL</span><h1>Tailgate response</h1></div><span id="scenarioBadge" class="scenario-badge">Combined degradation</span></div>
+        <div class="stage-grid">
+          <section class="scene-panel" aria-label="Mechanical assembly">
+            <div class="scene-toolbar"><div class="view-switch" aria-label="Assembly view"><button id="viewVehicle" type="button" class="active" aria-pressed="true"><svg class="icon"><use href="#i-box"/></svg>Assembly</button><button id="viewMech" type="button" aria-pressed="false">Cutaway</button></div><button id="compareBtn" class="compare-button" type="button" aria-pressed="false"><svg class="icon"><use href="#i-compare"/></svg><span>Compare</span></button></div>
+            <div class="viewport" id="viewport">
+              <canvas id="scene" tabindex="0" aria-label="Interactive 69-component tailgate CAD. Drag to orbit, scroll to zoom, or use arrow keys to orbit and plus or minus to zoom."></canvas>
+              <div id="unsupported" hidden>3D graphics are unavailable. Signal plots and results remain available.</div>
+              <div class="viewport-heading"><span>TAILGATE ASSEMBLY</span><small>69 components <b>·</b> Parametric CAD</small></div>
+              <div class="viewport-tools"><button id="resetCamera" class="icon-button" type="button" aria-label="Reset camera" title="Reset camera"><svg class="icon"><use href="#i-target"/></svg></button><button id="toggleLabels" class="icon-button" type="button" aria-label="Show component labels" aria-pressed="false" title="Component labels"><svg class="icon"><use href="#i-label"/></svg></button><button id="fullscreenBtn" class="icon-button" type="button" aria-label="Expand assembly view" aria-pressed="false" title="Expand assembly view"><svg class="icon"><use href="#i-expand"/></svg></button></div>
+              <div id="compareHalf" class="compare-half" hidden><div><span>Factory</span><strong id="factoryAngle">0.0°</strong></div><div><span>Modified</span><strong id="tunedAngle">0.0°</strong></div></div>
+              <div id="callouts" class="callouts" hidden><span id="callHinge" class="callout">Hinge axle</span><span id="callStrut" class="callout">Power strut</span></div>
+              <div class="viewport-bottom"><span class="orbit-hint">Drag to orbit <b>·</b> Scroll to zoom</span><button id="overlayPlay" type="button" class="viewport-play" aria-label="Play or pause simulation">▶</button><span class="axis-key"><b>X</b><b>Y</b><b>Z</b> <span>SI units</span></span></div>
+            </div>
+            <div class="playback"><span class="playback-label">PLAYBACK</span><strong><span id="timeNow">3.25</span><small> / 6.50 s</small></strong><input id="scrubber" type="range" min="0" max="6.5" step="0.01" value="3.25" aria-label="Simulation playback time"><label class="sr-only" for="speedSelect">Playback speed</label><select id="speedSelect"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></div>
+          </section>
+          <aside class="monitor-panel" aria-label="Current simulation values">
+            <div class="monitor-heading"><span class="eyebrow">SIGNAL INSPECTOR</span><span id="monitorController">Factory</span></div>
+            <div class="angle-instrument"><span class="signal-label">Opening angle</span><strong id="angleNow">0.0<span>deg</span></strong><div class="angle-meter"><span id="angleMeter"></span><i></i></div><div class="meter-labels"><span>0°</span><span>Target <b id="targetNow">0.0°</b></span><span>78°</span></div></div>
+            <dl class="signal-readouts"><div><dt>Strut stroke<small>Extension from closed</small></dt><dd id="strokeNow">0<span>mm</span></dd></div><div><dt>Motor current<small>Per actuator</small></dt><dd id="currentNow">0.00<span>A</span></dd></div><div><dt>Motor torque<small>Combined at hinge</small></dt><dd id="errorNow">0.0<span>Nm</span></dd></div></dl>
+            <div class="tracking-readout"><div><span>Tracking error</span><strong id="trackingNow">0.0°</strong></div><p id="trackingNote">Command minus true angle</p></div>
+          </aside>
+        </div>
+        <section class="trace-panel" aria-label="Synchronized signal traces">
+          <div class="trace-heading"><div><h2>Signal trace</h2><span id="traceDescription">Opening angle · degrees</span></div><div class="signal-switch" aria-label="Plotted signal"><button type="button" data-signal="angle" class="active" aria-pressed="true">Angle</button><button type="button" data-signal="current" aria-pressed="false">Current</button><button type="button" data-signal="torque" aria-pressed="false">Torque</button></div><div class="plot-legend"><span id="targetLegend"><i class="target"></i>Command</span><span id="responseLegend"><i class="factory"></i>Factory</span><span id="baselineLegend" hidden><i class="modified"></i>Modified</span></div></div>
+          <div class="chart-wrap"><canvas id="plot" tabindex="0" aria-label="Opening angle signal plot. Click or use the playback slider to inspect time."></canvas></div>
+          <div class="trace-footer"><span id="resultSummary">Full cycle simulation · 6.50 seconds</span><button id="viewResultsBtn" class="text-button" type="button">View analysis</button></div>
+        </section>
+      </section>
+
+      <section id="results" class="view-panel results-panel" hidden aria-label="Simulation results">
+        <div class="results-heading"><div><span class="eyebrow">FULL CYCLE ANALYSIS</span><h1>Cycle analysis</h1><p id="resultScenario">Combined degradation · 6.50 s opening cycle</p></div><button id="exportJsonBtn" class="button" type="button"><svg class="icon"><use href="#i-download"/></svg>Export run JSON</button></div>
+        <div class="result-overview"><div><span class="signal-label">Factory tracking error</span><strong id="factoryMae">0.00<small>deg MAE</small></strong></div><div><span class="signal-label">Modified tracking error</span><strong id="modifiedMae">0.00<small>deg MAE</small></strong></div><div class="delta-card"><span class="signal-label">Change in tracking error</span><strong id="improvement">0.0<small>%</small></strong><span id="improvementNote">Same controller settings</span></div></div>
+        <div class="result-table-wrap"><table class="results-table"><caption>Computed metrics for both controllers, over the full simulation cycle.</caption><thead><tr><th scope="col">Measurement</th><th scope="col">Factory</th><th scope="col">Modified</th><th scope="col">Unit</th></tr></thead><tbody id="metricsBody"></tbody></table></div>
+        <section class="checks-panel"><div class="section-heading"><h2>Illustrative acceptance checks</h2><span id="checkSummary" class="text-tag">Modified controller</span></div><div id="checksGrid" class="checks-grid"></div><p>Demo thresholds only. These checks evaluate the synthetic traces and do not certify hardware safety or compliance.</p></section>
+        <div class="analysis-note"><svg class="icon"><use href="#i-info"/></svg><p>Both trajectories are computed when the setup changes. Playback only moves the inspection cursor. Presets use known fault parameters; this demo does not perform learned RL or automatic diagnosis.</p></div>
+      </section>
+      <footer class="workbench-footer"><span>Model in the loop <b>·</b> Synthetic data</span><span>Integration <strong>10 ms</strong> <b>·</b> Trace ≈ <strong>30 ms</strong></span><a id="bomLink" href="bill_of_materials.csv" download>Bill of materials <svg class="icon"><use href="#i-download"/></svg></a></footer>
+    </main>
+  </div>
 </div>
-</div>
+<div id="toast" class="toast" role="status" hidden></div>
+<dialog id="modelDialog" aria-labelledby="modelDialogTitle">
+  <div class="dialog-header"><div><span class="eyebrow">MODEL NOTES</span><h2 id="modelDialogTitle">What this workbench simulates</h2></div><button id="closeModelBtn" class="icon-button" type="button" aria-label="Close model notes"><svg class="icon"><use href="#i-close"/></svg></button></div>
+  <p>A rigid tailgate hinge with two powered struts, driven by an illustrative controller. The animated mechanism uses the same mount geometry as the physics model.</p>
+  <dl class="model-details"><div><dt>Assembly</dt><dd>69 CAD components with articulated hatch and struts</dd></div><div><dt>Cycle</dt><dd>0° to 78° over 4.8 s, then hold to 6.5 s</dd></div><div><dt>Time resolution</dt><dd>10 ms integration; trace sampled every third step, plus the final frame</dd></div><div><dt>Controller presets</dt><dd>Hand-set values informed by the injected synthetic fault</dd></div><div><dt>Scope</dt><dd>Browser model demonstration. No ECU, HIL hardware, OEM measurements, autonomous diagnosis, or trained RL controller.</dd></div></dl>
+  <p class="help-text">CSV exports contain both full-cycle trajectories. JSON exports also include plant parameters, controller settings, metrics, and the playback position.</p>
+  <a class="button" href="https://github.com/Venkat-RJ/RecursiveCal" target="_blank" rel="noopener noreferrer">View source repository</a>
+</dialog>
 <script src="physics_v2.js"></script>
 <script src="cad_mesh.js"></script>
 <script src="cad_renderer.js"></script>
