@@ -46,6 +46,35 @@ jobs:
         with:
           path: './site'
           name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Wait for Pages artifact metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PAGES_ARTIFACT_NAME: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          node --input-type=module <<'NODE'
+          const endpoint = `https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}/artifacts?per_page=100`;
+          let available = false;
+          for (let attempt = 0; attempt < 12; attempt++) {
+            const response = await fetch(endpoint, {
+              headers: {
+                Authorization: `Bearer ${process.env.GH_TOKEN}`,
+                Accept: 'application/vnd.github+json',
+                'X-GitHub-Api-Version': '2022-11-28'
+              }
+            });
+            if (!response.ok) throw new Error(`Artifact metadata request failed: HTTP ${response.status}`);
+            const data = await response.json();
+            const artifact = data.artifacts.find(item => item.name === process.env.PAGES_ARTIFACT_NAME && !item.expired);
+            if (artifact) {
+              console.log(`Pages artifact ${artifact.id} is available for deployment.`);
+              available = true;
+              break;
+            }
+            console.log(`Waiting for uploaded Pages artifact metadata (${attempt + 1}/12).`);
+            if (attempt < 11) await new Promise(resolve => setTimeout(resolve, 5000));
+          }
+          if (!available) throw new Error('Uploaded Pages artifact did not appear in the Actions API within 55 seconds.');
+          NODE
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
