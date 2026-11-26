@@ -1,3 +1,5 @@
+import { createPanda3D } from './panda-3d.mjs?v=20261126-3d';
+
 (() => {
   'use strict';
 
@@ -119,6 +121,9 @@
   }, head);
   make('path', { class: 'panda-smile', d: 'M0 -3v3M0 0q-3 4-6 1M0 0q3 4 6 1' }, head);
 
+  // The SVG character remains available if a device cannot create a 3D context.
+  const character = createPanda3D(history);
+
   let width = 0;
   let height = 0;
   let center = 153;
@@ -129,7 +134,8 @@
   let target = 50;
   let historyTop = 0;
   let groundBlend = 0;
-  let roamPhase = 0;
+  let storyTime = 0;
+  let renderSize = 128;
   let lastTime = 0;
   let raf = 0;
   let visible = false;
@@ -137,6 +143,35 @@
   let behindTree = false;
 
   const treeX = y => center + 2.8 * Math.sin(y / 232) + 2.2 * Math.sin(y / 71);
+
+  // A short, continuous story: climb, hide, peek from both sides, emerge and slide.
+  const moments = [
+    [0,    0,    0,  1, -0.16,  0, 0, 'climbing'],
+    [2.2,  .25,-18,  1,  0.18,  0, 0, 'climbing'],
+    [3.5,  1,  -24, .15,-0.85,  0, 0, 'going-behind'],
+    [5,    .5, -32, -1, -2.70,  0, 0, 'hiding'],
+    [5.8,  0,  -38, -1, -3.14,  0, 0, 'hiding'],
+    [6.4,  0,  -38, -1,  0,     0, 0, 'peeking-right'],
+    [7.8,  .9, -40, -1, -0.27,  1, 1, 'peeking-right'],
+    [9.8,  .9, -40, -1, -0.27,  1, 1, 'hiding'],
+    [11,   0,  -33, -1,  0.2,   0, 0, 'peeking-left'],
+    [12.4,-.9, -29, -1,  0.27, -1, 1, 'peeking-left'],
+    [14.3,-.9, -29, -1,  0.27, -1, 1, 'coming-out'],
+    [15.6,-1,  -22, .15, 1.0,   0, 0, 'coming-out'],
+    [17,  -.3, -12,  1,  0.2,   0, 0, 'climbing-up'],
+    [18.5, 0,  -39,  1, -0.2,   0, 0, 'sliding-down'],
+    [20,   .12,  0,  1,  0.2,   0, 0, 'resting'],
+    [23,   0,    0,  1, -0.16,  0, 0, 'climbing']
+  ];
+  function story(time) {
+    const local = time % 23;
+    const index = moments.findIndex((moment, i) => i < moments.length - 1 && local < moments[i + 1][0]);
+    const a = moments[Math.max(0,index)], b = moments[Math.max(0,index) + 1];
+    const progress = (local - a[0]) / (b[0] - a[0]);
+    const ease = (1 - Math.cos(progress * Math.PI)) / 2;
+    const values = a.slice(1,7).map((value,i) => value + (b[i + 1] - value) * ease);
+    return { x:values[0], lift:values[1], depth:values[2], yaw:values[3], peek:values[4], wave:values[5], mode:a[7] };
+  }
 
   function updateTarget() {
     historyTop = history.getBoundingClientRect().top;
@@ -153,9 +188,11 @@
     width = nextWidth;
     height = nextHeight;
     scale = mobile.matches ? 0.56 : 0.92;
-    center = mobile.matches ? 34 : first.left - bounds.left - 71;
+    center = mobile.matches ? 34 : first.left - bounds.left - 64;
+    renderSize = mobile.matches ? 80 : 128;
+    character?.resize(renderSize);
     groundY = height - 21;
-    endY = groundY - 43 * scale;
+    endY = groundY - renderSize * 0.37;
     const radius = mobile.matches ? 12.5 : 23;
     svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
 
@@ -227,25 +264,43 @@
   }
 
   function paint(time, speed) {
-    const wandering = groundBlend > 0.01 && !reduced.matches;
-    const step = wandering ? roamPhase * 10 : current / (mobile.matches ? 11 : 17);
-    const orbitRadius = mobile.matches ? 9 : 26;
-    const sway = (mobile.matches ? 3 : 7) * Math.sin(current / 59);
-    const x = treeX(current) + sway * (1 - groundBlend) + Math.sin(roamPhase) * orbitRadius * groundBlend;
-    const y = current + (Math.cos(roamPhase) * 5 - Math.abs(Math.sin(step)) * 1.4) * groundBlend;
-    const tilt = wandering ? Math.sin(step) * 3 : Math.sin(current / 39) * 4;
+    const motion = reduced.matches
+      ? { x:0, lift:0, depth:1, yaw:-0.16, peek:0, wave:0, mode:'resting' }
+      : story(storyTime);
+    const step = current / (mobile.matches ? 11 : 17) + storyTime * 2.3;
+    const orbitRadius = mobile.matches ? 11 : 20;
+    const x = treeX(current) + motion.x * orbitRadius;
+    const y = clamp(current + motion.lift * (mobile.matches ? 0.55 : 1), 50, endY)
+      + motion.depth * 3 * groundBlend;
+    const tilt = Math.sin(step) * 2 * (1 - Math.abs(motion.peek)) - motion.peek * 8;
     const breath = reduced.matches ? 1 : 1 + Math.sin(time / 900) * 0.008;
-    const move = reduced.matches ? 0 : wandering ? 1 : clamp(speed / 1.5, 0.1, 1);
-    const nextBehind = wandering && groundBlend > 0.85 && Math.cos(roamPhase) < -0.18;
+    const move = reduced.matches ? 0 : clamp(speed / 1.5, 0.35, 1);
+    const nextBehind = motion.depth < 0;
     if (nextBehind !== behindTree) {
       behindTree = nextBehind;
       if (behindTree) svg.insertBefore(panda, tree);
       else svg.appendChild(panda);
     }
-    panda.setAttribute('data-pose', reduced.matches ? 'resting' : wandering ? 'wandering' : 'climbing');
+    panda.setAttribute('data-pose', motion.mode);
     panda.setAttribute('transform', `translate(${x.toFixed(2)} ${y.toFixed(2)}) scale(${scale})`);
     pose.setAttribute('transform', `rotate(${tilt.toFixed(2)}) scale(1 ${breath.toFixed(4)})`);
-    head.setAttribute('transform', `rotate(${(wandering ? Math.cos(roamPhase) * -7 : Math.sin(current / 83) * 6).toFixed(2)} 0 -19)`);
+    head.setAttribute('transform', `rotate(${(-motion.peek * 10).toFixed(2)} 0 -19)`);
+
+    if (character) {
+      const rendered = character.render({
+        time:storyTime, yaw:motion.yaw, lean:tilt * Math.PI / 180,
+        gait:reduced.matches ? 0 : step,
+        grip:1 - groundBlend * 0.7, peek:motion.peek,
+        wave:motion.wave * (mobile.matches ? 0.65 : 1),
+        sit:groundBlend * (motion.mode === 'resting' ? 1 : 0), still:reduced.matches
+      });
+      panda.style.display = rendered ? 'none' : '';
+      character.canvas.style.display = rendered ? 'block' : 'none';
+      character.canvas.dataset.pose = motion.mode;
+      character.canvas.dataset.behindTree = String(nextBehind);
+      character.canvas.style.zIndex = nextBehind ? '1' : '3';
+      character.canvas.style.transform = `translate3d(${(x-renderSize/2).toFixed(2)}px,${(y-renderSize/2).toFixed(2)}px,0)`;
+    }
 
     for (const [index, side] of [-1, 1].entries()) {
       const gait = Math.sin(step + index * Math.PI) * move;
@@ -256,24 +311,24 @@
     const blink = !reduced.matches && blinkTime > 4450 ? Math.max(0.08, Math.abs(blinkTime - 4575) / 125) : 1;
     eyes.setAttribute('transform', `scale(1 ${blink.toFixed(3)})`);
     footShadow.setAttribute('cx', x);
-    footShadow.setAttribute('cy', groundY + Math.cos(roamPhase) * 4);
+    footShadow.setAttribute('cy', groundY + motion.depth * 3);
     footShadow.setAttribute('rx', 23 * scale);
     footShadow.setAttribute('ry', 5 * scale);
-    footShadow.style.opacity = String(reduced.matches ? 0.14 : groundBlend * 0.14);
+    footShadow.style.opacity = String(reduced.matches ? 0.14 : groundBlend * (motion.lift < -15 ? 0.055 : 0.14));
   }
 
   function frame(time) {
     raf = 0;
     if (reduced.matches || document.hidden || !visible) return;
-    const dt = Math.min(40, lastTime ? time - lastTime : 16.7);
+    const elapsed = Math.min(1000, lastTime ? time - lastTime : 16.7);
+    const dt = Math.min(80, elapsed);
     lastTime = time;
     const previous = current;
     current += (target - current) * (1 - Math.exp(-dt / 85));
     if (Math.abs(target - current) < 0.2) current = target;
     const atBase = target >= endY - 1 && current >= endY - 2;
     groundBlend += ((atBase ? 1 : 0) - groundBlend) * (1 - Math.exp(-dt / 350));
-    if (groundBlend > 0.01) roamPhase += dt * 0.00052 * groundBlend;
-    else roamPhase = 0;
+    storyTime += elapsed / 1000;
     paint(time, Math.abs(current - previous));
     const pandaInView = historyTop + current > -100 && historyTop + current < innerHeight + 100;
     if (pandaInView || Math.abs(target - current) > 0.2) schedule();
@@ -308,7 +363,7 @@
   reduced.addEventListener('change', () => {
     stop();
     groundBlend = 0;
-    roamPhase = 0;
+    storyTime = 0;
     updateTarget();
     current = reduced.matches ? endY : target;
     paint(performance.now(), 0);
