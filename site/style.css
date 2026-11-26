@@ -27,9 +27,10 @@ a:hover { color: #173b62; text-decoration-color: currentColor; }
 a:focus-visible { outline: 2px solid var(--link); outline-offset: 5px; }
 .site-header { display: flex; align-items: center; justify-content: space-between; gap: 25px; padding: 24px 0 19px; border-bottom: 1px solid var(--line); font-size: 12px; }
 .home-link { color: #555b63; text-decoration: none; }
-nav { display: flex; gap: 24px; }
+nav { display: flex; flex-wrap: wrap; gap: 8px 24px; }
 nav a { color: #555b63; text-decoration: none; }
 nav a:hover { text-decoration: underline; }
+nav a[aria-current="page"] { color: var(--link); font-weight: 600; text-decoration: underline; }
 .profile { display: grid; grid-template-columns: 1fr 148px; column-gap: 44px; padding-top: 47px; }
 .profile-heading { align-self: center; }
 h1 { margin: 0 0 7px; font-size: 32px; font-weight: 600; letter-spacing: -1.1px; line-height: 1.25; }
@@ -87,7 +88,7 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding: 21px 0 32
   .page { padding: 0 23px; }
   body { font-size: 14px; }
   .site-header { padding: 19px 0 15px; font-size: 11px; gap: 15px; }
-  nav { gap: 16px; }
+  nav { gap: 8px 16px; }
   .home-link { display: none; }
   .profile { grid-template-columns: 1fr 92px; gap: 19px; padding-top: 32px; }
   h1 { font-size: 26px; letter-spacing: -.75px; }
